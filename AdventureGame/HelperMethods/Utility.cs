@@ -249,6 +249,9 @@ namespace AdventureGame.HelperMethods
             player.MaxHp = 1000;
             player.Class = "Priest";
             player.Race = "Night elf";
+            player.Weapon = new Weapon("Greatsword", 50, 6, "2d6", GetAbilityModifier(player.Strength), "Str");
+            player.Armor.Add(new Armor("Plate", 1500, 65, 18, "Chest", 0, ""));            
+            player.ArmorClass = 18;
         }
     }
 }

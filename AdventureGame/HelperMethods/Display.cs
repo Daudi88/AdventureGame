@@ -95,9 +95,9 @@ namespace AdventureGame.HelperMethods
             if (player.Weapon != null)
             {
                 if (player.Weapon.AbilityModifier >= 0)
-                    Console.Write($"{player.Weapon} = {player.Weapon.Damage} (+{player.Weapon.AbilityModifier} {player.Weapon.ModifierName}) Damage");
+                    Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (+{player.Weapon.AbilityModifier} {player.Weapon.ModifierName}) Damage");
                 else
-                    Console.Write($"{player.Weapon} = {player.Weapon.Damage} ({player.Weapon.AbilityModifier} {player.Weapon.ModifierName}) Damage");
+                    Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} ({player.Weapon.AbilityModifier} {player.Weapon.ModifierName}) Damage");
             }
             top += 2;
 
@@ -107,11 +107,11 @@ namespace AdventureGame.HelperMethods
                 {
                     Console.SetCursorPosition(left, top++);
                     if (armor.Placement.Equals("Off-hand"))
-                        Console.Write($"{armor} =  +{armor.ArmorClass} Armor Class");
+                        Console.Write($"{armor.Name} =  +{armor.ArmorClass} Armor Class");
                     else if (armor.AbilityModifier > 0)
-                        Console.Write($"{armor} = {armor.ArmorClass} (+{armor.AbilityModifier} {armor.ModifierName}) Armor Class");
+                        Console.Write($"{armor.Name} = {armor.ArmorClass} (+{armor.AbilityModifier} {armor.ModifierName}) Armor Class");
                     else
-                        Console.Write($"{armor} = {armor.ArmorClass} Armor Class");
+                        Console.Write($"{armor.Name} = {armor.ArmorClass} Armor Class");
                 }
             }
             Console.ReadLine();
