@@ -143,8 +143,8 @@ namespace AdventureGame
             {
                 Console.WriteLine("\n\tWelcome to the Barbarian Inn!");
                 Console.WriteLine("\tWhat can we do for you?");
-                Console.WriteLine("\t1. Rest for the night");
-                Console.WriteLine("\t2. Eat and drink");
+                Console.WriteLine("\t1. Rest for the night for 100 gold (+ 100% Hp)");
+                Console.WriteLine("\t2. Eat and drink 60 gold (+ 50% Hp)");
                 Console.WriteLine("\t3. Purchase or sell items");
                 Console.WriteLine("\t4. Leave");
                 Console.Write("\t> ");
@@ -191,9 +191,5 @@ namespace AdventureGame
             Thread.Sleep(800);
             Environment.Exit(0);
         }
-
-        
-
-        
     }
 }
