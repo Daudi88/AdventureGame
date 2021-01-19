@@ -10,8 +10,7 @@ namespace AdventureGame.Interfaces
         /// <summary>
         /// How much the consumable item heals its user.
         /// </summary>
-        public string HitPoints { get; set; }
-        public int ExtraHealing { get; set; }
-        public void Consume(Creature user);
+        public string Health { get; set; }
+        public void Consume(Character user);
     }
 }
