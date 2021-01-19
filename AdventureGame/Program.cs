@@ -9,7 +9,7 @@
         }
 
         // TODO
-        // Fixa implementeringen av Tavern. 1. (Rest for the night = - 5 gold gives full hp text = You sleep like a baby and are fully rested and healed.)
+        // Fixa implementeringen av Shop.
         // Vapen, Armor, Items, Potions , Backpack osv...
         // Håkan ska skriva sitt äventyr! Implementeringen får ske i Explore().
         // Drick potion (RedBull) under strid mellan rundorna. Ger dig 10% Hp. Kostar 20-30 guld. 

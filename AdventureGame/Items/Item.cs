@@ -17,7 +17,5 @@ namespace AdventureGame.Items
             Name = name;
             Cost = cost;
         }
-
-        public abstract void Describe();
     }
 }

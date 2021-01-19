@@ -6,17 +6,17 @@ namespace AdventureGame.Creatures
 {
     abstract class Character
     {
-        public string Name { get; set; } = "";
-        public int Level { get; set; } = 1;
-        public int Hp { get; set; } = 0;
+        public string Name { get; set; }
+        public int Level { get; set; } = 2;
+        public int Hp { get; set; }
         public int Exp { get; set; } = 0;
-        public int Strength { get; set; } = 0;
+        public int Damage { get; set; }
         public int Gold { get; set; } = 0;
 
-        public Character(int hp, int strength)
+        public Character(int hp, int damage)
         {
             Hp = hp;
-            Strength = strength;
+            Damage = damage;
         }
 
         public abstract int Attack();

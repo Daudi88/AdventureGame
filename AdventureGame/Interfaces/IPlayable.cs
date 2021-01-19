@@ -13,11 +13,11 @@ namespace AdventureGame.Interfaces
             string Class { get; set; }
             int MaxHp { get; set; }
             int MaxExp { get; set; }
-            public void LevelUp();
+            Weapon Weapon { get; set; }
+            List<Armor> Armor { get; set; }
+            List<Item> Backpack { get; set; }
 
-            //Weapon Weapon { get; set; }
-            //List<Armor> Armor { get; set; }
-            //List<Item> Backpack { get; set; }
+            public void LevelUp();            
         }
     }
 }

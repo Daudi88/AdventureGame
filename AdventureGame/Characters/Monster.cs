@@ -6,7 +6,7 @@ namespace AdventureGame.Characters
 {
     class Monster : Character
     {
-        public Monster(string name, int level, int hp, int strength, int exp) : base(hp, strength)
+        public Monster(string name, int level, int hp, int damage, int exp) : base(hp, damage)
         {
             Name = name;
             Level = level;
@@ -16,9 +16,9 @@ namespace AdventureGame.Characters
 
         public override int Attack()
         {
-            int damage = Utility.RollDice(Strength * 2);
+            int damage = Utility.RollDice(Damage * 2);
             string text = $"{Name} hits you dealing {damage} damage!";
-            Console.WriteLine($"\t┃ {text.PadRight(38 - text.Length)} ┃");
+            Console.WriteLine($"\t┃ {text.PadRight(38)} ┃");
             return damage;
         }
     }

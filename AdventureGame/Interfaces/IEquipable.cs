@@ -1,11 +1,11 @@
-﻿namespace AdventureGame.Interfaces
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace AdventureGame.Interfaces
 {
-    /// <summary>
-    /// Interface for equipable items.
-    /// </summary>
     interface IEquipable
-    {        
-        public int AbilityModifier { get; set; }
-        public string ModifierName { get; set; }
+    {
+        public void Equip();
     }
 }

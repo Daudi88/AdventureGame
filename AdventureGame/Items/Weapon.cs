@@ -3,22 +3,13 @@ using System;
 
 namespace AdventureGame.Items
 {
-    //class Weapon : Item, IEquipable
-    //{
-    //    public string Damage { get; set; }
-    //    public int AbilityModifier { get; set; }
-    //    public string ModifierName { get; set; }
+    class Weapon : Item
+    {
+        public string Damage { get; set; }        
 
-    //    public Weapon(string name, int cost, int weight, string damage, int abilityModifier, string modifierName) : base(name, cost, weight)
-    //    {
-    //        Damage = damage;
-    //        AbilityModifier = abilityModifier;
-    //        ModifierName = modifierName;
-    //    }
-
-    //    public override void Describe()
-    //    {
-    //        Console.WriteLine($"{Name}\t{Cost} gp\t{Damage}\t{Weight}");
-    //    }
-    //}
+        public Weapon(string name, int cost, string damage) : base(name, cost)
+        {
+            Damage = damage;
+        }
+    }
 }

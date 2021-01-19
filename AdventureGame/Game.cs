@@ -1,11 +1,10 @@
-﻿using AdventureGame.Creatures;
+﻿using AdventureGame.Characters;
+using AdventureGame.Creatures;
 using AdventureGame.HelperMethods;
 using System;
-using System.Threading;
 using System.Collections.Generic;
-using AdventureGame.Characters;
-using System.Dynamic;
-using System.Xml.Linq;
+using System.Linq;
+using System.Threading;
 
 namespace AdventureGame
 {
@@ -106,18 +105,26 @@ namespace AdventureGame
 
         private void Battle()
         {
-            List<Monster> monsters = Utility.GetMonsters();
-            Monster monster = monsters[Utility.RollDice(monsters.Count)];
-            Console.WriteLine();
-            Console.WriteLine($"\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            Console.WriteLine($"\t┃ You have encountered {monster.Name}! ┃");
+            Monster[] monsters = Utility.GetMonsters().Where(m => m.Level <= player.Level).ToArray();
+            Monster monster = monsters[Utility.RollDice(monsters.Length)];
+            int ctr = 0;
+            string text;
             while (monster.Hp > 0)
             {
+                Console.WriteLine($"\n\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                if (ctr == 0)
+                {
+                    text = $"You have encountered {monster.Name}!";
+                    Console.WriteLine($"\t┃ {text.PadRight(38)} ┃");
+                    ctr++;
+                }
                 monster.Hp -= player.Attack();
                 if (monster.Hp <= 0)
                 {
-                    Console.WriteLine($"\t┃ You defeated {monster.Name}! ┃");
-                    Console.WriteLine($"\t┃ You gained {monster.Exp} Exp and {monster.Gold} gold!┃");
+                    text = $"You defeated {monster.Name}!";
+                    Console.WriteLine($"\t┃ {text.PadRight(38)} ┃");
+                    text = $"You gained {monster.Exp} Exp and {monster.Gold} gold!";
+                    Console.WriteLine($"\t┃ {text.PadRight(38)} ┃");
                     Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                     player.Exp += monster.Exp;
                     player.Gold += monster.Gold;
@@ -132,7 +139,8 @@ namespace AdventureGame
                     player.Hp -= monster.Attack();
                     if (player.Hp <= 0)
                     {
-                        Console.WriteLine($"\t┃ You were defeated by {monster.Name}! ┃");
+                        text = $"You were defeated by { monster.Name}!";
+                        Console.WriteLine($"\t┃ {text.PadRight(38)} ┃");
                         Console.WriteLine($"\t┃ You loose...                           ┃");
                         Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                         Console.WriteLine("\n\t Do you want to try again? (y/n)");
@@ -172,8 +180,11 @@ namespace AdventureGame
             Console.WriteLine($"\t┃ Level: {player.Level.ToString().PadRight(11)} ┃");
             Console.WriteLine($"\t┃ Hp: {player.Hp}/{player.MaxHp.ToString().PadRight(12 - a)} ┃");
             Console.WriteLine($"\t┃ Exp: {player.Exp}/{player.MaxExp.ToString().PadRight(11 - b)} ┃");
-            Console.WriteLine($"\t┃ Strength: {player.Strength.ToString().PadRight(8)} ┃");
+            Console.WriteLine($"\t┃ Damage: {player.Damage.ToString().PadRight(8)} ┃");
             Console.WriteLine($"\t┃ Gold: {player.Gold.ToString().PadRight(12)} ┃");
+            Console.WriteLine($"\t┣━EQUIPPED━━━━━━━━━━━┫");
+            Console.WriteLine($"\t┃ Armor:             ┃");
+            Console.WriteLine($"\t┃ Weapon:            ┃");
             Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━┛");
             Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
@@ -235,25 +246,80 @@ namespace AdventureGame
 
         private void Rest()
         {
-            Console.WriteLine("\t You wake up the next day feeling well and rested.");
-            Console.WriteLine("\t Your Hp is now fully restored.");
             player.Hp = player.MaxHp;
+            Console.WriteLine("\t You slept like a baby and are fully rested and healed.");
             Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
 
         private void Eat()
         {
+            player.Hp += player.MaxHp / 2;
             Console.WriteLine("\t You feel much better after a good meal.");
             Console.WriteLine("\t Your Hp is now restored by 50%.");
-            player.Hp += player.MaxHp / 2;
             Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
 
         private void Shop()
         {
-            throw new NotImplementedException();
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("\n\t Welcome to the Abracapothecary!");
+                Console.WriteLine("\t The shop that holds everything an adventurer could want.");
+                Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━┓");
+                Console.WriteLine("\t┃ 1. Buy Armor    ┃");
+                Console.WriteLine("\t┃ 2. Buy Weapons  ┃");
+                Console.WriteLine("\t┃ 3. Buy Potions  ┃");
+                Console.WriteLine("\t┃ 4. Sell items   ┃");
+                Console.WriteLine("\t┃ 5. Leave        ┃");
+                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━┛");
+                Console.Write("\t > ");
+                int.TryParse(Utility.ReadInGreen(), out int choice);
+                switch (choice)
+                {
+                    case 1:
+                        BuyArmor();
+                        break;
+                    case 2:
+                        BuyWeapons();
+                        break;
+                    case 3:
+                        BuyPotions();
+                        break;
+                    case 4:
+                        SellItems();
+                        break;
+                    case 5:
+                        Console.WriteLine("\t Thank you for visiting! We hope to see you back again soon!");
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("\t Invalid choice. Try again...\n");
+                        break;
+                }
+            }
+        }
+
+        private void BuyArmor()
+        {
+            
+        }
+
+        private void BuyWeapons()
+        {
+            
+        }
+
+        private void BuyPotions()
+        {
+            
+        }
+
+        private void SellItems()
+        {
+            
         }
 
         private static void ExitGame()

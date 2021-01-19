@@ -13,7 +13,7 @@ namespace AdventureGame.Creatures
         public int MaxHp { get; set; }
         public int MaxExp { get; set; }
 
-        public Player(int hp, int strength) : base(hp, strength)
+        public Player(int hp, int damage) : base(hp, damage)
         {
             MaxHp = Hp;
             MaxExp = 200 * Level; // Fundera på om denna ska ligga i en variabel/metod eftersom vi använder den på flera ställen. 
@@ -21,9 +21,9 @@ namespace AdventureGame.Creatures
 
         public override int Attack()
         {
-            int damage = Utility.RollDice(Strength * 2);
+            int damage = Utility.RollDice(Damage * 2);
             string text = $"You hit the monster dealing {damage} damage!";
-            Console.WriteLine($"\t┃ {text.PadRight(38 - text.Length)} ┃");
+            Console.WriteLine($"\t┃ {text.PadRight(38)} ┃");
             return damage;
         }
 
@@ -34,7 +34,7 @@ namespace AdventureGame.Creatures
             MaxExp += 200 * Level;
             MaxHp += Level;
             Hp = MaxHp;
-            Strength++;
+            Damage++;
         }
     }
 }

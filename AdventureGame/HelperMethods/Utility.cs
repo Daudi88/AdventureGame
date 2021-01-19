@@ -29,7 +29,8 @@ namespace AdventureGame.HelperMethods
         {
             List<Monster> monsters = new List<Monster>()
             {
-                new Monster("Frogman", 1, 15, 7, 50)
+                new Monster("Frogman", 1, 15, 7, 50),
+                new Monster("Megaman", 2, 25, 12, 150)
             };
             return monsters;
         }
@@ -42,6 +43,11 @@ namespace AdventureGame.HelperMethods
             Console.ForegroundColor = ConsoleColor.White;
             Console.CursorVisible = false;
             return input;
+        }
+
+        public static void TypeOverWrongDoings()
+        {
+
         }
 
         //public static Player GetClass(Classes choice)
