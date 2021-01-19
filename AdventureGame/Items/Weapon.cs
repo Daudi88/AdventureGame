@@ -1,14 +1,13 @@
 ﻿using AdventureGame.Characters;
 using AdventureGame.Interfaces;
-using System;
 
 namespace AdventureGame.Items
 {
     class Weapon : Item, IEquipable
     {
-        public int Damage { get; set; }        
+        public string Damage { get; set; }
 
-        public Weapon(string name, int cost, int damage) : base(name, cost)
+        public Weapon(string name, int cost, string damage) : base(name, cost)
         {
             Damage = damage;
         }
@@ -16,6 +15,11 @@ namespace AdventureGame.Items
         public void Equip(Player player)
         {
             player.Damage = Damage;
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} ({Damage} Damage)";
         }
     }
 }

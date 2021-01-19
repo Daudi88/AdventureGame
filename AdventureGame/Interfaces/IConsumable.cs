@@ -1,4 +1,4 @@
-﻿using AdventureGame.Creatures;
+﻿using AdventureGame.Characters;
 
 namespace AdventureGame.Interfaces
 {
@@ -8,9 +8,9 @@ namespace AdventureGame.Interfaces
     interface IConsumable
     {
         /// <summary>
-        /// How much the consumable item heals its user.
+        /// How much the potion item heals its user.
         /// </summary>
-        public string Health { get; set; }
-        public void Consume(Character user);
+        public int Healing { get; set; }
+        public void Consume(Player player);
     }
 }

@@ -1,5 +1,4 @@
-﻿using AdventureGame.Creatures;
-using System;
+﻿using System;
 using System.Threading;
 
 namespace AdventureGame.HelperMethods

@@ -1,5 +1,4 @@
 ﻿using AdventureGame.Characters;
-using AdventureGame.Creatures;
 using AdventureGame.Items;
 using System;
 using System.Collections.Generic;
@@ -25,12 +24,24 @@ namespace AdventureGame.HelperMethods
             return random.Next(dice);
         }
 
+        public static int RollDice(string dice)
+        {
+            int times = int.Parse(dice[0].ToString());
+            int sides = int.Parse(dice[2..]);
+            int result = 0;
+            for (int i = 0; i < times; i++)
+            {
+                result += random.Next(1, sides + 1);
+            }
+            return result;
+        }
+
         public static List<Monster> GetMonsters()
         {
             List<Monster> monsters = new List<Monster>()
             {
-                new Monster("Frogman", 1, 15, 7, 50),
-                new Monster("Megaman", 2, 25, 12, 150)
+                new Monster("Frogman", 1, 15, "1d6", 50),
+                new Monster("Megaman", 2, 25, "1d8", 150)
             };
             return monsters;
         }
@@ -45,9 +56,33 @@ namespace AdventureGame.HelperMethods
             return input;
         }
 
+        public static void WriteInYellow(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void WriteInRed(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public static void TypeOverWrongDoings()
         {
 
+        }
+
+        internal static Armor[] GetArmor()
+        {
+            Armor[] armor = new Armor[]
+            {
+                new Armor("Leather Armor", 50, 5),
+                new Armor("Shinobi Battle Armour", 10000, 500)
+            };
+            return armor;
         }
 
         //public static Player GetClass(Classes choice)

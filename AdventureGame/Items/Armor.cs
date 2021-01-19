@@ -1,6 +1,5 @@
 ﻿using AdventureGame.Characters;
 using AdventureGame.Interfaces;
-using System;
 
 namespace AdventureGame.Items
 {
@@ -18,6 +17,9 @@ namespace AdventureGame.Items
             player.MaxHp += MaxHp;
         }
 
-
+        public override string ToString()
+        {
+            return $"{Name} (+{MaxHp} Hp)";
+        }
     }
 }

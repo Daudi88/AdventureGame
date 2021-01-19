@@ -1,9 +1,4 @@
-﻿using AdventureGame.Creatures;
-using AdventureGame.Items;
-using System;
-using System.Threading;
-
-namespace AdventureGame.HelperMethods
+﻿namespace AdventureGame.HelperMethods
 {
     class Display
     {
