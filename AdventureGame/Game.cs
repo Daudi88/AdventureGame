@@ -92,6 +92,9 @@ namespace AdventureGame
                     case 4:
                         ExitGame();
                         break;
+                    case 5:
+                        Map();
+                        break;
                     default:
                         break;
                 }
@@ -110,6 +113,27 @@ namespace AdventureGame
             Console.Write("\t > ");
             int.TryParse(Utility.ReadInGreen(), out int choice);
             return choice;
+        }
+
+        private void Map()
+        {
+            Console.WriteLine();
+            Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            Console.WriteLine("\t┃                                               ┃");
+            Console.WriteLine("\t┃    AAAA AAA                                   ┃");
+            Console.Write("\t┃    AAAA  AAAA         ≈≈≈≈≈        ");
+            Utility.WriteInRed("X");
+            Console.WriteLine("          ┃");
+            Console.WriteLine("\t┃    A  AAA AA         ≈≈≈≈≈≈≈                  ┃");
+            Console.WriteLine("\t┃        AAAAAA         ≈≈≈≈≈   ######          ┃");
+            Console.WriteLine("\t┃                       ############            ┃");
+            Console.WriteLine("\t┃                   ##########  ╔──────╗        ┃");
+            Console.Write("\t┃     ");
+            Utility.WriteInYellow("[δ]");
+            Console.WriteLine("            ########   │ town │        ┃");
+            Console.WriteLine("\t┃                    #########  ╚──────╝        ┃");
+            Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            Console.ReadLine();
         }
 
         private void Explore()

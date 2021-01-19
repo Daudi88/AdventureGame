@@ -1,4 +1,6 @@
-﻿namespace AdventureGame
+﻿using System;
+
+namespace AdventureGame
 {
     class Program
     {
@@ -20,17 +22,8 @@
         // Console.WriteLine("\n\tYou take the time to drink a powerfull potion. It feels like you have wings."); => När man dricker en potion!    
         // Gandalf story och implementering. 
 
-        //┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-        //┃                                               ┃
-        //┃    AAAA AAA                                   ┃
-        //┃    AAAA  AAAA         ≈≈≈≈≈        X          ┃
-        //┃    A  AAA AA         ≈≈≈≈≈≈≈                  ┃
-        //┃        AAAAAA         ≈≈≈≈≈   ######          ┃
-        //┃                       ############            ┃
-        //┃                   ##########  ╔──────╗        ┃   
-        //┃     [δ]            ########   │ town │        ┃
-        //┃                    #########  ╚──────╝        ┃
-        //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+        
+        
         // A = berg, # = skog, ≈ = vatten, X marks the spot, [Ω]/[δ] = player eller någon annan symbol ;)
         // Fast du gör den 10 gånger bättre! :D 
 
