@@ -7,17 +7,14 @@ namespace AdventureGame.Interfaces
 {
     interface IPlayable
     {
-        interface IPlayable
-        {
-            string Race { get; set; }
-            string Class { get; set; }
-            int MaxHp { get; set; }
-            int MaxExp { get; set; }
-            Weapon Weapon { get; set; }
-            List<Armor> Armor { get; set; }
-            List<Item> Backpack { get; set; }
+        public string Race { get; set; }
+        public string Class { get; set; }
+        public int MaxHp { get; set; }
+        public int MaxExp { get; set; }
+        public Weapon Weapon { get; set; }
+        public Armor Armor { get; set; }
+        public List<Item> Backpack { get; set; }
 
-            public void LevelUp();            
-        }
+        public void LevelUp();
     }
 }

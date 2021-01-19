@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AdventureGame.Characters;
 
 namespace AdventureGame.Interfaces
 {
     interface IEquipable
     {
-        public void Equip();
+        public void Equip(Player player);
     }
 }

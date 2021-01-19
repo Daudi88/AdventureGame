@@ -1,15 +1,21 @@
-﻿using AdventureGame.Interfaces;
+﻿using AdventureGame.Characters;
+using AdventureGame.Interfaces;
 using System;
 
 namespace AdventureGame.Items
 {
-    class Weapon : Item
+    class Weapon : Item, IEquipable
     {
-        public string Damage { get; set; }        
+        public int Damage { get; set; }        
 
-        public Weapon(string name, int cost, string damage) : base(name, cost)
+        public Weapon(string name, int cost, int damage) : base(name, cost)
         {
             Damage = damage;
+        }
+
+        public void Equip(Player player)
+        {
+            player.Damage = Damage;
         }
     }
 }

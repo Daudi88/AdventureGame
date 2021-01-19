@@ -1,8 +1,4 @@
-﻿using AdventureGame.Interfaces;
-using System;
-using System.Collections.Generic;
-
-namespace AdventureGame.Creatures
+﻿namespace AdventureGame.Characters
 {
     abstract class Character
     {

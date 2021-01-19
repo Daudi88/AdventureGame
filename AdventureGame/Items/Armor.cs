@@ -1,9 +1,10 @@
-﻿using AdventureGame.Interfaces;
+﻿using AdventureGame.Characters;
+using AdventureGame.Interfaces;
 using System;
 
 namespace AdventureGame.Items
 {
-    class Armor : Item
+    class Armor : Item, IEquipable
     {
         public int MaxHp { get; set; }
 
@@ -11,5 +12,12 @@ namespace AdventureGame.Items
         {
             MaxHp = maxHp;
         }
+
+        public void Equip(Player player)
+        {
+            player.MaxHp += MaxHp;
+        }
+
+
     }
 }

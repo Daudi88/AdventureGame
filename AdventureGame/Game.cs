@@ -183,7 +183,7 @@ namespace AdventureGame
             Console.WriteLine($"\t┃ Damage: {player.Damage.ToString().PadRight(8)} ┃");
             Console.WriteLine($"\t┃ Gold: {player.Gold.ToString().PadRight(12)} ┃");
             Console.WriteLine($"\t┣━EQUIPPED━━━━━━━━━━━┫");
-            Console.WriteLine($"\t┃ Armor:             ┃");
+            Console.WriteLine($"\t┃ Armor: {player.Armor.Name.PadRight(11)} ┃");
             Console.WriteLine($"\t┃ Weapon:            ┃");
             Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━┛");
             Console.WriteLine("\t [Press enter to continue]");

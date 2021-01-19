@@ -1,5 +1,4 @@
-﻿using AdventureGame.Creatures;
-using AdventureGame.HelperMethods;
+﻿using AdventureGame.HelperMethods;
 using System;
 
 namespace AdventureGame.Characters
