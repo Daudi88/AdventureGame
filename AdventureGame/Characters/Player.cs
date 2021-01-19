@@ -26,7 +26,7 @@ namespace AdventureGame.Characters
         {
             int damage = Utility.RollDice(Damage);
             string text = $"You hit the monster dealing {damage} damage!";
-            Console.WriteLine($"\t┃ {text.PadRight(38)}  ┃");
+            Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
             return damage;
         }
 
@@ -35,6 +35,10 @@ namespace AdventureGame.Characters
             Level++;
             MaxExp += 200 * Level;
             MaxHp += Level;
+            if (MaxHp > 1000)
+            {
+                MaxHp = 1000;
+            }
             Hp = MaxHp;
         }
     }

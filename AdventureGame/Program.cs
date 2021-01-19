@@ -18,7 +18,22 @@
         // Drick potion (RedBull) under strid mellan rundorna. Ger dig 10% Hp. Kostar 20-30 guld.
         // Om Hp går under 10% skriv ut Hp i rött
         // Console.WriteLine("\n\tYou take the time to drink a powerfull potion. It feels like you have wings."); => När man dricker en potion!    
-        // Gandalf story och implementering.        
+        // Gandalf story och implementering. 
+
+        //┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        //┃                                               ┃
+        //┃    AAAA AAA                                   ┃
+        //┃    AAAA  AAAA         ≈≈≈≈≈        X          ┃
+        //┃    A  AAA AA         ≈≈≈≈≈≈≈                  ┃
+        //┃        AAAAAA         ≈≈≈≈≈   ######          ┃
+        //┃                       ############            ┃
+        //┃                   ##########  ╔──────╗        ┃   
+        //┃     [δ]            ########   │ town │        ┃
+        //┃                    #########  ╚──────╝        ┃
+        //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+        // A = berg, # = skog, ≈ = vatten, X marks the spot, [Ω]/[δ] = player eller någon annan symbol ;)
+        // Fast du gör den 10 gånger bättre! :D 
+
 
         // ÖVERKURS!
         // Sudda ut felaktig inmatning.

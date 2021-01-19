@@ -63,10 +63,10 @@ namespace AdventureGame
             player.Name = "Kakashi Hatake";
             player.Hp = 1000;
             player.MaxHp = 1000;
-            player.Damage = "10d100";
+            player.Damage = "8d100";
             player.Gold = 100000;
             player.Armor = new Armor("Shinobi Battle Armour", 10000, 500);
-            player.Weapon = new Weapon("Executioner's Blade", 10000, "10d100");
+            player.Weapon = new Weapon("Executioner's Blade", 10000, "8d100");
             player.Backpack = new List<Item>()
             {
                 new Potion("Red Bull", 30, player.MaxHp / 10, 100)
@@ -133,30 +133,30 @@ namespace AdventureGame
             string text;
             while (monster.Hp > 0)
             {
-                Console.WriteLine($"\n\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                Console.WriteLine($"\n\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
                 if (ctr == 0)
                 {
                     text = $"You have encountered {monster.Name}!";
-                    Console.WriteLine($"\t┃ {text.PadRight(38)}  ┃");
+                    Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
                     ctr++;
                 }
                 monster.Hp -= player.Attack();
                 if (monster.Hp <= 0)
                 {
                     text = $"You defeated {monster.Name}!";
-                    Console.WriteLine($"\t┃ {text.PadRight(38)}  ┃");
+                    Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
                     text = $"You gained {monster.Exp} Exp and {monster.Gold} gold!";
-                    Console.WriteLine($"\t┃ {text.PadRight(38)}  ┃");
+                    Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
                     player.Exp += monster.Exp;
                     player.Gold += monster.Gold;
 
                     if (player.Exp >= player.MaxExp)
                     {
-                        Console.WriteLine("\t┃ Well Done! You leveled up!              ┃");
+                        Console.WriteLine("\t┃ Well Done! You leveled up!               ┃");
                         player.LevelUp();
                     }
 
-                    Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                    Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                 }
                 else
                 {
@@ -164,9 +164,9 @@ namespace AdventureGame
                     if (player.Hp <= 0)
                     {
                         text = $"You were defeated by { monster.Name}!";
-                        Console.WriteLine($"\t┃ {text.PadRight(38)}  ┃");
-                        Console.WriteLine($"\t┃ You lose...                            ┃");
-                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                        Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
+                        Console.WriteLine($"\t┃ You lose...                              ┃");
+                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                         Console.WriteLine("\n\t Do you want to try again? (y/n)");
                         Console.Write("\t > ");
                         string choice = Utility.ReadInGreen();
@@ -182,7 +182,7 @@ namespace AdventureGame
                     else
                     {
                         Console.Write($"\t┃ {player.Name} Hp: ");
-                        text = player.Hp.ToString().PadRight(33 - player.Name.Length);
+                        text = player.Hp.ToString().PadRight(34 - player.Name.Length);
                         if (player.Hp < player.MaxHp / 5)
                         {
                             Utility.WriteInRed(text);
@@ -192,8 +192,8 @@ namespace AdventureGame
                             Console.Write(text);
                         }
                         Console.WriteLine("  ┃");
-                        Console.WriteLine($"\t┃ {monster.Name} Hp: {monster.Hp.ToString().PadRight(33 - monster.Name.Length)}  ┃");
-                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                        Console.WriteLine($"\t┃ {monster.Name} Hp: {monster.Hp.ToString().PadRight(34 - monster.Name.Length)}  ┃");
+                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                     }
                 }
                 Console.WriteLine("\t[Press enter to continue]");

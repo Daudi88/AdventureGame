@@ -17,7 +17,7 @@ namespace AdventureGame.Characters
         {
             int damage = Utility.RollDice(Damage);
             string text = $"{Name} hits you dealing {damage} damage!";
-            Console.WriteLine($"\t┃ {text.PadRight(38)}  ┃");
+            Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
             return damage;
         }
     }
