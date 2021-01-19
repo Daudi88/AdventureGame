@@ -23,7 +23,7 @@ namespace AdventureGame.Creatures
         {
             int damage = Utility.RollDice(Strength * 2);
             string text = $"You hit the monster dealing {damage} damage!";
-            Console.WriteLine($"       ┃ {text.PadRight(38 - text.Length)} ┃");
+            Console.WriteLine($"\t┃ {text.PadRight(38 - text.Length)} ┃");
             return damage;
         }
 

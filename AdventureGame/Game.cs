@@ -33,17 +33,17 @@ namespace AdventureGame
             player = new Player(35, 15);
             while (true)
             {
-                Console.WriteLine("\n\tWhat is your name?");
-                Console.Write("\t> ");
+                Console.WriteLine("\n\t What is your name?");
+                Console.Write("\t > ");
                 player.Name = Utility.ReadInGreen();
 
                 if (player.Name.Length < 3)
                 {
-                    Console.WriteLine("\tThe name is too short...");
+                    Console.WriteLine("\t The name is too short...");
                 }
                 else if (player.Name.Length > 12)
                 {
-                    Console.WriteLine("\tThe name is too long...");
+                    Console.WriteLine("\t The name is too long...");
                 }
                 else
                 {
@@ -79,13 +79,14 @@ namespace AdventureGame
 
         private int MainMenu()
         {
-            Console.WriteLine("\n       ┏━MENU━━━━━━━━━━━━┓");
-            Console.WriteLine("       ┃ 1. Go Explore   ┃");
-            Console.WriteLine("       ┃ 2. Show Details ┃");
-            Console.WriteLine("       ┃ 3. Go to Tavern ┃");
-            Console.WriteLine("       ┃ 4. Exit Game    ┃");
-            Console.WriteLine("       ┗━━━━━━━━━━━━━━━━━┛");
-            Console.Write("\t> ");
+            Console.WriteLine();
+            Console.WriteLine("\t┏━MENU━━━━━━━━━━━━┓");
+            Console.WriteLine("\t┃ 1. Go Explore   ┃");
+            Console.WriteLine("\t┃ 2. Show Details ┃");
+            Console.WriteLine("\t┃ 3. Go to Tavern ┃");
+            Console.WriteLine("\t┃ 4. Exit Game    ┃");
+            Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━┛");
+            Console.Write("\t > ");
             int.TryParse(Utility.ReadInGreen(), out int choice);
             return choice;
         }
@@ -95,7 +96,7 @@ namespace AdventureGame
             int chance = Utility.RollDice(10);
             if (chance == 0)
             {
-                Console.WriteLine("\n\tThis is a very peacefull place and you don't sense any trouble near you.");
+                Console.WriteLine("\n\t This is a very peacefull place and you don't sense any trouble near you.");
             }
             else
             {
@@ -107,17 +108,17 @@ namespace AdventureGame
         {
             List<Monster> monsters = Utility.GetMonsters();
             Monster monster = monsters[Utility.RollDice(monsters.Count)];
-
-            Console.WriteLine("\n       ┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            Console.WriteLine($"       ┃ You have encountered {monster.Name}!");
+            Console.WriteLine();
+            Console.WriteLine($"\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            Console.WriteLine($"\t┃ You have encountered {monster.Name}! ┃");
             while (monster.Hp > 0)
             {
                 monster.Hp -= player.Attack();
                 if (monster.Hp <= 0)
                 {
-                    Console.WriteLine($"       ┃ You defeated {monster.Name}!");
-                    Console.WriteLine($"       ┃ You gained {monster.Exp} Exp and {monster.Gold} gold!");
-                    Console.WriteLine("       ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+                    Console.WriteLine($"\t┃ You defeated {monster.Name}! ┃");
+                    Console.WriteLine($"\t┃ You gained {monster.Exp} Exp and {monster.Gold} gold!┃");
+                    Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                     player.Exp += monster.Exp;
                     player.Gold += monster.Gold;
 
@@ -131,10 +132,10 @@ namespace AdventureGame
                     player.Hp -= monster.Attack();
                     if (player.Hp <= 0)
                     {
-                        Console.WriteLine($"       ┃ You were defeated by {monster.Name}");
-                        Console.WriteLine("       ┃ You loose...");
-                        Console.WriteLine("       ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                        Console.WriteLine("\n\tDo you want to try again? (y/n)");
+                        Console.WriteLine($"\t┃ You were defeated by {monster.Name}! ┃");
+                        Console.WriteLine($"\t┃ You loose...                           ┃");
+                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                        Console.WriteLine("\n\t Do you want to try again? (y/n)");
                         Console.Write("\t> ");
                         string choice = Utility.ReadInGreen();
                         if (choice.ToLower() == "y")
@@ -148,9 +149,9 @@ namespace AdventureGame
                     }
                     else
                     {
-                        Console.WriteLine($"       ┃ {player.Name} Hp: {player.Hp.ToString().PadRight(33 - player.Name.Length)} ┃");
-                        Console.WriteLine($"       ┃ {monster.Name} Hp: {monster.Hp.ToString().PadRight(33 - monster.Name.Length)} ┃");
-                        Console.WriteLine("       ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                        Console.WriteLine($"\t┃ {player.Name} Hp: {player.Hp.ToString().PadRight(33 - player.Name.Length)} ┃");
+                        Console.WriteLine($"\t┃ {monster.Name} Hp: {monster.Hp.ToString().PadRight(33 - monster.Name.Length)} ┃");
+                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                     }
                 }
                 Console.WriteLine("\t[Press enter to continue]");
@@ -165,31 +166,34 @@ namespace AdventureGame
             int xp = player.Exp;
             int b = xp > 9 && xp < 100 ? 1 : xp > 99 && xp < 1000 ? 2 : xp > 999 && xp < 10000 ? 3 : xp > 9999 ? 4 : 0;
 
-            Console.WriteLine("\n       ┏━DETAILS━━━━━━━━━━━━┓");
-            Console.WriteLine($"       ┃ Name: {player.Name.PadRight(12)} ┃");
-            Console.WriteLine($"       ┃ Level: {player.Level.ToString().PadRight(11)} ┃");
-            Console.WriteLine($"       ┃ Hp: {player.Hp}/{player.MaxHp.ToString().PadRight(12 - a)} ┃");
-            Console.WriteLine($"       ┃ Exp: {player.Exp}/{player.MaxExp.ToString().PadRight(11 - b)} ┃");
-            Console.WriteLine($"       ┃ Strength: {player.Strength.ToString().PadRight(8)} ┃");
-            Console.WriteLine($"       ┃ Gold: {player.Gold.ToString().PadRight(12)} ┃");
-            Console.WriteLine("       ┗━━━━━━━━━━━━━━━━━━━━┛");
+            Console.WriteLine();
+            Console.WriteLine($"\t┏━DETAILS━━━━━━━━━━━━┓");
+            Console.WriteLine($"\t┃ Name: {player.Name.PadRight(12)} ┃");
+            Console.WriteLine($"\t┃ Level: {player.Level.ToString().PadRight(11)} ┃");
+            Console.WriteLine($"\t┃ Hp: {player.Hp}/{player.MaxHp.ToString().PadRight(12 - a)} ┃");
+            Console.WriteLine($"\t┃ Exp: {player.Exp}/{player.MaxExp.ToString().PadRight(11 - b)} ┃");
+            Console.WriteLine($"\t┃ Strength: {player.Strength.ToString().PadRight(8)} ┃");
+            Console.WriteLine($"\t┃ Gold: {player.Gold.ToString().PadRight(12)} ┃");
+            Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━┛");
+            Console.WriteLine("\t [Press enter to continue]");
+            Console.ReadLine();
         }
 
         private void Tavern()
         {
-            Console.WriteLine("\n\tWelcome to the Barbarian Inn!");
+            Console.WriteLine("\n\t Welcome to the Barbarian Inn!");
             bool exit = false;
 
             while (!exit)
             {
-                Console.WriteLine("\tWhat can we do for you?");
-                Console.WriteLine("       ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-                Console.WriteLine("       ┃ 1. Rest for the night for 100 gold (+ 100% Hp) ┃");
-                Console.WriteLine("       ┃ 2. Eat and drink 60 gold (+ 50% Hp)            ┃");
-                Console.WriteLine("       ┃ 3. Purchase or sell items                      ┃");
-                Console.WriteLine("       ┃ 4. Leave                                       ┃");
-                Console.WriteLine("       ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-                Console.Write("\t> ");
+                Console.WriteLine("\t What can we do for you?");
+                Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                Console.WriteLine("\t┃ 1. Rest for the night for 100 gold (+ 100% Hp) ┃");
+                Console.WriteLine("\t┃ 2. Eat and drink 60 gold (+ 50% Hp)            ┃");
+                Console.WriteLine("\t┃ 3. Purchase or sell items                      ┃");
+                Console.WriteLine("\t┃ 4. Leave                                       ┃");
+                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                Console.Write("\t > ");
                 int.TryParse(Utility.ReadInGreen(), out int choice);
                 switch (choice)
                 {
@@ -201,7 +205,7 @@ namespace AdventureGame
                         }
                         else
                         {
-                            Console.WriteLine("\tSorry! You don't have enough gold...\n");
+                            Console.WriteLine("\t Sorry! You don't have enough gold...\n");
                         }
                         break;
                     case 2:
@@ -212,18 +216,18 @@ namespace AdventureGame
                         }
                         else
                         {
-                            Console.WriteLine("\tSorry! You don't have enough gold...\n");
+                            Console.WriteLine("\t Sorry! You don't have enough gold...\n");
                         }
                         break;
                     case 3:
                         Shop();
                         break;
                     case 4:
-                        Console.WriteLine("\tThank you for visiting! We hope to see you back again soon!");
+                        Console.WriteLine("\t Thank you for visiting! We hope to see you back again soon!");
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("\tInvalid choice. Try again...\n");
+                        Console.WriteLine("\t Invalid choice. Try again...\n");
                         break;
                 }
             }
@@ -231,19 +235,19 @@ namespace AdventureGame
 
         private void Rest()
         {
-            Console.WriteLine("\tYou wake up the next day feeling well and rested.");
-            Console.WriteLine("\tYour Hp is now fully restored.");
+            Console.WriteLine("\t You wake up the next day feeling well and rested.");
+            Console.WriteLine("\t Your Hp is now fully restored.");
             player.Hp = player.MaxHp;
-            Console.WriteLine("\t[Press enter to continue]");
+            Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
 
         private void Eat()
         {
-            Console.WriteLine("\tYou feel much better after a good meal.");
-            Console.WriteLine("\tYour Hp is now restored by 50%.");
+            Console.WriteLine("\t You feel much better after a good meal.");
+            Console.WriteLine("\t Your Hp is now restored by 50%.");
             player.Hp += player.MaxHp / 2;
-            Console.WriteLine("\t[Press enter to continue]");
+            Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
 
@@ -254,7 +258,7 @@ namespace AdventureGame
 
         private static void ExitGame()
         {
-            Console.Write("\n\tExiting game");
+            Console.Write("\n\t Exiting game");
             for (int i = 0; i < 3; i++)
             {
                 Thread.Sleep(800);
