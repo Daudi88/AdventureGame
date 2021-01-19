@@ -45,7 +45,7 @@ namespace AdventureGame
                 {
                     Console.WriteLine("\t The name is too long...");
                 }
-                else if (name == "Kakashi")
+                else if (name.Trim().ToLower() == "robin")
                 {
                     GodMode();
                     break;
@@ -60,7 +60,7 @@ namespace AdventureGame
 
         private void GodMode()
         {
-            player.Name = "Kakashi";
+            player.Name = "Kakashi Hatake";
             player.Hp = 1000;
             player.MaxHp = 1000;
             player.Damage = "10d100";
