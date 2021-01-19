@@ -22,13 +22,14 @@ namespace AdventureGame.Creatures
         public override int Attack()
         {
             int damage = Utility.RollDice(Strength * 2);
-            Console.WriteLine($"\tYou hit the monster dealing {damage} damage!");
+            string text = $"You hit the monster dealing {damage} damage!";
+            Console.WriteLine($"       ┃ {text.PadRight(38 - text.Length)} ┃");
             return damage;
         }
 
         public void LevelUp()
         {
-            Exp = Exp - MaxExp; // Kom på ett snyggare sätt att skriva detta på! ;)
+            //Exp = Exp - MaxExp; // Kom på ett snyggare sätt att skriva detta på! ;)
             Level++;
             MaxExp += 200 * Level;
             MaxHp += Level;

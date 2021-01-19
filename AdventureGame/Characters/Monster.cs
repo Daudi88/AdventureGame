@@ -17,7 +17,8 @@ namespace AdventureGame.Characters
         public override int Attack()
         {
             int damage = Utility.RollDice(Strength * 2);
-            Console.WriteLine($"\t{Name} hits you dealing {damage} damage!");
+            string text = $"{Name} hits you dealing {damage} damage!";
+            Console.WriteLine($"       ┃ {text.PadRight(38 - text.Length)} ┃");
             return damage;
         }
     }
