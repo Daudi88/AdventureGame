@@ -101,7 +101,7 @@ namespace AdventureGame
                         ExitGame();
                         break;
                     case 5:
-                        Map();
+                        OpenMap();
                         break;
                     default:
                         break;
@@ -123,7 +123,7 @@ namespace AdventureGame
             return choice;
         }
 
-        private void Map()
+        private void OpenMap()
         {
             Console.WriteLine();
             Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
@@ -141,6 +141,8 @@ namespace AdventureGame
             Console.WriteLine("            ########   │ town │        ┃");
             Console.WriteLine("\t┃                    #########  ╚──────╝        ┃");
             Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            Console.WriteLine("\t [δ] = secret friend, # = tree, A = mountain ...");
+            Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
 
@@ -154,6 +156,7 @@ namespace AdventureGame
                 if (pos == 0.0)
                 {
                     Console.WriteLine("\n\t You go north...");
+                    Console.WriteLine("\t Be careful not to loose yourself in the wild!");
                     pos += 0.1;
                     DoesAnythingHappen();
                 }
@@ -162,13 +165,16 @@ namespace AdventureGame
 
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go North      ┃");
-                        Console.WriteLine("\t┃ 2. Go East       ┃");
-                        Console.WriteLine("\t┃ 3. Go West       ┃");
-                        Console.WriteLine("\t┃ 4. Go to town    ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.WriteLine("\n\t What do you want to do?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go North       ┃");
+                        Console.WriteLine("\t┃ 2. Go East        ┃");
+                        Console.WriteLine("\t┃ 3. Go West        ┃");
+                        Console.WriteLine("\t┃ 4. Go to town     ┃");
+                        Console.WriteLine("\t┃ 5. Show Details   ┃");
+                        Console.WriteLine("\t┃ 6. Open Backpack  ┃");
+                        Console.WriteLine("\t┃ 7. Open Map       ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━┛");
                         Console.Write("\t > ");
                         int.TryParse(Utility.ReadInGreen(), out int choice);
                         switch (choice)
@@ -176,25 +182,34 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go north...");
                                 pos += 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go east...");
                                 pos += 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 3:
                                 Console.WriteLine("\n\t You go west...");
                                 pos -= 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 4:
                                 Console.WriteLine("\n\t You go back home...");
-                                MainMenu();
                                 exit = true;
+                                MainMenu();
+                                break;
+                            case 5:
+                                ShowDetails();
+                                break;
+                            case 6:
+                                OpenBackpack();
+                                break;
+                            case 7:
+                                OpenMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -207,7 +222,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go North      ┃");
                         Console.WriteLine("\t┃ 2. Go West       ┃");
@@ -220,20 +235,20 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go north...");
                                 pos += 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go west...");
                                 pos -= 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 3:
                                 Console.WriteLine("\n\t You go east...");
                                 pos += 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -245,7 +260,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go North      ┃");
                         Console.WriteLine("\t┃ 2. Go East       ┃");
@@ -258,20 +273,20 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go north...");
                                 pos += 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go east...");
                                 pos += 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 3:
                                 Console.WriteLine("\n\t You go south...");
                                 pos -= 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -283,7 +298,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go West       ┃");
                         Console.WriteLine("\t┃ 2. Go East       ┃");
@@ -296,20 +311,20 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go west...");
                                 pos -= 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go east...");
                                 pos += 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 3:
                                 Console.WriteLine("\n\t You go South...");
                                 pos -= 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -321,7 +336,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go North      ┃");
                         Console.WriteLine("\t┃ 2. Go West       ┃");
@@ -334,20 +349,20 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go north...");
                                 pos += 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go west...");
                                 pos -= 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 3:
                                 Console.WriteLine("\n\t You go South...");
                                 pos -= 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -359,7 +374,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go West       ┃");
                         Console.WriteLine("\t┃ 2. Go South      ┃");
@@ -371,14 +386,14 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go west...");
                                 pos -= 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go South...");
                                 pos -= 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -390,7 +405,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go North      ┃");
                         Console.WriteLine("\t┃ 2. Go East       ┃");
@@ -402,14 +417,14 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go north...");
                                 pos += 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go east...");
                                 pos += 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -421,7 +436,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go North      ┃");
                         Console.WriteLine("\t┃ 2. Go West       ┃");
@@ -433,14 +448,14 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go north...");
                                 pos += 0.1;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go west...");
                                 pos -= 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -452,7 +467,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
-                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\n\t What do you want to do?");
                         Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
                         Console.WriteLine("\t┃ 1. Go West       ┃");
                         Console.WriteLine("\t┃ 2. Go East       ┃");
@@ -464,14 +479,14 @@ namespace AdventureGame
                             case 1:
                                 Console.WriteLine("\n\t You go west...");
                                 pos -= 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             case 2:
                                 Console.WriteLine("\n\t You go east...");
                                 pos += 1.0;
-                                DoesAnythingHappen();
                                 exit = true;
+                                DoesAnythingHappen();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -504,6 +519,11 @@ namespace AdventureGame
                     }
                 }
             }
+        }
+
+        private void OpenBackpack()
+        {
+            throw new NotImplementedException();
         }
 
         private void BossEncounter()
