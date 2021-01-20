@@ -111,16 +111,40 @@ namespace AdventureGame
 
         private int MainMenu()
         {
-            Console.WriteLine();
-            Console.WriteLine("\t┏━MENU━━━━━━━━━━━━━┓");
-            Console.WriteLine("\t┃ 1. Go Explore    ┃");
-            Console.WriteLine("\t┃ 2. Show Details  ┃");
-            Console.WriteLine("\t┃ 3. Go to Tavern  ┃");
-            Console.WriteLine("\t┃ 4. Exit Game     ┃");
-            Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
-            Console.Write("\t > ");
+            string[] content = new string[] { "1. Go Explore", "2. Show Details", "3. Go to Tavern", "4. Exit Game" };
+            string longest = content.OrderByDescending(s => s.Length).First();            
+            PrintMenu("MENU", content, longest.Length);
+            //Console.WriteLine();
+            //Console.WriteLine("\t┏━MENU━━━━━━━━━━━━━┓");
+            //Console.WriteLine("\t┃ 1. Go Explore    ┃");
+            //Console.WriteLine("\t┃ 2. Show Details  ┃");
+            //Console.WriteLine("\t┃ 3. Go to Tavern  ┃");
+            //Console.WriteLine("\t┃ 4. Exit Game     ┃");
+            //Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+            //Console.Write("\t > ");
             int.TryParse(Utility.ReadInGreen(), out int choice);
             return choice;
+        }
+
+        private static void PrintMenu(string title, string[] text, int width)
+        {
+            Console.Write($"\n\t┏━{title}");
+            for (int i = 0; i < width - title.Length + 2; i++)
+            {
+                Console.Write("━");
+            }
+            Console.WriteLine("┓");
+            for (int i = 0; i < text.Length; i++)
+            {
+                Console.WriteLine($"\t┃ {text[i].PadRight(width)}  ┃");
+            }
+            Console.Write("\t┗");
+            for (int i = 0; i < width + 3; i++)
+            {
+                Console.Write("━");
+            }
+            Console.WriteLine("┛");
+            Console.Write("\t > ");
         }
 
         private void OpenMap()
