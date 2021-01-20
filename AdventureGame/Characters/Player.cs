@@ -22,11 +22,11 @@ namespace AdventureGame.Characters
             MaxExp = 200 * Level; // Fundera på om denna ska ligga i en variabel/metod eftersom vi använder den på flera ställen. 
         }
 
-        public override int Attack()
+        public override int Attack(out string text)
         {
             int damage = Utility.RollDice(Damage);
-            string text = $"You hit the monster dealing {damage} damage!";
-            Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
+            text = $"You hit the monster dealing {damage} damage!";
+            //Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
             return damage;
         }
 

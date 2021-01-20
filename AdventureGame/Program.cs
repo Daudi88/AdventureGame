@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventureGame.HelperMethods;
+using System;
 
 namespace AdventureGame
 {

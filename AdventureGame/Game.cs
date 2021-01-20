@@ -42,7 +42,7 @@ namespace AdventureGame
             {
                 Console.WriteLine("\n\t What is your name?");
                 Console.Write("\t > ");
-                string name = Utility.ReadInGreen();
+                string name = ColorConsole.ReadInGreen();
                 name = name.Trim();
 
                 if (name.Length < 3)
@@ -69,6 +69,7 @@ namespace AdventureGame
         private void GodMode()
         {
             player.Name = "Kakashi Hatake";
+            player.Level = 10;
             player.Hp = 1000;
             player.MaxHp = 1000;
             player.Damage = "8d100";
@@ -89,7 +90,7 @@ namespace AdventureGame
                 switch (choice)
                 {
                     case 1:
-                        Explore();
+                        GoAdventure();
                         break;
                     case 2:
                         ShowDetails();
@@ -98,10 +99,13 @@ namespace AdventureGame
                         Tavern();
                         break;
                     case 4:
-                        ExitGame();
+                        Backpack();
                         break;
                     case 5:
-                        OpenMap();
+                        Utility.PrintMap();
+                        break;
+                    case 6:
+                        ExitGame();
                         break;
                     default:
                         break;
@@ -111,67 +115,25 @@ namespace AdventureGame
 
         private int MainMenu()
         {
-            string[] content = new string[] { "1. Go Explore", "2. Show Details", "3. Go to Tavern", "4. Exit Game" };
-            string longest = content.OrderByDescending(s => s.Length).First();            
-            PrintMenu("MENU", content, longest.Length);
-            //Console.WriteLine();
-            //Console.WriteLine("\t┏━MENU━━━━━━━━━━━━━┓");
-            //Console.WriteLine("\t┃ 1. Go Explore    ┃");
-            //Console.WriteLine("\t┃ 2. Show Details  ┃");
-            //Console.WriteLine("\t┃ 3. Go to Tavern  ┃");
-            //Console.WriteLine("\t┃ 4. Exit Game     ┃");
-            //Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
-            //Console.Write("\t > ");
-            int.TryParse(Utility.ReadInGreen(), out int choice);
+            string[] content = new string[]
+            {
+                "1. Go on an Adventure",
+                "2. Show Details",
+                "3. Go to Tavern",
+                "4. Open Backpack",
+                "5. Open Map",
+                "4. Exit Game"
+            };
+            string longest = content.OrderByDescending(s => s.Length).First();
+            Console.WriteLine();
+            Utility.PrintWithFrame("MENU", content, longest.Length);
+            Console.Write("\t > ");
+            int.TryParse(ColorConsole.ReadInGreen(), out int choice);
             return choice;
         }
 
-        private static void PrintMenu(string title, string[] text, int width)
+        private void GoAdventure()
         {
-            Console.Write($"\n\t┏━{title}");
-            for (int i = 0; i < width - title.Length + 2; i++)
-            {
-                Console.Write("━");
-            }
-            Console.WriteLine("┓");
-            for (int i = 0; i < text.Length; i++)
-            {
-                Console.WriteLine($"\t┃ {text[i].PadRight(width)}  ┃");
-            }
-            Console.Write("\t┗");
-            for (int i = 0; i < width + 3; i++)
-            {
-                Console.Write("━");
-            }
-            Console.WriteLine("┛");
-            Console.Write("\t > ");
-        }
-
-        private void OpenMap()
-        {
-            Console.WriteLine();
-            Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            Console.WriteLine("\t┃                                               ┃");
-            Console.WriteLine("\t┃    AAAA AAA                                   ┃");
-            Console.Write("\t┃    AAAA  AAAA         ≈≈≈≈≈        ");
-            Utility.WriteInRed("X");
-            Console.WriteLine("          ┃");
-            Console.WriteLine("\t┃    A  AAA AA         ≈≈≈≈≈≈≈                  ┃");
-            Console.WriteLine("\t┃        AAAAAA         ≈≈≈≈≈   ######          ┃");
-            Console.WriteLine("\t┃                       ############            ┃");
-            Console.WriteLine("\t┃                   ##########  ╔──────╗        ┃");
-            Console.Write("\t┃     ");
-            Utility.WriteInYellow("[δ]");
-            Console.WriteLine("            ########   │ town │        ┃");
-            Console.WriteLine("\t┃                    #########  ╚──────╝        ┃");
-            Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            Console.WriteLine("\t [δ] = secret friend, # = tree, A = mountain ...");
-            Console.WriteLine("\t [Press enter to continue]");
-            Console.ReadLine();
-        }
-
-        private void Explore()
-        {            
             double pos = 0.0;
             while (true)
             {
@@ -179,100 +141,116 @@ namespace AdventureGame
                 bool exit = false;
                 if (pos == 0.0)
                 {
-                    Console.WriteLine("\n\t You go north...");
-                    Console.WriteLine("\t Be careful not to loose yourself in the wild!");
+                    Console.WriteLine("\n\t You start your adventure by going north...");
+                    Console.WriteLine("\t Be careful not to loose yourself in the wild!\n");
                     pos += 0.1;
-                    DoesAnythingHappen();
+                    EncounterCheck();
                 }
                 else if (pos == 0.1)
                 {
-
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go North       ┃");
-                        Console.WriteLine("\t┃ 2. Go East        ┃");
-                        Console.WriteLine("\t┃ 3. Go West        ┃");
-                        Console.WriteLine("\t┃ 4. Go to town     ┃");
-                        Console.WriteLine("\t┃ 5. Show Details   ┃");
-                        Console.WriteLine("\t┃ 6. Open Backpack  ┃");
-                        Console.WriteLine("\t┃ 7. Open Map       ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go North",
+                            "2. Go East",
+                            "3. Go back to town",
+                            "4. Go West",
+                            "5. Show Details",
+                            "6. Open Backpack",
+                            "7. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go north...");
+                                Console.WriteLine("\n\t You went north...");
                                 pos += 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\n\t You go east...");
+                                Console.WriteLine("\n\t You went east...");
                                 pos += 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 3:
-                                Console.WriteLine("\n\t You go west...");
-                                pos -= 1.0;
-                                exit = true;
-                                DoesAnythingHappen();
-                                break;
-                            case 4:
-                                Console.WriteLine("\n\t You go back home...");
+                                Console.WriteLine("\n\t You went back home...");
                                 exit = true;
                                 MainMenu();
+                                break;
+                            case 4:
+                                Console.WriteLine("\n\t You went west...");
+                                pos -= 1.0;
+                                exit = true;
+                                EncounterCheck();
                                 break;
                             case 5:
                                 ShowDetails();
                                 break;
                             case 6:
-                                OpenBackpack();
+                                Backpack();
                                 break;
                             case 7:
-                                OpenMap();
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
                                 break;
                         }
                     }
-
                 }
                 else if (pos == -1.1 || pos == 1.1)
                 {
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go North      ┃");
-                        Console.WriteLine("\t┃ 2. Go West       ┃");
-                        Console.WriteLine("\t┃ 3. Go East       ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go North",
+                            "2. Go East",
+                            "3. Go West",
+                            "4. Show Details",
+                            "5. Open Backpack",
+                            "6. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go north...");
+                                Console.WriteLine("\n\t You went north...");
                                 pos += 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\n\t You go west...");
-                                pos -= 1.0;
-                                exit = true;
-                                DoesAnythingHappen();
-                                break;
-                            case 3:
-                                Console.WriteLine("\n\t You go east...");
+                                Console.WriteLine("\n\t You went east...");
                                 pos += 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You went west...");
+                                pos -= 1.0;
+                                exit = true;
+                                EncounterCheck();
+                                break;
+                            case 4:
+                                ShowDetails();
+                                break;
+                            case 5:
+                                Backpack();
+                                break;
+                            case 6:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -285,32 +263,47 @@ namespace AdventureGame
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go North      ┃");
-                        Console.WriteLine("\t┃ 2. Go East       ┃");
-                        Console.WriteLine("\t┃ 3. Go South      ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go North",
+                            "2. Go East",
+                            "3. Go South",
+                            "4. Show Details",
+                            "5. Open Backpack",
+                            "6. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go north...");
+                                Console.WriteLine("\n\t You went north...");
                                 pos += 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\n\t You go east...");
+                                Console.WriteLine("\n\t You went east...");
                                 pos += 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 3:
-                                Console.WriteLine("\n\t You go south...");
+                                Console.WriteLine("\n\t You went south...");
                                 pos -= 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 4:
+                                ShowDetails();
+                                break;
+                            case 5:
+                                Backpack();
+                                break;
+                            case 6:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -323,32 +316,47 @@ namespace AdventureGame
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go West       ┃");
-                        Console.WriteLine("\t┃ 2. Go East       ┃");
-                        Console.WriteLine("\t┃ 3. Go South      ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go East",
+                            "2. Go South",
+                            "3. Go West",
+                            "4. Show Details",
+                            "5. Open Backpack",
+                            "6. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go west...");
-                                pos -= 1.0;
-                                exit = true;
-                                DoesAnythingHappen();
-                                break;
-                            case 2:
-                                Console.WriteLine("\n\t You go east...");
+                                Console.WriteLine("\n\t You went east...");
                                 pos += 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
-                            case 3:
-                                Console.WriteLine("\n\t You go South...");
+                            case 2:
+                                Console.WriteLine("\n\t You went South...");
                                 pos -= 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You went west...");
+                                pos -= 1.0;
+                                exit = true;
+                                EncounterCheck();
+                                break;
+                            case 4:
+                                ShowDetails();
+                                break;
+                            case 5:
+                                Backpack();
+                                break;
+                            case 6:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -361,32 +369,47 @@ namespace AdventureGame
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go North      ┃");
-                        Console.WriteLine("\t┃ 2. Go West       ┃");
-                        Console.WriteLine("\t┃ 3. Go South      ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go North",
+                            "2. Go South",
+                            "3. Go West",
+                            "4. Show Details",
+                            "5. Open Backpack",
+                            "6. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go north...");
+                                Console.WriteLine("\n\t You went north...");
                                 pos += 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\n\t You go west...");
-                                pos -= 1.0;
-                                exit = true;
-                                DoesAnythingHappen();
-                                break;
-                            case 3:
-                                Console.WriteLine("\n\t You go South...");
+                                Console.WriteLine("\n\t You went south...");
                                 pos -= 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You went west...");
+                                pos -= 1.0;
+                                exit = true;
+                                EncounterCheck();
+                                break;
+                            case 4:
+                                ShowDetails();
+                                break;
+                            case 5:
+                                Backpack();
+                                break;
+                            case 6:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -399,25 +422,40 @@ namespace AdventureGame
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go West       ┃");
-                        Console.WriteLine("\t┃ 2. Go South      ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go South",
+                            "2. Go West",
+                            "3. Show Details",
+                            "4. Open Backpack",
+                            "5. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go west...");
-                                pos -= 1.0;
-                                exit = true;
-                                DoesAnythingHappen();
-                                break;
-                            case 2:
-                                Console.WriteLine("\n\t You go South...");
+                                Console.WriteLine("\n\t You went south...");
                                 pos -= 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You went west...");
+                                pos -= 1.0;
+                                exit = true;
+                                EncounterCheck();
+                                break;
+                            case 3:
+                                ShowDetails();
+                                break;
+                            case 4:
+                                Backpack();
+                                break;
+                            case 5:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -430,25 +468,40 @@ namespace AdventureGame
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go North      ┃");
-                        Console.WriteLine("\t┃ 2. Go East       ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go North",
+                            "2. Go East",
+                            "3. Show Details",
+                            "4. Open Backpack",
+                            "5. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go north...");
+                                Console.WriteLine("\n\t You went north...");
                                 pos += 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\n\t You go east...");
+                                Console.WriteLine("\n\t You went east...");
                                 pos += 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 3:
+                                ShowDetails();
+                                break;
+                            case 4:
+                                Backpack();
+                                break;
+                            case 5:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -461,25 +514,40 @@ namespace AdventureGame
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go North      ┃");
-                        Console.WriteLine("\t┃ 2. Go West       ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go North",
+                            "2. Go West",
+                            "3. Show Details",
+                            "4. Open Backpack",
+                            "5. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go north...");
+                                Console.WriteLine("\n\t You went north...");
                                 pos += 0.1;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\n\t You go west...");
+                                Console.WriteLine("\n\t You went west...");
                                 pos -= 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 3:
+                                ShowDetails();
+                                break;
+                            case 4:
+                                Backpack();
+                                break;
+                            case 5:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -492,25 +560,40 @@ namespace AdventureGame
                     while (!exit)
                     {
                         Console.WriteLine("\n\t What do you want to do?");
-                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
-                        Console.WriteLine("\t┃ 1. Go West       ┃");
-                        Console.WriteLine("\t┃ 2. Go East       ┃");
-                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        string[] content = new string[]
+                        {
+                            "1. Go East",
+                            "2. Go West",
+                            "3. Show Details",
+                            "4. Open Backpack",
+                            "5. Open Map"
+                        };
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("", content, longest.Length);
                         Console.Write("\t > ");
-                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\n\t You go west...");
+                                Console.WriteLine("\n\t You went west...");
                                 pos -= 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\n\t You go east...");
+                                Console.WriteLine("\n\t You went east...");
                                 pos += 1.0;
                                 exit = true;
-                                DoesAnythingHappen();
+                                EncounterCheck();
+                                break;
+                            case 3:
+                                ShowDetails();
+                                break;
+                            case 4:
+                                Backpack();
+                                break;
+                            case 5:
+                                Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -520,12 +603,12 @@ namespace AdventureGame
                 }
                 else if (pos == -3.2 || pos == -2.3 || pos == 2.2)
                 {
-                    Console.WriteLine("\n\t You go back east again...");
+                    Console.WriteLine("\n\t You went back east again...");
                     pos += 1.0;
                 }
                 else if (pos == 3.0)
                 {
-                    Console.WriteLine("\n\t You go back west agian...");
+                    Console.WriteLine("\n\t You went back west agian...");
                     pos -= 1.0;
                 }
                 else if (pos == 0.4)
@@ -533,6 +616,15 @@ namespace AdventureGame
                     if (player.Level >= 10)
                     {
                         BossEncounter();
+                        if (player.Hp > 0)
+                        {
+                            WinScreen();
+                        }
+                        else
+                        {
+                            LoseScreen();
+                            TryAgain();
+                        }
                     }
                     else
                     {
@@ -545,17 +637,100 @@ namespace AdventureGame
             }
         }
 
-        private void OpenBackpack()
+        private void LoseScreen() // Implementera mer!
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\n\t Yeay! You win!");
+            Console.ReadLine();
         }
 
-        private void BossEncounter()
+        private void WinScreen() // Implementera mer!
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\n\t Sorry, you lose...");
+            Console.ReadLine();
         }
 
-        private void DoesAnythingHappen()
+        private void Backpack() // Implementera mer!
+        {
+            Console.WriteLine("\n\t Your backpack is empty...");
+            Console.WriteLine("\t [Press enter to continue]");
+            Console.ReadLine();
+        }
+
+        private void BossEncounter() // Implementera mer!
+        {
+            Console.WriteLine("\n\t The boss is gone! Where has he gone?");
+            Console.WriteLine("\t [Press enter to continue]");
+            Console.ReadLine();
+        }
+
+        private void Battle()
+        {
+            Enemy[] monsters = Utility.GetMonsters().Where(m => m.Level <= player.Level).ToArray();
+            Enemy monster = monsters[Utility.RollDice(monsters.Length)];
+            int battleCtr = 0;
+            List<string> content = new List<string>();
+            while (monster.Hp > 0)
+            {
+                content.Clear();
+                if (battleCtr == 0)
+                {
+                    content.Add($"You have encountered {monster.Name}!");
+                    battleCtr++;
+                }
+                monster.Hp -= player.Attack(out string text);
+                content.Add(text);
+                if (monster.Hp <= 0)
+                {
+                    content.Add($"You defeated {monster.Name}!");
+                    content.Add($"You gained {monster.Exp} Exp and {monster.Gold} gold!");
+                    player.Exp += monster.Exp;
+                    player.Gold += monster.Gold;
+
+                    if (player.Exp >= player.MaxExp)
+                    {
+                        content.Add("Well Done! You leveled up!");
+                        player.LevelUp();
+                    }
+                }
+                else
+                {
+                    player.Hp -= monster.Attack(out text);
+                    content.Add(text);
+                    if (player.Hp <= 0)
+                    {
+                        content.Add($"You were defeated by { monster.Name}!");
+                        content.Add("You lose...");
+                    }
+                    else
+                    {
+                        if (player.Hp < player.MaxHp)
+                        {
+                            content.Add($"{player.Name} Hp: [red]{player.Hp}[/red]");
+                        }
+                        else
+                        {
+                            content.Add($"{player.Name} Hp: {player.Hp}");
+                        }
+                        content.Add($"{monster.Name} Hp: {monster.Hp}");
+                    }
+                }
+
+                string longest = content.OrderByDescending(s => s.Length).First();
+                Utility.PrintWithFrame("BATTLE", content.ToArray(), longest.Length);
+
+                if (player.Hp <= 0)
+                {
+                    TryAgain();
+                }
+                else
+                {
+                    Console.WriteLine("\t[Press enter to continue]");
+                    Console.ReadLine();
+                }
+            }
+        }
+
+        private void EncounterCheck()
         {
             int chance = Utility.RollDice(10);
             if (chance == 0)
@@ -568,140 +743,67 @@ namespace AdventureGame
             }
         }
 
-        private void Battle()
+        private void TryAgain()
         {
-            Monster[] monsters = Utility.GetMonsters().Where(m => m.Level <= player.Level).ToArray();
-            Monster monster = monsters[Utility.RollDice(monsters.Length)];
-            int battleCtr = 0;
-            string text;
-            while (monster.Hp > 0)
+            Console.WriteLine("\t Do you want to try again? (y/n)");
+            Console.Write("\t > ");
+            string choice = ColorConsole.ReadInGreen();
+            if (choice.ToLower() == "y")
             {
-                Console.WriteLine($"\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-                if (battleCtr == 0)
-                {
-                    text = $"You have encountered {monster.Name}!";
-                    Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
-                    battleCtr++;
-                }
-                monster.Hp -= player.Attack();
-                if (monster.Hp <= 0)
-                {
-                    text = $"You defeated {monster.Name}!";
-                    Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
-                    text = $"You gained {monster.Exp} Exp and {monster.Gold} gold!";
-                    Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
-                    player.Exp += monster.Exp;
-                    player.Gold += monster.Gold;
-
-                    if (player.Exp >= player.MaxExp)
-                    {
-                        Console.WriteLine("\t┃ Well Done! You leveled up!               ┃");
-                        player.LevelUp();
-                    }
-
-                    Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-                }
-                else
-                {
-                    player.Hp -= monster.Attack();
-                    if (player.Hp <= 0)
-                    {
-                        text = $"You were defeated by { monster.Name}!";
-                        Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
-                        Console.WriteLine($"\t┃ You lose...                              ┃");
-                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-                        Console.WriteLine("\n\t Do you want to try again? (y/n)");
-                        Console.Write("\t > ");
-                        string choice = Utility.ReadInGreen();
-                        if (choice.ToLower() == "y")
-                        {
-                            StartGame();
-                        }
-                        else
-                        {
-                            ExitGame();
-                        }
-                    }
-                    else
-                    {
-                        Console.Write($"\t┃ {player.Name} Hp: ");
-                        text = player.Hp.ToString().PadRight(34 - player.Name.Length);
-                        if (player.Hp < player.MaxHp / 5)
-                        {
-                            Utility.WriteInRed(text);
-                        }
-                        else
-                        {
-                            Console.Write(text);
-                        }
-                        Console.WriteLine("  ┃");
-                        Console.WriteLine($"\t┃ {monster.Name} Hp: {monster.Hp.ToString().PadRight(34 - monster.Name.Length)}  ┃");
-                        Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-                    }
-                }
-                Console.WriteLine("\t[Press enter to continue]");
-                Console.ReadLine();
+                StartGame();
+            }
+            else
+            {
+                ExitGame();
             }
         }
 
         private void ShowDetails()
         {
             Console.WriteLine();
-            Console.WriteLine($"\t┏━DETAILS━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            Console.Write($"\t┃ Name: ");
-            Utility.WriteInYellow(player.Name.PadRight(38));
-            Console.WriteLine("  ┃");
-            Console.Write($"\t┃ Level: ");
-            Utility.WriteInYellow(player.Level.ToString().PadRight(37));
-            Console.WriteLine("  ┃");
-            Console.Write($"\t┃ Hp: ");
-            Utility.WriteInYellow(player.Hp.ToString());
-            Console.Write("/");
+            string[] content1 = new string[]
+            {
+                $"Name: [yellow]{player.Name}[/yellow]",
+                $"Level: [yellow]{player.Level}[/yellow]",
+                $"Hp: [yellow]{player.Hp}/{player.MaxHp}[/yellow]",
+                $"Exp: [yellow]{player.Exp}/{player.MaxExp}[/yellow]",
+                $"Damage: [yellow]{player.Damage}[/yellow]",
+                $"Gold: [yellow]{player.Gold}[/yellow]",
+                $"Gold: [yellow]{player.Gold}[/yellow]",
+            };
 
-            int hp = player.Hp;
-            int a = hp > 9 && hp < 100 ? 1 : hp > 99 && hp < 1000 ? 2 : hp > 999 ? 3 : 0;
-            Utility.WriteInYellow(player.MaxHp.ToString().PadRight(38 - a));
-            Console.WriteLine("  ┃");
-            Console.Write($"\t┃ Exp: ");
-            Utility.WriteInYellow(player.Exp.ToString());
-            Console.Write("/");
-
-            int xp = player.Exp;
-            int b = xp > 9 && xp < 100 ? 1 : xp > 99 && xp < 1000 ? 2 : xp > 999 && xp < 10000 ? 3 : xp > 9999 ? 4 : 0;
-            Utility.WriteInYellow(player.MaxExp.ToString().PadRight(37 - b));
-            Console.WriteLine("  ┃");
-            Console.Write($"\t┃ Damage: ");
-            Utility.WriteInYellow(player.Damage.ToString().PadRight(36));
-            Console.WriteLine("  ┃");
-            Console.Write($"\t┃ Gold: ");
-            Utility.WriteInYellow(player.Gold.ToString().PadRight(38));
-            Console.WriteLine("  ┃");
-            Console.WriteLine($"\t┣━EQUIPPED━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-
-            string text;
+            string armor;
             if (player.Armor != null)
             {
-                text = player.Armor.ToString();
+                armor = player.Armor.ToString();
             }
             else
             {
-                text = new string(' ', 37);
+                armor = new string(string.Empty);
             }
-            Console.Write($"\t┃ Armor: ");
-            Utility.WriteInYellow(text.PadRight(37));
-            Console.WriteLine("  ┃");
+
+            string weapon;
             if (player.Weapon != null)
             {
-                text = player.Weapon.ToString();
+                weapon = player.Weapon.ToString();
             }
             else
             {
-                text = new string(' ', 36);
+                weapon = new string(string.Empty);
             }
-            Console.Write($"\t┃ Weapon: ");
-            Utility.WriteInYellow(text.PadRight(36));
-            Console.WriteLine("  ┃");
-            Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+            string[] content2 = new string[]
+            {
+                $"Armor: [yellow]{armor}[/yellow]",
+                $"Weapon: [yellow]{weapon}[/yellow]"
+            };
+
+            string[] contents = new string[content1.Length + content2.Length];
+            Array.Copy(content1, contents, content1.Length);
+            Array.Copy(content2, 0, contents, content1.Length, content2.Length);
+
+            string longest = contents.OrderByDescending(s => s.Length).First();
+            Utility.PrintWithDividedFrame("DETAILS", content1, "EQUIPPED", content2, longest.Length - 17);
             Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
@@ -714,14 +816,17 @@ namespace AdventureGame
             while (!exit)
             {
                 Console.WriteLine("\t What can we do for you?");
-                Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-                Console.WriteLine("\t┃ 1. Rest for the night for 100 gold (+ 100% Hp)  ┃");
-                Console.WriteLine("\t┃ 2. Eat and drink 60 gold (+ 50% Hp)             ┃");
-                Console.WriteLine("\t┃ 3. Purchase or sell items                       ┃");
-                Console.WriteLine("\t┃ 4. Leave                                        ┃");
-                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                string[] content = new string[]
+                {
+                    "1. Rest for the night for 100 gold (+ 100% Hp)",
+                    "2. Eat and drink 60 gold (+ 50% Hp)",
+                    "3. Purchase or sell items",
+                    "4. Leave"
+                };
+                string longest = content.OrderByDescending(s => s.Length).First();
+                Utility.PrintWithFrame("", content, longest.Length);
                 Console.Write("\t > ");
-                int.TryParse(Utility.ReadInGreen(), out int choice);
+                int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                 switch (choice)
                 {
                     case 1:
@@ -784,15 +889,18 @@ namespace AdventureGame
             {
                 Console.WriteLine("\n\t Welcome to Abu Hassans Abracapothecary!");
                 Console.WriteLine("\t The one stop shop for everything you could ever want!");
-                Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━┓");
-                Console.WriteLine("\t┃ 1. Buy Armor    ┃");
-                Console.WriteLine("\t┃ 2. Buy Weapons  ┃");
-                Console.WriteLine("\t┃ 3. Buy Potions  ┃");
-                Console.WriteLine("\t┃ 4. Sell items   ┃");
-                Console.WriteLine("\t┃ 5. Leave        ┃");
-                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━┛");
+                string[] content = new string[]
+                {
+                    "1. Buy Armor",
+                    "2. Buy Weapons",
+                    "3. Buy Potions",
+                    "4. Sell items",
+                    "5. Leave"
+                };
+                string longest = content.OrderByDescending(s => s.Length).First();
+                Utility.PrintWithFrame("", content, longest.Length);
                 Console.Write("\t > ");
-                int.TryParse(Utility.ReadInGreen(), out int choice);
+                int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                 switch (choice)
                 {
                     case 1:
@@ -821,13 +929,21 @@ namespace AdventureGame
         private void BuyArmor()
         {
             Armor[] armor = Utility.GetArmor();
-            Console.WriteLine($"\t┏━ARMOR━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            Console.WriteLine($"\t┃ Nr:   Name:                   Cost:   Hp:   ┃");
+            List<string> content = new List<string>() { "Nr:\tName:\t\tCost:   Hp:  " };
             for (int i = 0; i < armor.Length; i++)
             {
-                Console.WriteLine($"\t┃ {i + 1}.\t{armor[i].Name.PadRight(24)}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}  ┃");
+                content.Add($"{i + 1}.\t{armor[i].Name.PadRight(24)}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}");
             }
-            Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+ 
+            string longest = content.OrderByDescending(s => s.Length).First();
+            Utility.PrintWithFrame("ARMOR", content.ToArray(), longest.Length);
+            //Console.WriteLine($"\t┏━ARMOR━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            //Console.WriteLine($"\t┃ Nr:   Name:                   Cost:   Hp:   ┃");
+            //for (int i = 0; i < armor.Length; i++)
+            //{
+            //    Console.WriteLine($"\t┃ {i + 1}.\t{armor[i].Name.PadRight(24)}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}  ┃");
+            //}
+            //Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             bool exit = false;
             while (!exit)
             {
@@ -840,7 +956,7 @@ namespace AdventureGame
                 Console.WriteLine("\t┃ 5. Leave                                   ┃");
                 Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                 Console.Write("\t > ");
-                int.TryParse(Utility.ReadInGreen(), out int choice);
+                int.TryParse(ColorConsole.ReadInGreen(), out int choice);
                 switch (choice)
                 {
                     case 1:

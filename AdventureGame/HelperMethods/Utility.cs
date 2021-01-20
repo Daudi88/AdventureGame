@@ -5,16 +5,6 @@ using System.Collections.Generic;
 
 namespace AdventureGame.HelperMethods
 {
-    //public enum Races : int
-    //{
-    //    
-    //}
-
-    //public enum Classes : int
-    //{
-    //    Barbarian = 1
-    //}
-
     static class Utility
     {
         static readonly Random random = new Random();
@@ -36,38 +26,87 @@ namespace AdventureGame.HelperMethods
             return result;
         }
 
-        public static List<Monster> GetMonsters()
+        public static List<Enemy> GetMonsters()
         {
-            List<Monster> monsters = new List<Monster>()
+            List<Enemy> monsters = new List<Enemy>()
             {
-                new Monster("Frogman", 1, 15, "1d6", 50),
-                new Monster("Megaman", 2, 25, "1d8", 150)
+                new Enemy("Frogman", 1, 12, "1d4", 50), // Unbalanced opponent ;)
+                new Enemy("Megaman", 2, 25, "1d8", 150)
             };
             return monsters;
         }
 
-        public static string ReadInGreen()
+        public static void PrintWithFrame(string title, string[] texts, int width)
         {
-            Console.CursorVisible = true;
-            Console.ForegroundColor = ConsoleColor.Green;
-            string input = Console.ReadLine();
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.CursorVisible = false;
-            return input;
+            Console.Write($"\t┏━{title}");
+            for (int i = 0; i < width - title.Length + 2; i++)
+            {
+                Console.Write("━");
+            }
+            Console.WriteLine("┓");
+            foreach (string text in texts)
+            {
+                if (text.Contains("red"))
+                {
+                    ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 11)}  ┃");
+                }
+                else
+                {
+                    Console.WriteLine($"\t┃ {text.PadRight(width)}  ┃");
+                }
+            }
+            Console.Write("\t┗");
+            for (int i = 0; i < width + 3; i++)
+            {
+                Console.Write("━");
+            }
+            Console.WriteLine("┛");
+
         }
 
-        public static void WriteInYellow(string text)
+        public static void PrintWithDividedFrame(string title1, string[] texts1, string title2, string[] texts2, int width)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write(text);
-            Console.ForegroundColor = ConsoleColor.White;
-        }
+            Console.Write($"\t┏━{title1}");
+            for (int i = 0; i < width - title1.Length + 2; i++)
+            {
+                Console.Write("━");
+            }
+            Console.WriteLine("┓");
+            foreach (string text in texts1)
+            {
+                if (text.Contains("yellow"))
+                {
+                    ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 17)}  ┃");
+                }
+                else
+                {
+                    Console.WriteLine($"\t┃ {text.PadRight(width)}  ┃");
+                }
+            }
+            Console.Write($"\t┣━{title2}");
+            for (int i = 0; i < width - title2.Length + 2; i++)
+            {
+                Console.Write("━");
+            }
+            Console.WriteLine("┫");
+            foreach (string text in texts2)
+            {
+                if (text.Contains("yellow"))
+                {
+                    ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 17)}  ┃");
+                }
+                else
+                {
+                    Console.WriteLine($"\t┃ {text.PadRight(width)}  ┃");
+                }
+            }
+            Console.Write("\t┗");
+            for (int i = 0; i < width + 3; i++)
+            {
+                Console.Write("━");
+            }
+            Console.WriteLine("┛");
 
-        public static void WriteInRed(string text)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(text);
-            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public static void TypeOverWrongDoings()
@@ -84,6 +123,50 @@ namespace AdventureGame.HelperMethods
             };
             return armor;
         }
+
+        public static void PrintMap()
+        {    
+            //ConsoleColor
+            Console.WriteLine();
+            Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AAA AAA AAA AAA  AAA  AAA[/darkgray]  [red]X[/red]   [darkgray]AAA AAA AAA A A AAA AAA AA AAA AA AAA  A[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA  [/darkgray]AAA AAA AAA [/darkgray]AAAAA      AA A AA AAA AAA AAA AAA AAA A AAA A AAA AA AAA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA[/darkgray] [darkyellow]Ω[/darkyellow] [darkgray]          AAA A AAA      AAA AAA AAA AAA AAA AAA AAA AAA AAA  AA  AAA AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AA AA AAA     AA AAA AAAA                                               AAAA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA AAA A A AA   A AAA AA AA A AAA AA     AA AAA A AAA AA AAA A AAAAA        AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA A AAA AAA    AAA AA AAA AAA AA AAA     A AA AAA AA AAA AA AAA AAAA      AAA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA AAA AAA   A AA AAAA AA AAA A AA     AA A AA AAA A AAA AA A AAA        AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AA AAA A AA    A AAA A AAA AA AA A     AAA AA AA[/darkgray] [darkblue]≈≈≈≈≈≈≈[/darkblue][darkgray] A AA AAA          A[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA AAA A AA A                             AA AAAA[/darkgray][darkblue] ≈≈≈≈≈≈≈≈≈[/darkblue] [darkyellow]δ[/darkyellow][darkgray]             AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkyellow]Ω[/darkyellow]    AA A AA     ≈≈≈≈≈      ### ## #     A AAA A ≈≈≈≈≈≈≈≈≈ # ## ####      ##┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃AAA    A #A #    ≈≈≈≈≈≈≈≈    # ## ###     AAA AA AAA ≈≈≈≈≈≈ ## ### # ##     ##┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃A AA    # A A   ≈≈≈≈≈≈≈≈≈≈   ## ### #     ### ## # #### ## # ### ## ###     ##┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃AA A    ## ##    ≈≈≈≈≈≈≈≈    #### ##     # ## ### # #### ## ### # ### #     # ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃AAA                                                                         ##┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃A AAA AA AAA A AA A AAA AA       ## ## # ### ### #### ## #      ## ### # ### #┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃A AA AA AA A AAAA A AA AAA        # ### # ### ## ## # ### #     ┼ ┼ ┼ ┼ ┼ ┼ ┼ ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃A AAA AAA A AA A A AA AAA A      ### ## # ### # ### ### ## #     ┼ ┼ ┼ ┼ ┼ ┼ ┼┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃AAAA AAA AA A AAAA AA  ╔──────────────╗ ## ##### ## ### ## ##   ┼ ┼ ┼ ┼ ┼ ┼ ┼ ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃AAAAA AAA AA AAA AAAA  │ Leaf Village │ # ### ## ### ## # ###    ┼ ┼ ┼ ┼ ┼ ┼ ┼┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃AAAAAA AAA AA A AAA AA ╚──────────────╝  ### ## ### ## ### ###           [Ω]  ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃A AAA AA AAAA A AAA AA A AAA A AA AAA AAA  #### # ### ## ## ## # ### ## #### #┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃AAAAAA AAA AA A AA AAAA AAAAAA AAA AA AAAAA ### ## #### # ### ## # ### ## ####┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            Console.ReadLine();
+
+          
+
+        }
+
+        //public enum Races : int
+        //{
+        //    
+        //}
+
+        //public enum Classes : int
+        //{
+        //    Barbarian = 1
+        //}
 
         //public static Player GetClass(Classes choice)
         //{
