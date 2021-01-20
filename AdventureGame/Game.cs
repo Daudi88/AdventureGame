@@ -11,19 +11,27 @@ namespace AdventureGame
     class Game
     {
         public static Player player;
+        static int ctr = 1;
         public void Setup()
         {
             Console.Title = "Adventure Game";
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
-            //Draw.MovingTitle();
             StartGame();
         }
 
         private void StartGame()
         {
-            Draw.Title();
             CharacterCreation();
+            if (ctr == 0)
+            {
+                Draw.MovingTitle();
+                ctr++;
+            }
+            else
+            {
+                Draw.Title();
+            }
             Run();
         }
 
@@ -137,11 +145,378 @@ namespace AdventureGame
         }
 
         private void Explore()
+        {            
+            double pos = 0.0;
+            while (true)
+            {
+                pos = Math.Round(pos, 1);
+                bool exit = false;
+                if (pos == 0.0)
+                {
+                    Console.WriteLine("\n\t You go north...");
+                    pos += 0.1;
+                    DoesAnythingHappen();
+                }
+                else if (pos == 0.1)
+                {
+
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go North      ┃");
+                        Console.WriteLine("\t┃ 2. Go East       ┃");
+                        Console.WriteLine("\t┃ 3. Go West       ┃");
+                        Console.WriteLine("\t┃ 4. Go to town    ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go north...");
+                                pos += 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go east...");
+                                pos += 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You go west...");
+                                pos -= 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 4:
+                                Console.WriteLine("\n\t You go back home...");
+                                MainMenu();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+
+                }
+                else if (pos == -1.1 || pos == 1.1)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go North      ┃");
+                        Console.WriteLine("\t┃ 2. Go West       ┃");
+                        Console.WriteLine("\t┃ 3. Go East       ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go north...");
+                                pos += 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go west...");
+                                pos -= 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You go east...");
+                                pos += 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == -1.2)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go North      ┃");
+                        Console.WriteLine("\t┃ 2. Go East       ┃");
+                        Console.WriteLine("\t┃ 3. Go South      ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go north...");
+                                pos += 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go east...");
+                                pos += 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You go south...");
+                                pos -= 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == 0.2 || pos == 2.1 || pos == 1.3)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go West       ┃");
+                        Console.WriteLine("\t┃ 2. Go East       ┃");
+                        Console.WriteLine("\t┃ 3. Go South      ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go west...");
+                                pos -= 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go east...");
+                                pos += 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You go South...");
+                                pos -= 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == 1.2 || pos == 3.2)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go North      ┃");
+                        Console.WriteLine("\t┃ 2. Go West       ┃");
+                        Console.WriteLine("\t┃ 3. Go South      ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go north...");
+                                pos += 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go west...");
+                                pos -= 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 3:
+                                Console.WriteLine("\n\t You go South...");
+                                pos -= 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == -1.3 || pos == -2.2 || pos == 3.3)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go West       ┃");
+                        Console.WriteLine("\t┃ 2. Go South      ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go west...");
+                                pos -= 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go South...");
+                                pos -= 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == -2.1 || pos == 2.0 || pos == 0.3)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go North      ┃");
+                        Console.WriteLine("\t┃ 2. Go East       ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go north...");
+                                pos += 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go east...");
+                                pos += 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == 3.1)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go North      ┃");
+                        Console.WriteLine("\t┃ 2. Go West       ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go north...");
+                                pos += 0.1;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go west...");
+                                pos -= 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == 2.3)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t Where do you want to go?");
+                        Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━┓");
+                        Console.WriteLine("\t┃ 1. Go West       ┃");
+                        Console.WriteLine("\t┃ 2. Go East       ┃");
+                        Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━┛");
+                        Console.Write("\t > ");
+                        int.TryParse(Utility.ReadInGreen(), out int choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("\n\t You go west...");
+                                pos -= 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("\n\t You go east...");
+                                pos += 1.0;
+                                DoesAnythingHappen();
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (pos == -3.2 || pos == -2.3 || pos == 2.2)
+                {
+                    Console.WriteLine("\n\t You go back east again...");
+                    pos += 1.0;
+                }
+                else if (pos == 3.0)
+                {
+                    Console.WriteLine("\n\t You go back west agian...");
+                    pos -= 1.0;
+                }
+                else if (pos == 0.4)
+                {
+                    if (player.Level >= 10)
+                    {
+                        BossEncounter();
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n\t You are not strong enough to fight the opponent...");
+                        Console.WriteLine("\t [Press enter to go back the way you came]");
+                        Console.ReadLine();
+                        pos -= 0.1;
+                    }
+                }
+            }
+        }
+
+        private void BossEncounter()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DoesAnythingHappen()
         {
             int chance = Utility.RollDice(10);
             if (chance == 0)
             {
-                Console.WriteLine("\n\t This is a very peacefull place and you don't sense any trouble near you.");
+                Console.WriteLine("\t This is a very peacefull place and you don't sense any trouble near you.");
             }
             else
             {
@@ -153,16 +528,16 @@ namespace AdventureGame
         {
             Monster[] monsters = Utility.GetMonsters().Where(m => m.Level <= player.Level).ToArray();
             Monster monster = monsters[Utility.RollDice(monsters.Length)];
-            int ctr = 0;
+            int battleCtr = 0;
             string text;
             while (monster.Hp > 0)
             {
-                Console.WriteLine($"\n\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-                if (ctr == 0)
+                Console.WriteLine($"\t┏━BATTLE━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                if (battleCtr == 0)
                 {
                     text = $"You have encountered {monster.Name}!";
                     Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
-                    ctr++;
+                    battleCtr++;
                 }
                 monster.Hp -= player.Attack();
                 if (monster.Hp <= 0)
