@@ -27,7 +27,7 @@ namespace AdventureGame.HelperMethods
             return result;
         }
 
-        public static List<Enemy> GetMonsters()
+        public static List<Enemy> GetEnemies()
         {
             List<Enemy> monsters = new List<Enemy>()
             {

@@ -12,7 +12,7 @@ namespace AdventureGame
     class Game
     {
         public static Player player;
-        static int ctr = 1;
+        static int ctr = 0;
         public void Setup()
         {
             Console.Title = "Adventure Game";
@@ -732,26 +732,26 @@ namespace AdventureGame
 
         private void Battle()
         {
-            Enemy[] monsters = Utility.GetMonsters().Where(m => m.Level <= player.Level).ToArray();
-            Enemy monster = monsters[Utility.RollDice(monsters.Length)];
+            Enemy[] enemies = Utility.GetEnemies().Where(e => e.Level <= player.Level).ToArray();
+            Enemy enemy = enemies[Utility.RollDice(enemies.Length)];
             int battleCtr = 0;
             List<string> content = new List<string>();
-            while (monster.Hp > 0)
+            while (enemy.Hp > 0)
             {
                 content.Clear();
                 if (battleCtr == 0)
                 {
-                    content.Add($"You have encountered {monster.Name}!");
+                    content.Add($"You have encountered {enemy.Name}!");
                     battleCtr++;
                 }
-                monster.Hp -= player.Attack(out string text);
+                enemy.Hp -= player.Attack(out string text);
                 content.Add(text);
-                if (monster.Hp <= 0)
+                if (enemy.Hp <= 0)
                 {
-                    content.Add($"You defeated {monster.Name}!");
-                    content.Add($"You gained {monster.Exp} Exp and {monster.Gold} gold!");
-                    player.Exp += monster.Exp;
-                    player.Gold += monster.Gold;
+                    content.Add($"You defeated {enemy.Name}!");
+                    content.Add($"You gained {enemy.Exp} Exp and {enemy.Gold} gold!");
+                    player.Exp += enemy.Exp;
+                    player.Gold += enemy.Gold;
 
                     if (player.Exp >= player.MaxExp)
                     {
@@ -761,11 +761,11 @@ namespace AdventureGame
                 }
                 else
                 {
-                    player.Hp -= monster.Attack(out text);
+                    player.Hp -= enemy.Attack(out text);
                     content.Add(text);
                     if (player.Hp <= 0)
                     {
-                        content.Add($"You were defeated by { monster.Name}!");
+                        content.Add($"You were defeated by { enemy.Name}!");
                         content.Add("You lose...");
                     }
                     else
@@ -778,7 +778,7 @@ namespace AdventureGame
                         {
                             content.Add($"{player.Name} Hp: {player.Hp}");
                         }
-                        content.Add($"{monster.Name} Hp: {monster.Hp}");
+                        content.Add($"{enemy.Name} Hp: {enemy.Hp}");
                     }
                 }
 
