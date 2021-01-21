@@ -12,6 +12,9 @@ namespace AdventureGame
     class Game
     {
         public static Player player;
+        private static bool treasureTaken = false;
+        private static bool haveYouMetHim = false;
+        private static bool graveyardVisited = false;
         public void Setup()
         {
             Console.Title = "The Shinobi";
@@ -69,7 +72,7 @@ namespace AdventureGame
             player.Gold = 100000;
             player.Armor = new Armor("Infinite Armour", 5000, 100);
             player.Weapon = new Weapon("Samehada", 100000, "8d100");
-            Potion potion = new Potion("Red Bull", 30, 10);
+            Potion potion = new Potion("Red Bull", 30, 10, "\t You drink a powerfull potion that gives you wings.");
             potion.Quantity = 100;
             player.Backpack.Add(potion);
         }
@@ -116,9 +119,8 @@ namespace AdventureGame
                 "5. Open Map",
                 "6. Exit Game"
             };
-            string longest = content.OrderByDescending(s => s.Length).First();
             Console.WriteLine();
-            Utility.PrintWithFrame("MENU", content, longest.Length);
+            Utility.PrintWithFrame("[darkcyan]MENU[/darkcyan]", content);
             Console.Write("\t > ");
             int.TryParse(ColorConsole.ReadInBlue(), out int choice);
             return choice;
@@ -152,8 +154,7 @@ namespace AdventureGame
                             "6. Open Backpack",
                             "7. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -210,8 +211,7 @@ namespace AdventureGame
                             "5. Open Backpack",
                             "6. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -263,8 +263,7 @@ namespace AdventureGame
                             "5. Open Backpack",
                             "6. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -316,8 +315,7 @@ namespace AdventureGame
                             "5. Open Backpack",
                             "6. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -369,8 +367,7 @@ namespace AdventureGame
                             "5. Open Backpack",
                             "6. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -391,7 +388,14 @@ namespace AdventureGame
                                 Console.WriteLine("\t You went west...");
                                 pos -= 1.0;
                                 exit = true;
-                                EncounterCheck();
+                                if (pos == 2.2)
+                                {
+                                    MeetHiruzen();
+                                }
+                                else
+                                {
+                                    EncounterCheck();
+                                }
                                 break;
                             case 4:
                                 ShowDetails();
@@ -421,8 +425,7 @@ namespace AdventureGame
                             "4. Open Backpack",
                             "5. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -437,7 +440,18 @@ namespace AdventureGame
                                 Console.WriteLine("\t You went west...");
                                 pos -= 1.0;
                                 exit = true;
-                                EncounterCheck();
+                                if (pos == -3.2)
+                                {
+                                    Treasure();
+                                }
+                                else if (pos == -2.3)
+                                {
+                                    AbuHassansShop();
+                                }
+                                else
+                                {
+                                    EncounterCheck();
+                                }
                                 break;
                             case 3:
                                 ShowDetails();
@@ -467,8 +481,7 @@ namespace AdventureGame
                             "4. Open Backpack",
                             "5. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -477,13 +490,27 @@ namespace AdventureGame
                                 Console.WriteLine("\t You went north...");
                                 pos += 0.1;
                                 exit = true;
-                                EncounterCheck();
+                                if (pos == 0.4)
+                                {
+                                    BossEncounter();                                    
+                                }
+                                else
+                                {
+                                    EncounterCheck();
+                                }
                                 break;
                             case 2:
                                 Console.WriteLine("\t You went east...");
                                 pos += 1.0;
                                 exit = true;
-                                EncounterCheck();
+                                if (pos == 3.0)
+                                {
+                                    Graveyard();
+                                }
+                                else
+                                {
+                                    EncounterCheck();
+                                }
                                 break;
                             case 3:
                                 ShowDetails();
@@ -513,8 +540,7 @@ namespace AdventureGame
                             "4. Open Backpack",
                             "5. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
@@ -559,21 +585,20 @@ namespace AdventureGame
                             "4. Open Backpack",
                             "5. Open Map"
                         };
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("", content, longest.Length);
+                        Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
                         int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
+                                Console.WriteLine("\t You went east...");
+                                pos += 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
                             case 2:
-                                Console.WriteLine("\t You went east...");
-                                pos += 1.0;
+                                Console.WriteLine("\t You went west...");
+                                pos -= 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
@@ -592,57 +617,96 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == -3.2 || pos == -2.3 || pos == 2.2)
-                {
-                    Console.WriteLine("\t You went back east again...");
-                    pos += 1.0;
-                }
-                else if (pos == 3.0)
-                {
-                    Console.WriteLine("\t You went back west agian...");
-                    pos -= 1.0;
-                }
-                else if (pos == 0.4)
-                {
-                    if (player.Level >= 10)
-                    {
-                        BossEncounter();
-                        if (player.Hp > 0)
-                        {
-                            WinScreen();
-                        }
-                        else
-                        {
-                            LoseScreen();
-                            TryAgain();
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("\t You are not strong enough to fight the opponent...");
-                        Console.WriteLine("\t [Press enter to go back the way you came]");
-                        Console.ReadLine();
-                        pos -= 0.1;
-                    }
-                }
             }
         }
 
-        // Implementera mer!
-        private void LoseScreen()
+        private void AbuHassansShop()
         {
-            Console.WriteLine("\n\t Yeay! You win!");
+            Console.WriteLine("\n\t Welcome to Abu hassan's one stop shop for everyting a good adventurer could ever need");
+            Console.WriteLine("\t Welcome back again soon!");
+            Console.WriteLine("\t [Press enter to go back the way you came]");
             Console.ReadLine();
         }
 
-        // Implementera mer!
-        private void WinScreen() 
+        private void Treasure()
+        {
+            if (!treasureTaken)
+            {
+                Console.WriteLine("\n\t Yeay! you got a treasure!");
+                treasureTaken = true;
+            }
+            else
+            {
+                Console.WriteLine("\n\t The treasue is no more...");
+            }
+            Console.WriteLine("\t [Press enter to go back the way you came]");
+            Console.ReadLine();
+        }
+
+        private void Graveyard()
+        {
+            if (!graveyardVisited)
+            {
+                Console.WriteLine("\n\t Yeay! you got a treasure!");
+                graveyardVisited = true;
+            }
+            else
+            {
+                Console.WriteLine("\n\t The graveyard is dead silent");
+            }
+            Console.WriteLine("\t [Press enter to go back the way you came]");
+            Console.ReadLine();
+        }
+
+        private void MeetHiruzen()
+        {
+            if (!haveYouMetHim)
+            {
+                Weapon weapon = new Weapon("Chakra Blade", 1500, "2d8");
+                Armor armor = new Armor("Chakra Armour", 2000, 75);
+                Potion potion = new Potion("Healing potion", 20, 15, "");
+                potion.Quantity = 10;
+
+                string[] content = new string[]
+                {
+                "An old man with white beard appears in front of you.",
+                "The man, dressed in red and white, looks upon you as if",
+                "he was expecting your arrival with a big smile on his face.",
+                $"[magenta]{player.Name}, he says while smoking on his pipe...[/magenta]",
+                "You instantly recognice the old man as Hiruzen Sarutobi",
+                "[magenta]There is little time and you need to go on with[/magenta]",
+                "[magenta]your quest to save Hanare![/magenta]",
+                "[magenta]Take these items and be on your way![/magenta]",
+                $"You got a {weapon.Name}, a {armor.Name} and 10 potions."
+                };
+                Utility.PrintWithFrame("[magenta]HIRUZEN[/magenta]", content);
+
+                player.Backpack.Add(weapon);
+                player.Backpack.Add(armor);
+                player.Backpack.Add(potion);
+                haveYouMetHim = true;
+            }
+            else
+            {
+                Console.WriteLine("\n\t Hiruzen smokes his pipe...");
+                Console.WriteLine("\t [Press enter to go back the way you came]");
+                Console.ReadLine();
+            }
+            
+        }
+
+        private void LoseScreen()
         {
             Console.WriteLine("\n\t Sorry, you lose...");
             Console.ReadLine();
         }
 
-        // Fixa så att listan med items rensas mellan varje gång :)
+        private void WinScreen()
+        {
+            Console.WriteLine("\n\t Yeay! You win!");
+            Console.ReadLine();
+        }
+
         private void Backpack(string str = null)
         {
             if (player.Backpack != null)
@@ -653,6 +717,7 @@ namespace AdventureGame
                 {
                     while (!exit)
                     {
+                        content.Clear();
                         int ctr = 1;
                         foreach (var item in player.Backpack)
                         {
@@ -660,23 +725,21 @@ namespace AdventureGame
                         }
                         content.Add($"{ctr}. Go back");
                         Console.WriteLine("\n\t What item do you want to use");
-                        string longest = content.OrderByDescending(s => s.Length).First();
-                        Utility.PrintWithFrame("BACKPACK", content.ToArray(), longest.Length);
+                        Utility.PrintWithFrame("[darkcyan]BACKPACK[/darkcyan]", content.ToArray());
                         Console.Write("\t > ");
                         if (int.TryParse(ColorConsole.ReadInBlue(), out int choice))
                         {
                             if (choice < ctr)
                             {
-                                Item item = player.Backpack[choice - 1];                        
+                                Item item = player.Backpack[choice - 1];
                                 if (item is IEquipable equipable)
                                 {
                                     equipable.Equip(player, equipable);
-                                    Console.WriteLine($"\t you equipped {item.Name} and gained {equipable.Bonus}!");
+
                                 }
                                 else if (item is IConsumable consumable)
                                 {
                                     consumable.Consume(player);
-                                    Console.WriteLine($"\t You drank a {item.Name} and gained {consumable.Healing} health!");
                                 }
 
                                 item.Quantity--;
@@ -720,8 +783,42 @@ namespace AdventureGame
         // Implementera mer!
         private void BossEncounter()
         {
-            Console.WriteLine("\n\t The boss is gone! Where has he gone?");
-            Console.WriteLine("\t [Press enter to continue]");
+            if (player.Level >= 10)
+            {
+                Enemy boss = new Enemy("Kaguya Otsutsuki", 10, 500, "3d18", 500);
+                FightTheBoss();
+                if (player.Hp > 0)
+                {
+                    WinScreen();
+                }
+                else
+                {
+                    LoseScreen();
+                    TryAgain();
+                }
+            }
+            else
+            {
+                Console.WriteLine("\t You are not strong enough to fight the opponent...");
+                Console.WriteLine("\t [Press enter to go back the way you came]");
+                Console.ReadLine();
+            }
+            
+        }
+
+        private void FightTheBoss()
+        {
+            player.Hp -= 1000;
+            Console.WriteLine("\n\t You were not ready!");
+            string[] haha = new string[] { "Ha! ", "Ha! ", "Ha! ", };
+            Console.Write("\t ");
+            Thread.Sleep(1000);
+            foreach (var ha in haha)
+            {
+                ColorConsole.WriteInRed(ha);
+                Thread.Sleep(1000);
+            }
+            Console.WriteLine("\n\t [Press enter to continue]");
             Console.ReadLine();
         }
 
@@ -739,7 +836,7 @@ namespace AdventureGame
                     content.Add($"You have encountered {enemy.Name}!");
                     battleCtr++;
                 }
-                int damage = player.Attack();                
+                int damage = player.Attack();
                 enemy.Hp -= damage;
                 content.Add($"You hit {enemy.Name} with your {player.Weapon.Name} dealing {damage} damage!");
                 if (enemy.Hp <= 0)
@@ -778,9 +875,7 @@ namespace AdventureGame
                         content.Add($"{enemy.Name} Hp: {enemy.Hp}");
                     }
                 }
-
-                string longest = content.OrderByDescending(s => s.Length).First();
-                Utility.PrintWithFrame("BATTLE", content.ToArray(), longest.Length);
+                Utility.PrintWithFrame("[red]BATTLE[/red]", content.ToArray());
 
                 if (player.Hp <= 0)
                 {
@@ -788,7 +883,7 @@ namespace AdventureGame
                 }
                 else
                 {
-                    Console.WriteLine("\t[Press enter to continue]");
+                    Console.WriteLine("\t [Press enter to continue]");
                     Console.ReadLine();
                 }
             }
@@ -803,6 +898,7 @@ namespace AdventureGame
             }
             else
             {
+                Console.WriteLine();
                 Battle();
             }
         }
@@ -867,7 +963,7 @@ namespace AdventureGame
             Array.Copy(content2, 0, contents, content1.Length, content2.Length);
 
             string longest = contents.OrderByDescending(s => s.Length).First();
-            Utility.PrintWithDividedFrame("DETAILS", content1, "EQUIPPED", content2, longest.Length - 17);
+            Utility.PrintWithDividedFrame("[darkcyan]DETAILS[/darkcyan]", content1, "EQUIPPED", content2, longest.Length - 17);
             Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
@@ -887,8 +983,7 @@ namespace AdventureGame
                     "3. Purchase or sell items",
                     "4. Leave"
                 };
-                string longest = content.OrderByDescending(s => s.Length).First();
-                Utility.PrintWithFrame("", content, longest.Length);
+                Utility.PrintWithFrame("", content);
                 Console.Write("\t > ");
                 int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                 switch (choice)
@@ -966,8 +1061,7 @@ namespace AdventureGame
                     "4. Sell items",
                     "5. Leave"
                 };
-                string longest = content.OrderByDescending(s => s.Length).First();
-                Utility.PrintWithFrame("", content, longest.Length);
+                Utility.PrintWithFrame("", content);
                 Console.Write("\t > ");
                 int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                 switch (choice)
@@ -1025,7 +1119,7 @@ namespace AdventureGame
                         else
                         {
                             Console.WriteLine($"\t You dont have enogh gold to buy the {armor.Name}!");
-                        }                        
+                        }
                     }
                     else
                     {

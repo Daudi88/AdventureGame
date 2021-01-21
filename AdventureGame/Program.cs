@@ -21,8 +21,8 @@ namespace AdventureGame
         // Håkan ska skriva sitt äventyr! Implementeringen får ske i Explore().
         // Kan man köpa/sälja flera quantity på samma gång? Hur många vill du köpa? Bara om det är en consumable.
         // Drick potion (RedBull) under strid mellan rundorna. Ger dig 10% Hp. Kostar 20-30 guld.
-        // Console.WriteLine("\n\tYou take the time to drink a powerfull potion. It feels like you have wings."); => När man dricker en potion!    
-        // Gandalf story och implementering.       
+        //  => När man dricker en potion!    
+        // Narutos Gandalf story och implementering.       
         // Fixa backpack problemet med akumelering av items rensas
 
         // ÖVERKURS!

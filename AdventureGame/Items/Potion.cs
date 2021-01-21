@@ -5,10 +5,12 @@ namespace AdventureGame.Items
     class Potion : Item, IConsumable
     {
         public int Healing { get; set; }
+        public string Text { get; set; }
 
-        public Potion(string name, int cost, int health) : base(name, cost)
+        public Potion(string name, int cost, int health, string text) : base(name, cost)
         {
             Healing = health;
+            Text = text;
         }
 
         public void Consume(IPlayable player)
@@ -18,6 +20,7 @@ namespace AdventureGame.Items
             {
                 player.Hp = player.MaxHp;
             }
+            System.Console.WriteLine(Text);
         }
 
         public override string ToString()

@@ -3,6 +3,7 @@ using AdventureGame.Interfaces;
 using AdventureGame.Items;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureGame.HelperMethods
 {
@@ -28,9 +29,9 @@ namespace AdventureGame.HelperMethods
         }
 
         public static List<Enemy> GetEnemies()
-        {  /*
-              List<Enemy> monsters = new List<Enemy>()
-            {   
+        {
+            List<Enemy> monsters = new List<Enemy>()
+              {   
                 new Enemy("Kisame", 1, 10, "1d4", 50),
                 new Enemy("Kabuto", 1, 10, "1d4", 50),
                 new Enemy("Obito", 1, 10, "1d4", 50),
@@ -40,30 +41,60 @@ namespace AdventureGame.HelperMethods
                 new Enemy("Deidara", 4, 40, "2d8", 200),
                 new Enemy("Kakuzu", 5, 60, "2d10", 250),
                 new Enemy("Hanzo", 6, 80, "3d8", 300),
-                new Enemy("Orochimaru", 100, 25, "3d10", 350),
+                new Enemy("Orochimaru", 7, 25, "3d10", 350),
                 new Enemy("Nagato", 8, 200, "2d16", 400),
-                new Enemy("Haku", 9, 250, "3d16", 450),
-                new Enemy("Kaguya Otsutsuki", 10, 500, "3d18", 500)
-            };
+                new Enemy("Haku", 9, 250, "3d16", 450)                
+              };
             return monsters;
-            */
-            List<Enemy> monsters = new List<Enemy>()
-            {
-                new Enemy("Frogman", 1, 12, "1d4", 50),
-                new Enemy("Megaman", 2, 25, "1d8", 150)
-            };
-            return monsters;
+            
+            
         }
 
-        public static void PrintWithFrame(string title, string[] texts, int width)
+        public static void PrintWithFrame(string title, string[] content)
         {
-            Console.Write($"\t┏━{title}");
-            for (int i = 0; i < width - title.Length + 2; i++)
+            List<int> lengths = new List<int>();
+            foreach (var item in content)
             {
-                Console.Write("━");
+                int length = item.Length;
+                if (item.Contains("[yellow]"))
+                {
+                    length -= 17;
+                }
+                lengths.Add(length);
+            }
+            int width = lengths.OrderByDescending(s => s).First();
+
+            ColorConsole.WriteEmbeddedColor($"\t┏━{title}");
+            if (title.Contains("[darkcyan]"))
+            {
+                for (int i = 0; i < width - title.Length + 23; i++)
+                {
+                    Console.Write("━");
+                }
+            }
+            else if (title.Contains("[red]"))
+            {
+                for (int i = 0; i < width - title.Length + 13; i++)
+                {
+                    Console.Write("━");
+                }
+            }
+            else if (title.Contains("[magenta]"))
+            {
+                for (int i = 0; i < width - title.Length + 21; i++)
+                {
+                    Console.Write("━");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < width - title.Length + 2; i++)
+                {
+                    Console.Write("━");
+                }
             }
             Console.WriteLine("┓");
-            foreach (string text in texts)
+            foreach (string text in content)
             {
                 if (text.Contains("[red]"))
                 {
@@ -72,6 +103,10 @@ namespace AdventureGame.HelperMethods
                 else if (text.Contains("[yellow]"))
                 {
                     ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 17)}  ┃");
+                }
+                else if (text.Contains("[magenta]"))
+                {
+                    ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 19)}  ┃");
                 }
                 else
                 {
@@ -89,15 +124,15 @@ namespace AdventureGame.HelperMethods
 
         public static void PrintWithDividedFrame(string title1, string[] texts1, string title2, string[] texts2, int width)
         {
-            Console.Write($"\t┏━{title1}");
-            for (int i = 0; i < width - title1.Length + 2; i++)
+            ColorConsole.WriteEmbeddedColor($"\t┏━{title1}");
+            for (int i = 0; i < width - title1.Length + 2 + 21; i++)
             {
                 Console.Write("━");
             }
             Console.WriteLine("┓");
             foreach (string text in texts1)
             {
-                if (text.Contains("yellow"))
+                if (text.Contains("[yellow]"))
                 {
                     ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 17)}  ┃");
                 }
@@ -173,8 +208,8 @@ namespace AdventureGame.HelperMethods
         {
             Potion[] potions = new Potion[]
             {
-                new Potion("Powerking", 15, 5),
-                new Potion("Red Bull", 30, 10)
+                new Potion("Powerking", 15, 5, ""),
+                new Potion("Red Bull", 30, 20, "\t You drink a powerfull potion that gives you wings.")
             };
             return potions;
 

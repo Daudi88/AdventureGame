@@ -1,5 +1,5 @@
-﻿using AdventureGame.Characters;
-using AdventureGame.Interfaces;
+﻿using AdventureGame.Interfaces;
+using System;
 
 namespace AdventureGame.Items
 {
@@ -20,6 +20,7 @@ namespace AdventureGame.Items
             {
                 player.Backpack.Add(player.Armor);
             }
+            Console.WriteLine($"\t you equipped {item.Name} and gained {item.Bonus}!");
             player.Armor = (Armor)item;
             player.MaxHp += MaxHp;
 
