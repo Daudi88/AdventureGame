@@ -46,7 +46,7 @@ namespace AdventureGame.HelperMethods
             Console.WriteLine("┓");
             foreach (string text in texts)
             {
-                if (text.Contains("red"))
+                if (text.Contains("[red]"))
                 {
                     ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 11)}  ┃");
                 }
@@ -125,37 +125,33 @@ namespace AdventureGame.HelperMethods
         }
 
         public static void PrintMap()
-        {    
-            //ConsoleColor
+        {
             Console.WriteLine();
-            Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AAA AAA AAA AAA  AAA  AAA[/darkgray]  [red]X[/red]   [darkgray]AAA AAA AAA A A AAA AAA AA AAA AA AAA  A[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA  [/darkgray]AAA AAA AAA [/darkgray]AAAAA      AA A AA AAA AAA AAA AAA AAA A AAA A AAA AA AAA[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA[/darkgray] [darkyellow]Ω[/darkyellow] [darkgray]          AAA A AAA      AAA AAA AAA AAA AAA AAA AAA AAA AAA  AA  AAA AA[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AA AA AAA     AA AAA AAAA                                               AAAA[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA AAA A A AA   A AAA AA AA A AAA AA     AA AAA A AAA AA AAA A AAAAA        AA[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA A AAA AAA    AAA AA AAA AAA AA AAA     A AA AAA AA AAA AA AAA AAAA      AAA[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA AAA AAA   A AA AAAA AA AAA A AA     AA A AA AAA A AAA AA A AAA        AA[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AA AAA A AA    A AAA A AAA AA AA A     AAA AA AA[/darkgray] [darkblue]≈≈≈≈≈≈≈[/darkblue][darkgray] A AA AAA          A[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA AAA A AA A                             AA AAAA[/darkgray][darkblue] ≈≈≈≈≈≈≈≈≈[/darkblue] [darkyellow]δ[/darkyellow][darkgray]             AA[/darkgray]┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃[darkyellow]Ω[/darkyellow]    AA A AA     ≈≈≈≈≈      ### ## #     A AAA A ≈≈≈≈≈≈≈≈≈ # ## ####      ##┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃AAA    A #A #    ≈≈≈≈≈≈≈≈    # ## ###     AAA AA AAA ≈≈≈≈≈≈ ## ### # ##     ##┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃A AA    # A A   ≈≈≈≈≈≈≈≈≈≈   ## ### #     ### ## # #### ## # ### ## ###     ##┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃AA A    ## ##    ≈≈≈≈≈≈≈≈    #### ##     # ## ### # #### ## ### # ### #     # ┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃AAA                                                                         ##┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃A AAA AA AAA A AA A AAA AA       ## ## # ### ### #### ## #      ## ### # ### #┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃A AA AA AA A AAAA A AA AAA        # ### # ### ## ## # ### #     ┼ ┼ ┼ ┼ ┼ ┼ ┼ ┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃A AAA AAA A AA A A AA AAA A      ### ## # ### # ### ### ## #     ┼ ┼ ┼ ┼ ┼ ┼ ┼┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃AAAA AAA AA A AAAA AA  ╔──────────────╗ ## ##### ## ### ## ##   ┼ ┼ ┼ ┼ ┼ ┼ ┼ ┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃AAAAA AAA AA AAA AAAA  │ Leaf Village │ # ### ## ### ## # ###    ┼ ┼ ┼ ┼ ┼ ┼ ┼┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃AAAAAA AAA AA A AAA AA ╚──────────────╝  ### ## ### ## ### ###           [Ω]  ┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃A AAA AA AAAA A AAA AA A AAA A AA AAA AAA  #### # ### ## ## ## # ### ## #### #┃");
-            ColorConsole.WriteEmbeddedColorLine("\t┃AAAAAA AAA AA A AA AAAA AAAAAA AAA AA AAAAA ### ## #### # ### ## # ### ## ####┃");
+            Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AAA AAA AAA AAA  AAA  AAA[/darkgray]  [red]X[/red]   [darkgray]AAA AAA AAA A A AAA AAA AA AAA AA AAA AAAA A AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA  AAA AAA AAA AAAAA      AA A AA AAA AAA AAA AAA AAA A AAA A AAA AA AAA A[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA[/darkgray] [darkcyan]S[/darkcyan]           [darkgray]AAA A AAA      AAA AAA AAA AAA AAA AAA AAA AAA AAA AA A AAA AAA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA              AA AAA AAAA                                               AAAA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA AAA A AA     A AAA AA AA                                                 AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA A AAA AAA     AA AA AAA AAA AA AAA     A AA AAA AA AAA AA AAA AAAA      AAA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA AAA AAA     AA AAAA AA AAA A AA     AA A AA AAA A AAA AA A AAA        AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AA AAA A AA                            AAA AA AA[/darkgray] [blue]≈≈≈≈≈≈≈[/blue][darkgray] A AA AAA          A[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA AAA A AA A                             AA AAAA[/darkgray][blue] ≈≈≈≈≈≈≈≈≈[/blue] [magenta]δ[/magenta]               [darkgray]AA[/darkgray]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A[/darkgray] [yellow]Ω[/yellow]    [darkgray]AA A AA[/darkgray]     [blue]≈≈≈≈≈[/blue]      [darkgreen]### ##       # ### #[/darkgreen] [blue]≈≈≈≈≈≈≈≈≈[/blue]                [darkgreen]##[/darkgreen]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA     AA AA A[/darkgray]    [blue]≈≈≈≈≈≈≈≈[/blue]    [darkgreen]# ## ###     ### ## ###[/darkgreen] [blue]≈≈≈≈≈≈[/blue] [darkgreen]## ### ##      ##[/darkgreen]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA      AA AAA[/darkgray]     [blue]≈≈≈≈≈≈[/blue]      [darkgreen]# ### #     ### ## # #### ## # ### ## ##     ##[/darkgreen]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[green]##[/green]       [darkgray]AA A[/darkgray]       [blue]≈≈≈≈[/blue]     [darkgreen]  ## ###       ## ### # #### ## ### # ###      ##[/darkgreen]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]###                                                                         ##[/darkgreen]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]# ##                                                                         #[/darkgreen]┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]# ### # ## # #### # ## ###[/darkgreen]        [darkgreen]# ### # ### ## ## # ###[/darkgreen]       ┼ ┼ ┼ ┼ ┼ ┼ ┼ ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]# ### ### # ## # # ### # ##[/darkgreen]      [darkgreen]### ## # ### # ### ### ##[/darkgreen]       ┼ ┼ ┼ ┼ ┼ ┼ ┼┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]#### ### ## # #### ###[/darkgreen] ╔──────────────╗ [darkgreen]## ##### ## ### ##[/darkgreen]      ┼ ┼ ┼ ┼ ┼ ┼ ┼ ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]##### ### ## ### ### #[/darkgreen] │ Leaf Village │ [darkgreen]# ### ## ### ## # #[/darkgreen]      ┼ ┼ ┼ ┼ ┼ ┼ ┼┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]###### ### ## # ## ###[/darkgreen] ╚──────────────╝  [darkgreen]### ## ### ## ### #[/darkgreen]                [yellow]Ω[/yellow] ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]# ##### ## # ### # ##[/darkgreen] [darkgray]AAA AA A AAAA A AAA[/darkgray] [darkgreen]## ### # ### #### #[/darkgreen]                 ┃");
+            ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]### ## #### ######[/darkgreen] [darkgray]AAA AA AAAAA AAA AA AAAA[/darkgray] [darkgreen]# ### ## # ### ## #### ## ### ####[/darkgreen]┃");
             ColorConsole.WriteEmbeddedColorLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             Console.ReadLine();
-
-          
-
         }
 
         //public enum Races : int

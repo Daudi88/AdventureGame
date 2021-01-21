@@ -22,7 +22,6 @@ namespace AdventureGame
 
         private void StartGame()
         {
-            CharacterCreation();
             if (ctr == 0)
             {
                 Draw.MovingTitle();
@@ -32,6 +31,7 @@ namespace AdventureGame
             {
                 Draw.Title();
             }
+            CharacterCreation();
             Run();
         }
 
@@ -929,10 +929,15 @@ namespace AdventureGame
         private void BuyArmor()
         {
             Armor[] armor = Utility.GetArmor();
-            List<string> content = new List<string>() { "Nr:\tName:\t\tCost:   Hp:  " };
+            string nr = "Nr.";
+            string name = "Name:";
+            string cost = "Cost:";
+            string hp = "Hp:";
+
+            List<string> content = new List<string>() { string.Format("{0}:\t{1}\t\t{2}   {3}  ", nr, name, cost, hp) };
             for (int i = 0; i < armor.Length; i++)
             {
-                content.Add($"{i + 1}.\t{armor[i].Name.PadRight(24)}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}");
+                content.Add($"{i + 1}.\t{armor[i].Name}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}");
             }
  
             string longest = content.OrderByDescending(s => s.Length).First();
@@ -944,66 +949,66 @@ namespace AdventureGame
             //    Console.WriteLine($"\t┃ {i + 1}.\t{armor[i].Name.PadRight(24)}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}  ┃");
             //}
             //Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            bool exit = false;
-            while (!exit)
-            {
-                Console.WriteLine("\n\t What weapon do you want to buy?");
-                Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-                Console.WriteLine("\t┃ 1. Dagger Damage 10. Cost: 50 gold         ┃");
-                Console.WriteLine("\t┃ 2. Rusty sword Damage 20. Cost: 100 gold   ┃");
-                Console.WriteLine("\t┃ 3. Broad sword Damage 50. Cost: 200 gold   ┃");
-                Console.WriteLine("\t┃ 4. Sell all items                          ┃");
-                Console.WriteLine("\t┃ 5. Leave                                   ┃");
-                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-                Console.Write("\t > ");
-                int.TryParse(ColorConsole.ReadInGreen(), out int choice);
-                switch (choice)
-                {
-                    case 1:
-                        if (player.Gold >= 50)
-                        {
-                            player.Gold -= 50;
-                            // Equip(); leta upp metoden för att lägga till skada från dagger.
-                        }
-                        else
-                        {
-                            Console.WriteLine("\t Sorry! You don't have enough gold...\n");
-                        }
-                        break;
-                    case 2:
-                        if (player.Gold >= 100)
-                        {
-                            player.Gold -= 100;
-                            // Equip(); leta upp metoden för att lägga till weapon.
-                        }
-                        else
-                        {
-                            Console.WriteLine("\t Sorry! You don't have enough gold...\n");
-                        }
-                        break;
-                    case 3:
-                        if (player.Gold >= 200)
-                        {
-                            player.Gold -= 200;
-                            // Equip(); leta upp metoden för att lägga till skada från dagger.
-                        }
-                        else
-                        {
-                            Console.WriteLine("\t Sorry! You don't have enough gold...\n");
-                        }
-                        break;
-                    case 4:
-                        SellItems();
-                        break;
-                    case 5:
-                        Console.WriteLine("\t Thank you for visiting! We hope to see you back again soon!");
-                        exit = true;
-                        break;
-                    default:
-                        Console.WriteLine("\t Invalid choice. Try again...\n");
-                        break;
-                }
-            }
+            //bool exit = false;
+            //while (!exit)
+            //{
+            //    Console.WriteLine("\n\t What weapon do you want to buy?");
+            //    Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            //    Console.WriteLine("\t┃ 1. Dagger Damage 10. Cost: 50 gold         ┃");
+            //    Console.WriteLine("\t┃ 2. Rusty sword Damage 20. Cost: 100 gold   ┃");
+            //    Console.WriteLine("\t┃ 3. Broad sword Damage 50. Cost: 200 gold   ┃");
+            //    Console.WriteLine("\t┃ 4. Sell all items                          ┃");
+            //    Console.WriteLine("\t┃ 5. Leave                                   ┃");
+            //    Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            //    Console.Write("\t > ");
+            //    int.TryParse(ColorConsole.ReadInGreen(), out int choice);
+            //    switch (choice)
+            //    {
+            //        case 1:
+            //            if (player.Gold >= 50)
+            //            {
+            //                player.Gold -= 50;
+            //                // Equip(); leta upp metoden för att lägga till skada från dagger.
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("\t Sorry! You don't have enough gold...\n");
+            //            }
+            //            break;
+            //        case 2:
+            //            if (player.Gold >= 100)
+            //            {
+            //                player.Gold -= 100;
+            //                // Equip(); leta upp metoden för att lägga till weapon.
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("\t Sorry! You don't have enough gold...\n");
+            //            }
+            //            break;
+            //        case 3:
+            //            if (player.Gold >= 200)
+            //            {
+            //                player.Gold -= 200;
+            //                // Equip(); leta upp metoden för att lägga till skada från dagger.
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("\t Sorry! You don't have enough gold...\n");
+            //            }
+            //            break;
+            //        case 4:
+            //            SellItems();
+            //            break;
+            //        case 5:
+            //            Console.WriteLine("\t Thank you for visiting! We hope to see you back again soon!");
+            //            exit = true;
+            //            break;
+            //        default:
+            //            Console.WriteLine("\t Invalid choice. Try again...\n");
+            //            break;
+            //    }
+            //}
 
         }
 

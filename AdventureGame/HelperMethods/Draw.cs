@@ -220,16 +220,27 @@ namespace AdventureGame.HelperMethods
 
         public static void Title()
         {
-            Console.Clear();
-            Console.WriteLine("\n\t\t\tWelcome to the");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\t ▄▄▄   ▄▄▄▄   ▌ ▐ ▄▄▄   ▐ ▄ ▄▄▄▄▄▄  ▄▌▄▄▄  ▄▄▄       ▄▄    ▄▄▄    ▌ ▄    ▄▄▄");
-            Console.WriteLine("\t▐█ ▀█ ██  ██  █ █▌▀▄ ▀  █▌▐█ ██  █ ██▌▀▄ █ ▀▄ ▀     ▐█ ▀  ▐█ ▀█  ██ ▐███ ▀▄ ▀");
-            Console.WriteLine("\t▄█▀▀█ ▐█  ▐█▌▐█▐█ ▐▀▀ ▄▐█▐▐▌ ▐█  █▌▐█▌▐▀▀▄ ▐▀▀ ▄    ▄█ ▀█▄▄█▀▀█ ▐█ ▌▐▌▐█ ▐▀▀ ▄");
-            Console.WriteLine("\t▐█  ▐▌██  ██  ███ ▐█▄▄▌██▐█▌ ▐█▌ ▐█▄█▌▐█ █▌▐█▄▄▌    ▐█▄ ▐█▐█  ▐▌██ ██▌▐█▌▐█▄▄▌");
-            Console.WriteLine("\t ▀  ▀ ▀▀▀▀▀    ▀   ▀▀▀ ▀▀ █  ▀▀▀  ▀▀▀  ▀  ▀ ▀▀▀      ▀▀▀▀  ▀  ▀ ▀▀  █ ▀▀▀ ▀▀▀");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("     ███        ▄█    █▄       ▄████████         ▄████████    ▄█    █▄     ▄█  ███▄▄▄▄    ▄██████▄  ▀█████████▄   ▄█  ");
+            Console.WriteLine(" ▀█████████▄   ███    ███     ███    ███        ███    ███   ███    ███   ███  ███▀▀▀██▄ ███    ███   ███    ███ ███  ");
+            Console.WriteLine("    ▀███▀▀██   ███    ███     ███    █▀         ███    █▀    ███    ███   ███▌ ███   ███ ███    ███   ███    ███ ███▌");
+            Console.WriteLine("     ███   ▀  ▄███▄▄▄▄███▄▄  ▄███▄▄▄            ███         ▄███▄▄▄▄███▄▄ ███▌ ███   ███ ███    ███  ▄███▄▄▄██▀  ███▌ ");
+            Console.WriteLine("     ███     ▀▀███▀▀▀▀███▀  ▀▀███▀▀▀          ▀███████████ ▀▀███▀▀▀▀███▀  ███▌ ███   ███ ███    ███ ▀▀███▀▀▀██▄  ███▌ ");
+            Console.WriteLine("     ███       ███    ███     ███    █▄                ███   ███    ███   ███  ███   ███ ███    ███   ███    ██▄ ███  ");
+            Console.WriteLine("     ███       ███    ███     ███    ███         ▄█    ███   ███    ███   ███  ███   ███ ███    ███   ███    ███ ███  ");
+            Console.WriteLine("    ▄████▀     ███    █▀      ██████████       ▄████████▀    ███    █▀    █▀    ▀█   █▀   ▀██████▀  ▄█████████▀  █▀  ");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\t\t\t\t\tAn adventure like never before...\n");
+
+            //Console.Clear();
+            //Console.WriteLine("\n\t\t\tWelcome to the");
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //Console.WriteLine("\t ▄▄▄   ▄▄▄▄   ▌ ▐ ▄▄▄   ▐ ▄ ▄▄▄▄▄▄  ▄▌▄▄▄  ▄▄▄       ▄▄    ▄▄▄    ▌ ▄    ▄▄▄");
+            //Console.WriteLine("\t▐█ ▀█ ██  ██  █ █▌▀▄ ▀  █▌▐█ ██  █ ██▌▀▄ █ ▀▄ ▀     ▐█ ▀  ▐█ ▀█  ██ ▐███ ▀▄ ▀");
+            //Console.WriteLine("\t▄█▀▀█ ▐█  ▐█▌▐█▐█ ▐▀▀ ▄▐█▐▐▌ ▐█  █▌▐█▌▐▀▀▄ ▐▀▀ ▄    ▄█ ▀█▄▄█▀▀█ ▐█ ▌▐▌▐█ ▐▀▀ ▄");
+            //Console.WriteLine("\t▐█  ▐▌██  ██  ███ ▐█▄▄▌██▐█▌ ▐█▌ ▐█▄█▌▐█ █▌▐█▄▄▌    ▐█▄ ▐█▐█  ▐▌██ ██▌▐█▌▐█▄▄▌");
+            //Console.WriteLine("\t ▀  ▀ ▀▀▀▀▀    ▀   ▀▀▀ ▀▀ █  ▀▀▀  ▀▀▀  ▀  ▀ ▀▀▀      ▀▀▀▀  ▀  ▀ ▀▀  █ ▀▀▀ ▀▀▀");
+            //Console.ForegroundColor = ConsoleColor.White;
+            //Console.WriteLine("\t\t\t\t\tAn adventure like never before...\n");
         }
 
         private static void Delayed(string text)
