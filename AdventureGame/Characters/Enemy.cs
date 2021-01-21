@@ -13,11 +13,9 @@ namespace AdventureGame.Characters
             Gold = Utility.RollDice(100 * Level);
         }
 
-        public override int Attack(out string text)
+        public override int Attack()
         {
-            int damage = Utility.RollDice(Damage);
-            text = $"{Name} hits you dealing {damage} damage!";            
-            return damage;
+            return Utility.RollDice(Damage);
         }
     }
 }

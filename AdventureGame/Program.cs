@@ -12,6 +12,7 @@ namespace AdventureGame
         }
 
         // TODO
+        // Låt fiender ha vapen (iaf ett vapennamn);
         // Fixa implementeringen av Shop.
         // Monster ska droppa items när de dör!
         // Visa föremålen i ryggsäcken.
@@ -22,7 +23,7 @@ namespace AdventureGame
         // Drick potion (RedBull) under strid mellan rundorna. Ger dig 10% Hp. Kostar 20-30 guld.
         // Console.WriteLine("\n\tYou take the time to drink a powerfull potion. It feels like you have wings."); => När man dricker en potion!    
         // Gandalf story och implementering.       
-
+        // Fixa backpack problemet med akumelering av items rensas
 
         // ÖVERKURS!
         // Sudda ut felaktig inmatning.

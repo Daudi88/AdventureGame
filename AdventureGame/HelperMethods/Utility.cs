@@ -28,10 +28,28 @@ namespace AdventureGame.HelperMethods
         }
 
         public static List<Enemy> GetEnemies()
-        {
+        {  /*
+              List<Enemy> monsters = new List<Enemy>()
+            {   
+                new Enemy("Kisame", 1, 10, "1d4", 50),
+                new Enemy("Kabuto", 1, 10, "1d4", 50),
+                new Enemy("Obito", 1, 10, "1d4", 50),
+                new Enemy("Madara", 1, 10, "1d4", 50),
+                new Enemy("Ginkaku", 2, 20, "2d4", 100),
+                new Enemy("Kimimaro", 3, 30, "2d6", 150),
+                new Enemy("Deidara", 4, 40, "2d8", 200),
+                new Enemy("Kakuzu", 5, 60, "2d10", 250),
+                new Enemy("Hanzo", 6, 80, "3d8", 300),
+                new Enemy("Orochimaru", 100, 25, "3d10", 350),
+                new Enemy("Nagato", 8, 200, "2d16", 400),
+                new Enemy("Haku", 9, 250, "3d16", 450),
+                new Enemy("Kaguya Otsutsuki", 10, 500, "3d18", 500)
+            };
+            return monsters;
+            */
             List<Enemy> monsters = new List<Enemy>()
             {
-                new Enemy("Frogman", 1, 12, "1d4", 50), // Unbalanced opponent ;)
+                new Enemy("Frogman", 1, 12, "1d4", 50),
                 new Enemy("Megaman", 2, 25, "1d8", 150)
             };
             return monsters;

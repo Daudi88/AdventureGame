@@ -8,8 +8,9 @@ namespace AdventureGame.HelperMethods
         public static void MovingTitle()
         {
             int top = 2;
-            int left = 2;
+            int left = 8;
             int ctr = 0;
+            int keyCtr = 0;
 
             string t = " ▀       █       █       █▀    ▄████████████████████████ █▀    █ █▀    ▀ ██      ▄█▀    ";
             string h = "            ▀      ▄▀    ███████▄███████████████   ▄▀      ▄▀      ▄▀   ████████▄██████▀ ██████    ▄▀      ▄    ";
@@ -21,7 +22,7 @@ namespace AdventureGame.HelperMethods
             string o = "         ██████ ▄██████▀█████████      ██      ██      █████████▄██████▀ ██████ ";
             string b = "        ▀   ▀  ▀█  ▄▀  ██████████████████████████  ▄▀  ██  ▄▀  ██  ▄▀  ██  ██  █████████▄██▀▄██▀ ██  ▄█ ";
             string[] title = new string[] { t, h, e, space, s, h, i, n, o, b, i };
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             foreach (var letter in title)
             {
                 for (int j = 0; j < letter.Length; j++)
@@ -29,7 +30,17 @@ namespace AdventureGame.HelperMethods
                     ctr++;
                     Console.SetCursorPosition(left, top++);
                     Console.Write(letter[j]);
-                    Thread.Sleep(1);
+
+                    if (Console.KeyAvailable)
+                    {
+                        keyCtr++;
+                    }
+
+                    if (keyCtr == 0)
+                    {
+                        Thread.Sleep(1);
+                    }
+
                     if (ctr % 10 == 8)
                     {
                         ctr = 0;

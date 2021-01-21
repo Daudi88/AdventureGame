@@ -15,6 +15,6 @@
             Damage = damage;
         }
 
-        public abstract int Attack(out string text);
+        public abstract int Attack();
     }
 }

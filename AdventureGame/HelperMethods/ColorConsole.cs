@@ -110,10 +110,10 @@ namespace AdventureGame.HelperMethods
             Console.WriteLine();
         }
 
-        public static string ReadInGreen()
+        public static string ReadInBlue()
         {
             Console.CursorVisible = true;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             string input = Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.White;
             Console.CursorVisible = false;

@@ -13,7 +13,7 @@ namespace AdventureGame.Characters
         public int MaxHp { get; set; }
         public int MaxExp { get; set; }
         public Armor Armor { get; set; }
-        public Weapon Weapon { get; set; }
+        public Weapon Weapon { get; set; } = new Weapon("Fists", 0, "1d4");
         public List<Item> Backpack { get; set; } = new List<Item>();
 
         public Player(int hp, string damage) : base(hp, damage)
@@ -22,12 +22,9 @@ namespace AdventureGame.Characters
             MaxExp = 200 * Level; // Fundera på om denna ska ligga i en variabel/metod eftersom vi använder den på flera ställen. 
         }
 
-        public override int Attack(out string text)
+        public override int Attack()
         {
-            int damage = Utility.RollDice(Damage);
-            text = $"You hit the monster with your {Weapon.Name} dealing {damage} damage!";
-            //Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
-            return damage;
+            return Utility.RollDice(Damage);
         }
 
         public void LevelUp()
