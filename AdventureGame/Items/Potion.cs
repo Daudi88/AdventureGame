@@ -1,5 +1,4 @@
-﻿using AdventureGame.Characters;
-using AdventureGame.Interfaces;
+﻿using AdventureGame.Interfaces;
 
 namespace AdventureGame.Items
 {
@@ -7,19 +6,23 @@ namespace AdventureGame.Items
     {
         public int Healing { get; set; }
 
-        public Potion(string name, int cost, int health, int quantity) : base(name, cost)
+        public Potion(string name, int cost, int health) : base(name, cost)
         {
             Healing = health;
-            Quantity = quantity;
         }
 
-        public void Consume(Player player)
+        public void Consume(IPlayable player)
         {
             player.Hp += Healing;
             if (player.Hp > player.MaxHp)
             {
                 player.Hp = player.MaxHp;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Quantity} {Name} (+{Healing} Hp)";
         }
     }
 }

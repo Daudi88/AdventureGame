@@ -1,4 +1,5 @@
 ﻿using AdventureGame.Characters;
+using AdventureGame.Interfaces;
 using AdventureGame.Items;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,10 @@ namespace AdventureGame.HelperMethods
                 if (text.Contains("[red]"))
                 {
                     ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 11)}  ┃");
+                }
+                else if (text.Contains("[yellow]"))
+                {
+                    ColorConsole.WriteEmbeddedColorLine($"\t┃ {text.PadRight(width + 17)}  ┃");
                 }
                 else
                 {
@@ -114,15 +119,50 @@ namespace AdventureGame.HelperMethods
 
         }
 
-        internal static Armor[] GetArmor()
+        internal static Armor[] GetArmors()
         {
             Armor[] armor = new Armor[]
             {
-                new Armor("Leather Armor", 50, 5),
-                new Armor("Shinobi Battle Armour", 10000, 500)
+                new Armor("Flak Jacket", 100, 15),
+                new Armor("Steam Armour", 200, 20),
+                new Armor("Shinobi Battle Armour", 500, 50),
+                new Armor("Chakra Armour", 2000, 75),
+                new Armor("Infinite Armour", 5000, 100)
             };
             return armor;
         }
+
+        public static Weapon[] GetWeapons()
+        {
+            Weapon[] weapons = new Weapon[]
+            {
+                new Weapon("Kunai", 150, "1d6"),
+                new Weapon("Shuriken", 250, "1d8"),
+                new Weapon("Bow & Arrow", 500, "1d10"),
+                new Weapon("Crossbow", 750, "1d12"),
+                new Weapon("Tekagi-Shuko", 1000, "2d6"),
+                new Weapon("Chakra Blade", 1500, "2d8"),
+                new Weapon("Spear", 2000, "2d10"),
+                new Weapon("Sword", 2500, "2d12")
+            };
+            return weapons;
+
+            // Seven Swordsmen of the Mist vapen:
+            // Kiba, Kubikiribōchō, Nuibari, Samehada, Shibuki, Hiramekarei, Kabutowari
+        }
+
+        public static Potion[] GetPotions()
+        {
+            Potion[] potions = new Potion[]
+            {
+                new Potion("Powerking", 15, 5),
+                new Potion("Red Bull", 30, 10)
+            };
+            return potions;
+
+        }
+
+
 
         public static void PrintMap()
         {

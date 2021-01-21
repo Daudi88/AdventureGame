@@ -1,9 +1,8 @@
-﻿using AdventureGame.Characters;
-
-namespace AdventureGame.Interfaces
+﻿namespace AdventureGame.Interfaces
 {
     interface IEquipable
     {
-        public void Equip(Player player);
+        public string Bonus { get; set; }
+        public void Equip(IPlayable player, IEquipable item);
     }
 }

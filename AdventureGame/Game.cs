@@ -1,5 +1,6 @@
 ﻿using AdventureGame.Characters;
 using AdventureGame.HelperMethods;
+using AdventureGame.Interfaces;
 using AdventureGame.Items;
 using System;
 using System.Collections.Generic;
@@ -74,12 +75,11 @@ namespace AdventureGame
             player.MaxHp = 1000;
             player.Damage = "8d100";
             player.Gold = 100000;
-            player.Armor = new Armor("Shinobi Battle Armour", 10000, 500);
-            player.Weapon = new Weapon("Executioner's Blade", 10000, "8d100");
-            player.Backpack = new List<Item>()
-            {
-                new Potion("Red Bull", 30, player.MaxHp / 10, 100)
-            };
+            player.Armor = new Armor("Infinite Armour", 5000, 100);
+            player.Weapon = new Weapon("Samehada", 100000, "8d100");
+            Potion potion = new Potion("Red Bull", 30, 10);
+            potion.Quantity = 100;
+            player.Backpack.Add(potion);
         }
 
         private void Run()
@@ -122,7 +122,7 @@ namespace AdventureGame
                 "3. Go to Tavern",
                 "4. Open Backpack",
                 "5. Open Map",
-                "4. Exit Game"
+                "6. Exit Game"
             };
             string longest = content.OrderByDescending(s => s.Length).First();
             Console.WriteLine();
@@ -649,11 +649,78 @@ namespace AdventureGame
             Console.ReadLine();
         }
 
-        private void Backpack() // Implementera mer!
+        private void Backpack(string str = null)
         {
-            Console.WriteLine("\n\t Your backpack is empty...");
-            Console.WriteLine("\t [Press enter to continue]");
-            Console.ReadLine();
+            if (player.Backpack != null)
+            {
+                bool exit = false;
+                List<string> content = new List<string>();
+                if (str == null)
+                {
+                    while (!exit)
+                    {
+                        int ctr = 1;
+                        foreach (var item in player.Backpack)
+                        {
+                            content.Add($"{ctr++}. [yellow]{item}[/yellow]");
+                        }
+                        content.Add($"{ctr}. Go back");
+                        Console.WriteLine("\n\t What item do you want to use");
+                        string longest = content.OrderByDescending(s => s.Length).First();
+                        Utility.PrintWithFrame("BACKPACK", content.ToArray(), longest.Length);
+                        Console.Write("\t > ");
+                        if (int.TryParse(ColorConsole.ReadInGreen(), out int choice))
+                        {
+                            if (choice < ctr)
+                            {
+                                Item item = player.Backpack[choice - 1];                        
+                                if (item is IEquipable equipable)
+                                {
+                                    equipable.Equip(player, equipable);
+                                    Console.WriteLine($"\t you equipped {item.Name} and gained {equipable.Bonus}!");
+                                }
+                                else if (item is IConsumable consumable)
+                                {
+                                    consumable.Consume(player);
+                                    Console.WriteLine($"\t You drank a {item.Name} and gained {consumable.Healing} health!");
+                                }
+
+                                item.Quantity--;
+                                if (item.Quantity == 0)
+                                {
+                                    player.Backpack.Remove(item);
+                                }
+                            }
+                            else
+                            {
+                                exit = true;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("\t Invalid choice, try again!");
+                            Console.WriteLine("\t [Press enter to continue]");
+                            Console.ReadLine();
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < player.Backpack.Count; i++)
+                    {
+                        content.Add($"{i + 1}. [yellow]{player.Backpack[i]} {player.Backpack[i].Cost}[/yellow]");
+                    }
+                    Console.WriteLine("\n\t What item do you want to sell?");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("\t Your backpack is empty...");
+                Console.WriteLine("\t [Press enter to continue]");
+                Console.ReadLine();
+            }
+
         }
 
         private void BossEncounter() // Implementera mer!
@@ -884,11 +951,16 @@ namespace AdventureGame
 
         private void Shop()
         {
+            int ctr = 0;
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("\n\t Welcome to Abu Hassans Abracapothecary!");
-                Console.WriteLine("\t The one stop shop for everything you could ever want!");
+                if (ctr == 0)
+                {
+                    Console.WriteLine("\n\t Welcome to Abu Hassan's Shop");
+                    ctr++;
+                }
+                Console.WriteLine("\t What do you want to do?");
                 string[] content = new string[]
                 {
                     "1. Buy Armor",
@@ -928,103 +1000,139 @@ namespace AdventureGame
 
         private void BuyArmor()
         {
-            Armor[] armor = Utility.GetArmor();
-            string nr = "Nr.";
-            string name = "Name:";
-            string cost = "Cost:";
-            string hp = "Hp:";
-
-            List<string> content = new List<string>() { string.Format("{0}:\t{1}\t\t{2}   {3}  ", nr, name, cost, hp) };
-            for (int i = 0; i < armor.Length; i++)
+            Armor[] armors = Utility.GetArmors();
+            while (true)
             {
-                content.Add($"{i + 1}.\t{armor[i].Name}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}");
+                Console.WriteLine("\n\t What armor do you want to buy?");
+                Console.WriteLine("\t┏━ARMOR━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                Console.WriteLine("\t┃ Nr:  Name:                    Cost:   Hp:   ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Flak Jacket              500     +10[/yellow]   ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 2.   [yellow]Steam Armour             750     +20[/yellow]   ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 3.   [yellow]Shinobi Battle Armour    1500    +50[/yellow]   ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 4.   [yellow]Chakra Armour            3000    +75[/yellow]   ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 5.   [yellow]Infinite Armour          5000    +100[/yellow]  ┃");
+                Console.WriteLine("\t┃ 6.   Go back to shop menu.                  ┃");
+                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                ColorConsole.Write("\t > ");
+                if (int.TryParse(ColorConsole.ReadInGreen(), out int choice))
+                {
+                    if (choice != 6)
+                    {
+                        Armor armor = armors[choice - 1];
+                        if (player.Gold >= armor.Cost)
+                        {
+                            player.Gold -= armor.Cost;
+                            player.Backpack.Add(armor);
+                            Console.WriteLine($"\t Thank you for buying the {armor.Name}!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"\t You dont have enogh gold to buy the {armor.Name}!");
+                        }                        
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("\t Invalid choice, try again!");
+                }
             }
- 
-            string longest = content.OrderByDescending(s => s.Length).First();
-            Utility.PrintWithFrame("ARMOR", content.ToArray(), longest.Length);
-            //Console.WriteLine($"\t┏━ARMOR━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            //Console.WriteLine($"\t┃ Nr:   Name:                   Cost:   Hp:   ┃");
-            //for (int i = 0; i < armor.Length; i++)
-            //{
-            //    Console.WriteLine($"\t┃ {i + 1}.\t{armor[i].Name.PadRight(24)}{armor[i].Cost.ToString().PadRight(8)}+{armor[i].MaxHp.ToString().PadRight(3)}  ┃");
-            //}
-            //Console.WriteLine($"\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            //bool exit = false;
-            //while (!exit)
-            //{
-            //    Console.WriteLine("\n\t What weapon do you want to buy?");
-            //    Console.WriteLine("\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            //    Console.WriteLine("\t┃ 1. Dagger Damage 10. Cost: 50 gold         ┃");
-            //    Console.WriteLine("\t┃ 2. Rusty sword Damage 20. Cost: 100 gold   ┃");
-            //    Console.WriteLine("\t┃ 3. Broad sword Damage 50. Cost: 200 gold   ┃");
-            //    Console.WriteLine("\t┃ 4. Sell all items                          ┃");
-            //    Console.WriteLine("\t┃ 5. Leave                                   ┃");
-            //    Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            //    Console.Write("\t > ");
-            //    int.TryParse(ColorConsole.ReadInGreen(), out int choice);
-            //    switch (choice)
-            //    {
-            //        case 1:
-            //            if (player.Gold >= 50)
-            //            {
-            //                player.Gold -= 50;
-            //                // Equip(); leta upp metoden för att lägga till skada från dagger.
-            //            }
-            //            else
-            //            {
-            //                Console.WriteLine("\t Sorry! You don't have enough gold...\n");
-            //            }
-            //            break;
-            //        case 2:
-            //            if (player.Gold >= 100)
-            //            {
-            //                player.Gold -= 100;
-            //                // Equip(); leta upp metoden för att lägga till weapon.
-            //            }
-            //            else
-            //            {
-            //                Console.WriteLine("\t Sorry! You don't have enough gold...\n");
-            //            }
-            //            break;
-            //        case 3:
-            //            if (player.Gold >= 200)
-            //            {
-            //                player.Gold -= 200;
-            //                // Equip(); leta upp metoden för att lägga till skada från dagger.
-            //            }
-            //            else
-            //            {
-            //                Console.WriteLine("\t Sorry! You don't have enough gold...\n");
-            //            }
-            //            break;
-            //        case 4:
-            //            SellItems();
-            //            break;
-            //        case 5:
-            //            Console.WriteLine("\t Thank you for visiting! We hope to see you back again soon!");
-            //            exit = true;
-            //            break;
-            //        default:
-            //            Console.WriteLine("\t Invalid choice. Try again...\n");
-            //            break;
-            //    }
-            //}
+
 
         }
 
         private void BuyWeapons()
         {
+            Weapon[] weapons = Utility.GetWeapons();
+            while (true)
+            {
+                Console.WriteLine("\n\t What weapon do you want to buy?");
+                Console.WriteLine("\t┏━WEAPONS━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                Console.WriteLine("\t┃ Nr:  Name:           Cost:   Damage:   ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Kunai           150     1d6[/yellow]       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 2.   [yellow]Shuriken        250     1d8[/yellow]       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 3.   [yellow]Bow & Arrow     500     1d10[/yellow]      ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 4.   [yellow]Crossbow        750     1d12[/yellow]      ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 5.   [yellow]Tekagi-Shuko    1000    2d6[/yellow]       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 6.   [yellow]Chakra Blade    1500    2d8[/yellow]       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 7.   [yellow]Spear           2000    2d10[/yellow]      ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 8.   [yellow]Sword           2500    2d12[/yellow]      ┃");
+                Console.WriteLine("\t┃ 9.   Go back to shop menu.             ┃");
+                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                ColorConsole.Write("\t > ");
+                if (int.TryParse(ColorConsole.ReadInGreen(), out int choice))
+                {
+                    if (choice != 9)
+                    {
+                        Weapon weapon = weapons[choice - 1];
+                        if (player.Gold >= weapon.Cost)
+                        {
+                            player.Gold -= weapon.Cost;
+                            player.Backpack.Add(weapon);
+                            Console.WriteLine($"\t Thank you for buying the {weapon.Name}!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"\t You don't have enough gold to buy the {weapon.Name}...");
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\t Invalid choice, try again!");
+                }
 
+
+            }
         }
 
         private void BuyPotions()
         {
-
+            Potion[] potions = Utility.GetPotions();
+            while (true)
+            {
+                Console.WriteLine("\n\t How many potions do you want to buy?");
+                Console.WriteLine("\t┏━Potions━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                Console.WriteLine("\t┃ Nr:  Name:           Cost:   HP:       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Power King   15     + 5HP[/yellow]       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 2.   [yellow]Red Bull     30    + 10HP[/yellow]       ┃");
+                Console.WriteLine("\t┃ 3.   Go back to shop menu.             ┃");
+                Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                ColorConsole.Write("\t > ");
+                if (int.TryParse(ColorConsole.ReadInGreen(), out int choice))
+                {
+                    if (choice != 3)
+                    {
+                        Potion potion = potions[choice - 1];
+                        if (player.Gold >= potion.Cost)
+                        {
+                            player.Gold -= potion.Cost;
+                            player.Backpack.Add(potion);
+                            Console.WriteLine($"\t Thank you for buying the {potion.Name}!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"\t You dont have enough gold to buy the {potion.Name}");
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
-
         private void SellItems()
         {
-
+            Backpack("sell");
         }
 
         private static void ExitGame()

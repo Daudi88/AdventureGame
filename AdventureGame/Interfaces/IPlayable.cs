@@ -5,6 +5,8 @@ namespace AdventureGame.Interfaces
 {
     interface IPlayable
     {
+        public int Hp { get; set; }
+        public string Damage { get; set; }
         public string Race { get; set; }
         public string Class { get; set; }
         public int MaxHp { get; set; }

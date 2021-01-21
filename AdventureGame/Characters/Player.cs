@@ -25,7 +25,7 @@ namespace AdventureGame.Characters
         public override int Attack(out string text)
         {
             int damage = Utility.RollDice(Damage);
-            text = $"You hit the monster dealing {damage} damage!";
+            text = $"You hit the monster with your {Weapon.Name} dealing {damage} damage!";
             //Console.WriteLine($"\t┃ {text.PadRight(39)}  ┃");
             return damage;
         }

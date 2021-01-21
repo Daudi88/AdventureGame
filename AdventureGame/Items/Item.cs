@@ -9,7 +9,7 @@ namespace AdventureGame.Items
         /// <summary>
         /// Cost in gold.
         /// </summary>
-        public double Cost { get; set; }
+        public int Cost { get; set; }
         public int Quantity { get; set; } = 1;
 
         public Item(string name, int cost)
