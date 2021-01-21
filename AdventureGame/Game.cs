@@ -12,10 +12,10 @@ namespace AdventureGame
     class Game
     {
         public static Player player;
-        static int ctr = 0;
         public void Setup()
         {
-            Console.Title = "Adventure Game";
+            Console.Title = "The Shinobi";
+            Console.SetWindowSize(135, 40);
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
             StartGame();
@@ -23,15 +23,15 @@ namespace AdventureGame
 
         private void StartGame()
         {
-            if (ctr == 0)
-            {
-                Draw.MovingTitle();
-                ctr++;
-            }
-            else
-            {
+            //if (ctr == 0)
+            //{
+            //    Draw.MovingTitle();
+            //    ctr++;
+            //}
+            //else
+            //{
                 Draw.Title();
-            }
+            //}
             CharacterCreation();
             Run();
         }
