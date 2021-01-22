@@ -31,7 +31,7 @@ namespace AdventureGame.HelperMethods
         public static List<Enemy> GetEnemies()
         {
             List<Enemy> monsters = new List<Enemy>()
-              {   
+              {
                 new Enemy("Kisame", 1, 10, "1d4", 50),
                 new Enemy("Kabuto", 1, 10, "1d4", 50),
                 new Enemy("Obito", 1, 10, "1d4", 50),
@@ -43,11 +43,11 @@ namespace AdventureGame.HelperMethods
                 new Enemy("Hanzo", 6, 80, "3d8", 300),
                 new Enemy("Orochimaru", 7, 25, "3d10", 350),
                 new Enemy("Nagato", 8, 200, "2d16", 400),
-                new Enemy("Haku", 9, 250, "3d16", 450)                
+                new Enemy("Haku", 9, 250, "3d16", 450)
               };
             return monsters;
-            
-            
+
+
         }
 
         public static void PrintWithFrame(string title, string[] content)
@@ -56,9 +56,9 @@ namespace AdventureGame.HelperMethods
             foreach (var item in content)
             {
                 int length = item.Length;
-                if (item.Contains("[yellow]"))
+                if (item.Contains("[magenta]"))
                 {
-                    length -= 17;
+                    length -= 19;
                 }
                 lengths.Add(length);
             }
@@ -220,6 +220,7 @@ namespace AdventureGame.HelperMethods
         public static void PrintMap()
         {
             Console.WriteLine();
+            int mapTop = Console.CursorTop;
             Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AAA AAA AAA AAA  AAA  AAA[/darkgray]  [red]X[/red]   [darkgray]AAA AAA AAA A A AAA AAA AA AAA AA AAA AAAA A AA[/darkgray]┃");
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA  AAA AAA AAA AAAAA      AA A AA AAA AAA AAA AAA AAA A AAA A AAA AA AAA A[/darkgray]┃");
@@ -244,7 +245,109 @@ namespace AdventureGame.HelperMethods
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]# ##### ## # ### # ##[/darkgreen] [darkgray]AAA AA A AAAA A AAA[/darkgray] [darkgreen]## ### # ### #### #[/darkgreen]                 ┃");
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]### ## #### ######[/darkgreen] [darkgray]AAA AA AAAAA AAA AA AAAA[/darkgray] [darkgreen]# ### ## # ### ## #### ## ### ####[/darkgreen]┃");
             ColorConsole.WriteEmbeddedColorLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            Console.WriteLine("\t [Press enter to continue]");
+            int mapBottom = Console.CursorTop;
+            PrintPlayer(mapTop);
             Console.ReadLine();
+            Console.SetCursorPosition(0, mapBottom);
+        }
+
+        private static void PrintPlayer(int mapTop)
+        {
+            IPlayable player = Game.player;
+            int left = 0;
+            int top = mapTop;
+            switch (player.Pos)
+            {
+                case -2.3:
+                    left = 12;
+                    top += 4;
+                    break;
+                case -2.2:
+                    left = 12;
+                    top += 10;
+                    break;
+                case -2.1:
+                    left = 15;
+                    top += 15;
+                    break;
+                case -1.3:
+                    left = 21;
+                    top += 4;
+                    break;
+                case -1.2:
+                    left = 25;
+                    top += 9;
+                    break;
+                case -1.1:
+                    left = 25;
+                    top += 15;
+                    break;
+                case 0.0:
+                    left = 39;
+                    top += 18;
+                    break;
+                case 0.1:
+                    left = 39;
+                    top += 15;
+                    break;
+                case 0.2:
+                    left = 36;
+                    top += 9;
+                    break;
+                case 0.3:
+                    left = 38;
+                    top += 5;
+                    break;
+                case 0.4:
+                    left = 36;
+                    top += 2;
+                    break;
+                case 1.1:
+                    left = 49;
+                    top += 15;
+                    break;
+                case 1.2:
+                    left = 48;
+                    top += 9;
+                    break;
+                case 1.3:
+                    left = 48;
+                    top += 5;
+                    break;
+                case 2.0:
+                    break;
+                case 2.1:
+                    left = 69;
+                    top += 15;
+                    break;
+                case 2.2:
+                    left = 70;
+                    top += 10;
+                    break;
+                case 2.3:
+                    left = 65;
+                    top += 5;
+                    break;
+                case 3.0:
+                    break;
+                case 3.1:
+                    left = 82;
+                    top += 15;
+                    break;
+                case 3.2:
+                    left = 82;
+                    top += 10;
+                    break;
+                case 3.3:
+                    left = 80;
+                    top += 5;
+                    break;
+                default:
+                    break;
+            }
+            Console.SetCursorPosition(left, top);
+            ColorConsole.WriteInRed("*");
         }
 
         //public enum Races : int

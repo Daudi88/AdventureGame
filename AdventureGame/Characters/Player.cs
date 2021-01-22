@@ -15,6 +15,7 @@ namespace AdventureGame.Characters
         public Armor Armor { get; set; }
         public Weapon Weapon { get; set; } = new Weapon("Fists", 0, "1d4");
         public List<Item> Backpack { get; set; } = new List<Item>();
+        public double Pos { get; set; } = 0.0;
 
         public Player(int hp, string damage) : base(hp, damage)
         {

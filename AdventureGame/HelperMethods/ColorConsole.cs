@@ -162,9 +162,9 @@ namespace AdventureGame.HelperMethods
             return input;
         }
 
-        public static void WriteInYellow(string text)
+        public static void WriteInBlue(string text)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Write(text);
             Console.ForegroundColor = ConsoleColor.White;
         }

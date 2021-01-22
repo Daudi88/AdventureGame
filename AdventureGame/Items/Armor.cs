@@ -5,7 +5,7 @@ namespace AdventureGame.Items
 {
     class Armor : Item, IEquipable
     {
-        public int MaxHp { get; set; }
+        public int MaxHp { get; set; } // Armor är Armor
         public string Bonus { get; set; }
 
         public Armor(string name, int cost, int maxHp) : base(name, cost)
@@ -22,7 +22,7 @@ namespace AdventureGame.Items
             }
             Console.WriteLine($"\t you equipped {item.Name} and gained {item.Bonus}!");
             player.Armor = (Armor)item;
-            player.MaxHp += MaxHp;
+            player.MaxHp += MaxHp; // Bennys snygga armor tänk!
 
         }
 

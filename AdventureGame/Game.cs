@@ -26,6 +26,7 @@ namespace AdventureGame
 
         private void StartGame()
         {
+            Console.Clear();
             Draw.MovingTitle();
             CharacterCreation();
             Run();
@@ -81,25 +82,25 @@ namespace AdventureGame
         {
             while (true)
             {
-                int choice = MainMenu();
-                switch (choice)
+                string choice = MainMenu();
+                switch (choice.ToUpper())
                 {
-                    case 1:
+                    case "1":
                         GoAdventure();
                         break;
-                    case 2:
-                        ShowDetails();
-                        break;
-                    case 3:
+                    case "2":
                         Tavern();
                         break;
-                    case 4:
+                    case "C":
+                        ShowDetails();
+                        break;
+                    case "B":
                         Backpack();
                         break;
-                    case 5:
+                    case "M":
                         Utility.PrintMap();
                         break;
-                    case 6:
+                    case "E":
                         ExitGame();
                         break;
                     default:
@@ -108,96 +109,37 @@ namespace AdventureGame
             }
         }
 
-        private int MainMenu()
+        private string MainMenu()
         {
             string[] content = new string[]
             {
                 "1. Go on an Adventure",
-                "2. Show Details",
-                "3. Go to Tavern",
-                "4. Open Backpack",
-                "5. Open Map",
-                "6. Exit Game"
+                "2. Go to Tavern",
+                "C. Show Details",
+                "B. Open Backpack",
+                "M. Open Map",
+                "E. Exit Game"
             };
             Console.WriteLine();
             Utility.PrintWithFrame("[darkcyan]MENU[/darkcyan]", content);
             Console.Write("\t > ");
-            int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-            return choice;
+            return ColorConsole.ReadInBlue();
         }
 
         private void GoAdventure()
         {
             Console.WriteLine("\n\t You start your adventure by going north...");
             Console.WriteLine("\t Be careful not to loose yourself in the wild!");
-            double pos = 0.1;
+            player.Pos = 0.1;
             while (true)
             {
-                pos = Math.Round(pos, 1);
+                player.Pos = Math.Round(player.Pos, 1);
                 bool exit = false;
-                if (pos == 0.0)
+                if (player.Pos == 0.0)
                 {
                     break;
                 }
-                else if (pos == 0.1)
-                {
-                    while (!exit)
-                    {
-                        Console.WriteLine("\n\t What do you want to do?");
-                        string[] content = new string[]
-                        {
-                            "1. Go North",
-                            "2. Go East",
-                            "3. Go back to town",
-                            "4. Go West",
-                            "5. Show Details",
-                            "6. Open Backpack",
-                            "7. Open Map"
-                        };
-                        Utility.PrintWithFrame("", content);
-                        Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
-                        {
-                            case 1:
-                                Console.WriteLine("\t You went north...");
-                                pos += 0.1;
-                                exit = true;
-                                EncounterCheck();
-                                break;
-                            case 2:
-                                Console.WriteLine("\t You went east...");
-                                pos += 1.0;
-                                exit = true;
-                                EncounterCheck();
-                                break;
-                            case 3:
-                                Console.WriteLine("\t You went back home...");
-                                exit = true;
-                                pos -= 0.1;
-                                break;
-                            case 4:
-                                Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
-                                exit = true;
-                                EncounterCheck();
-                                break;
-                            case 5:
-                                ShowDetails();
-                                break;
-                            case 6:
-                                Backpack();
-                                break;
-                            case 7:
-                                Utility.PrintMap();
-                                break;
-                            default:
-                                Console.WriteLine("\t Invalid choice...");
-                                break;
-                        }
-                    }
-                }
-                else if (pos == -1.1 || pos == 1.1)
+                else if (player.Pos == 0.1)
                 {
                     while (!exit)
                     {
@@ -207,40 +149,46 @@ namespace AdventureGame
                             "1. Go North",
                             "2. Go East",
                             "3. Go West",
-                            "4. Show Details",
-                            "5. Open Backpack",
-                            "6. Open Map"
+                            "4. Go back home",
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went north...");
-                                pos += 0.1;
+                                player.Pos += 0.1;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went east...");
-                                pos += 1.0;
+                                player.Pos += 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 3:
+                            case "3":
                                 Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
+                                player.Pos -= 1.2;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 4:
+                            case "4":
+                                Console.WriteLine("\t You went back home...");
+                                player.Pos -= 0.1;
+                                exit = true;
+                                break;
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 5:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 6:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
@@ -249,7 +197,73 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == -1.2)
+                else if (player.Pos == -1.1 || player.Pos == 1.1)
+                {
+                    while (!exit)
+                    {
+                        Console.WriteLine("\n\t What do you want to do?");
+                        string[] content = new string[]
+                        {
+                            "1. Go North",
+                            "2. Go East",
+                            "3. Go West",
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
+                        };
+                        Utility.PrintWithFrame("", content);
+                        Console.Write("\t > ");
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
+                        {
+                            case "1":
+                                Console.WriteLine("\t You went north...");
+                                if (player.Pos == -1.1)
+                                {
+                                    player.Pos -= 0.1;
+                                }
+                                else
+                                {
+                                    player.Pos += 0.1;
+                                }
+                                exit = true;
+                                EncounterCheck();
+                                break;
+                            case "2":
+                                Console.WriteLine("\t You went east...");
+                                if (player.Pos == -1.1)
+                                {
+                                    player.Pos += 1.2;
+                                }
+                                else
+                                {
+                                    player.Pos += 1.0;
+                                }
+                                exit = true;
+                                EncounterCheck();
+                                break;
+                            case "3":
+                                Console.WriteLine("\t You went west...");
+                                player.Pos -= 1.0;
+                                exit = true;
+                                EncounterCheck();
+                                break;
+                            case "C":
+                                ShowDetails();
+                                break;
+                            case "B":
+                                Backpack();
+                                break;
+                            case "M":
+                                Utility.PrintMap();
+                                break;
+                            default:
+                                Console.WriteLine("\t Invalid choice...");
+                                break;
+                        }
+                    }
+                }
+                else if (player.Pos == -1.2)
                 {
                     while (!exit)
                     {
@@ -259,40 +273,40 @@ namespace AdventureGame
                             "1. Go North",
                             "2. Go East",
                             "3. Go South",
-                            "4. Show Details",
-                            "5. Open Backpack",
-                            "6. Open Map"
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went north...");
-                                pos += 0.1;
+                                player.Pos -= 0.1;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went east...");
-                                pos += 1.0;
+                                player.Pos += 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 3:
+                            case "3":
                                 Console.WriteLine("\t You went south...");
-                                pos -= 0.1;
+                                player.Pos += 0.1;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 4:
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 5:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 6:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
@@ -301,7 +315,7 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == 0.2 || pos == 2.1 || pos == 1.3)
+                else if (player.Pos == 0.2 || player.Pos == 2.1 || player.Pos == 1.3)
                 {
                     while (!exit)
                     {
@@ -311,40 +325,47 @@ namespace AdventureGame
                             "1. Go East",
                             "2. Go South",
                             "3. Go West",
-                            "4. Show Details",
-                            "5. Open Backpack",
-                            "6. Open Map"
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went east...");
-                                pos += 1.0;
+                                player.Pos += 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went South...");
-                                pos -= 0.1;
+                                player.Pos -= 0.1;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 3:
+                            case "3":
                                 Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
+                                if (player.Pos == 0.2)
+                                {
+                                    player.Pos -= 1.4;
+                                }
+                                else
+                                {
+                                    player.Pos -= 1.0;
+                                }
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 4:
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 5:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 6:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
@@ -353,7 +374,7 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == 1.2 || pos == 3.2)
+                else if (player.Pos == 1.2 || player.Pos == 3.2)
                 {
                     while (!exit)
                     {
@@ -363,32 +384,32 @@ namespace AdventureGame
                             "1. Go North",
                             "2. Go South",
                             "3. Go West",
-                            "4. Show Details",
-                            "5. Open Backpack",
-                            "6. Open Map"
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went north...");
-                                pos += 0.1;
+                                player.Pos += 0.1;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went south...");
-                                pos -= 0.1;
+                                player.Pos -= 0.1;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 3:
+                            case "3":
                                 Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
+                                player.Pos -= 1.0;
                                 exit = true;
-                                if (pos == 2.2)
+                                if (player.Pos == 2.2)
                                 {
                                     MeetHiruzen();
                                 }
@@ -397,13 +418,13 @@ namespace AdventureGame
                                     EncounterCheck();
                                 }
                                 break;
-                            case 4:
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 5:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 6:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
@@ -412,7 +433,7 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == -1.3 || pos == -2.2 || pos == 3.3)
+                else if (player.Pos == -1.3 || player.Pos == 3.3)
                 {
                     while (!exit)
                     {
@@ -421,30 +442,33 @@ namespace AdventureGame
                         {
                             "1. Go South",
                             "2. Go West",
-                            "3. Show Details",
-                            "4. Open Backpack",
-                            "5. Open Map"
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went south...");
-                                pos -= 0.1;
+                                if (player.Pos == -1.3)
+                                {
+                                    player.Pos += 0.1;
+                                }
+                                else
+                                {
+                                    player.Pos -= 0.1;
+                                }
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
+                                player.Pos -= 1.0;
                                 exit = true;
-                                if (pos == -3.2)
-                                {
-                                    Treasure();
-                                }
-                                else if (pos == -2.3)
+                                if (player.Pos == -2.3)
                                 {
                                     AbuHassansShop();
                                 }
@@ -453,13 +477,13 @@ namespace AdventureGame
                                     EncounterCheck();
                                 }
                                 break;
-                            case 3:
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 4:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 5:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
@@ -468,7 +492,7 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == -2.1 || pos == 2.0 || pos == 0.3)
+                else if (player.Pos == -2.1 || player.Pos == 2.0 || player.Pos == 0.3)
                 {
                     while (!exit)
                     {
@@ -477,33 +501,44 @@ namespace AdventureGame
                         {
                             "1. Go North",
                             "2. Go East",
-                            "3. Show Details",
-                            "4. Open Backpack",
-                            "5. Open Map"
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went north...");
-                                pos += 0.1;
-                                exit = true;
-                                if (pos == 0.4)
+                                if (player.Pos == -2.1)
                                 {
-                                    BossEncounter();                                    
+                                    player.Pos -= 0.1;
+                                }
+                                else
+                                {
+                                    player.Pos += 0.1;
+                                }
+                                exit = true;
+                                if (player.Pos == 0.4)
+                                {
+                                    BossEncounter();
+                                }
+                                else if (player.Pos == -2.2)
+                                {
+                                    Treasure();
                                 }
                                 else
                                 {
                                     EncounterCheck();
                                 }
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went east...");
-                                pos += 1.0;
+                                player.Pos += 1.0;
                                 exit = true;
-                                if (pos == 3.0)
+                                if (player.Pos == 3.0)
                                 {
                                     Graveyard();
                                 }
@@ -512,13 +547,13 @@ namespace AdventureGame
                                     EncounterCheck();
                                 }
                                 break;
-                            case 3:
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 4:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 5:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
@@ -527,7 +562,7 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == 3.1)
+                else if (player.Pos == 3.1)
                 {
                     while (!exit)
                     {
@@ -536,34 +571,34 @@ namespace AdventureGame
                         {
                             "1. Go North",
                             "2. Go West",
-                            "3. Show Details",
-                            "4. Open Backpack",
-                            "5. Open Map"
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went north...");
-                                pos += 0.1;
+                                player.Pos += 0.1;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
+                                player.Pos -= 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 3:
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 4:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 5:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
@@ -572,7 +607,7 @@ namespace AdventureGame
                         }
                     }
                 }
-                else if (pos == 2.3)
+                else if (player.Pos == 2.3)
                 {
                     while (!exit)
                     {
@@ -581,40 +616,152 @@ namespace AdventureGame
                         {
                             "1. Go East",
                             "2. Go West",
-                            "3. Show Details",
-                            "4. Open Backpack",
-                            "5. Open Map"
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
                         };
                         Utility.PrintWithFrame("", content);
                         Console.Write("\t > ");
-                        int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                        switch (choice)
+                        string choice = ColorConsole.ReadInBlue();
+                        switch (choice.ToUpper())
                         {
-                            case 1:
+                            case "1":
                                 Console.WriteLine("\t You went east...");
-                                pos += 1.0;
+                                player.Pos += 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 2:
+                            case "2":
                                 Console.WriteLine("\t You went west...");
-                                pos -= 1.0;
+                                player.Pos -= 1.0;
                                 exit = true;
                                 EncounterCheck();
                                 break;
-                            case 3:
+                            case "C":
                                 ShowDetails();
                                 break;
-                            case 4:
+                            case "B":
                                 Backpack();
                                 break;
-                            case 5:
+                            case "M":
                                 Utility.PrintMap();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
                                 break;
                         }
+                    }
+                }
+                else if (player.Pos == 2.2 || player.Pos == -2.3 || player.Pos == -3.2)
+                {
+                    Console.WriteLine("\n\t What do you want to do?");
+                    string[] content = new string[]
+                    {
+                            "1. Go East",
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
+                    };
+                    Utility.PrintWithFrame("", content);
+                    Console.Write("\t > ");
+                    string choice = ColorConsole.ReadInBlue();
+                    switch (choice.ToUpper())
+                    {
+                        case "1":
+                            Console.WriteLine("\t You went east...");
+                            player.Pos += 1.0;
+                            exit = true;
+                            EncounterCheck();
+                            break;
+                        case "C":
+                            ShowDetails();
+                            break;
+                        case "B":
+                            Backpack();
+                            break;
+                        case "M":
+                            Utility.PrintMap();
+                            break;
+                        default:
+                            Console.WriteLine("\t Invalid choice...");
+                            break;
+                    }
+                }
+                else if (player.Pos == 3.0)
+                {
+                    Console.WriteLine("\n\t What do you want to do?");
+                    string[] content = new string[]
+                    {
+                            "1. Go West",
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
+                    };
+                    Utility.PrintWithFrame("", content);
+                    Console.Write("\t > ");
+                    string choice = ColorConsole.ReadInBlue();
+                    switch (choice.ToUpper())
+                    {
+                        case "1":
+                            Console.WriteLine("\t You went west...");
+                            player.Pos -= 1.0;
+                            exit = true;
+                            EncounterCheck();
+                            break;
+                        case "C":
+                            ShowDetails();
+                            break;
+                        case "B":
+                            Backpack();
+                            break;
+                        case "M":
+                            Utility.PrintMap();
+                            break;
+                        default:
+                            Console.WriteLine("\t Invalid choice...");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\n\t What do you want to do?");
+                    string[] content = new string[]
+                    {
+                            "1. Go South",
+                            "C. Show Details",
+                            "B. Open Backpack",
+                            "M. Open Map"
+                    };
+                    Utility.PrintWithFrame("", content);
+                    Console.Write("\t > ");
+                    string choice = ColorConsole.ReadInBlue();
+                    switch (choice.ToUpper())
+                    {
+                        case "1":
+                            Console.WriteLine("\t You went south...");
+                            if (player.Pos == -2.2)
+                            {
+                                player.Pos += 0.1;
+                            }
+                            else
+                            {
+                                player.Pos -= 0.1;
+                            }
+                            exit = true;
+                            EncounterCheck();
+                            break;
+                        case "C":
+                            ShowDetails();
+                            break;
+                        case "B":
+                            Backpack();
+                            break;
+                        case "M":
+                            Utility.PrintMap();
+                            break;
+                        default:
+                            Console.WriteLine("\t Invalid choice...");
+                            break;
                     }
                 }
             }
@@ -639,7 +786,7 @@ namespace AdventureGame
             {
                 Console.WriteLine("\n\t The treasue is no more...");
             }
-            Console.WriteLine("\t [Press enter to go back the way you came]");
+            Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
 
@@ -654,7 +801,7 @@ namespace AdventureGame
             {
                 Console.WriteLine("\n\t The graveyard is dead silent");
             }
-            Console.WriteLine("\t [Press enter to go back the way you came]");
+            Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
         }
 
@@ -689,22 +836,26 @@ namespace AdventureGame
             else
             {
                 Console.WriteLine("\n\t Hiruzen smokes his pipe...");
-                Console.WriteLine("\t [Press enter to go back the way you came]");
+                Console.WriteLine("\t [Press enter to continue]");
                 Console.ReadLine();
             }
-            
+
         }
 
         private void LoseScreen()
         {
             Console.WriteLine("\n\t Sorry, you lose...");
+            Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
+            PlayAgain();
         }
 
         private void WinScreen()
         {
             Console.WriteLine("\n\t Yeay! You win!");
+            Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
+            PlayAgain();
         }
 
         private void Backpack(string str = null)
@@ -768,6 +919,7 @@ namespace AdventureGame
                         content.Add($"{i + 1}. [yellow]{player.Backpack[i]} {player.Backpack[i].Cost}[/yellow]");
                     }
                     Console.WriteLine("\n\t What item do you want to sell?");
+                    // Skriv ut alla items i backpack
                 }
 
             }
@@ -794,16 +946,15 @@ namespace AdventureGame
                 else
                 {
                     LoseScreen();
-                    TryAgain();
                 }
             }
             else
             {
                 Console.WriteLine("\t You are not strong enough to fight the opponent...");
-                Console.WriteLine("\t [Press enter to go back the way you came]");
+                Console.WriteLine("\t [Press enter to continue]");
                 Console.ReadLine();
             }
-            
+
         }
 
         private void FightTheBoss()
@@ -818,8 +969,6 @@ namespace AdventureGame
                 ColorConsole.WriteInRed(ha);
                 Thread.Sleep(1000);
             }
-            Console.WriteLine("\n\t [Press enter to continue]");
-            Console.ReadLine();
         }
 
         private void Battle()
@@ -879,7 +1028,7 @@ namespace AdventureGame
 
                 if (player.Hp <= 0)
                 {
-                    TryAgain();
+                    LoseScreen();
                 }
                 else
                 {
@@ -895,6 +1044,7 @@ namespace AdventureGame
             if (chance == 0)
             {
                 Console.WriteLine("\t This is a very peacefull place and you don't sense any trouble near you.");
+                Console.WriteLine("\t [Press enter to continue]");
             }
             else
             {
@@ -903,9 +1053,9 @@ namespace AdventureGame
             }
         }
 
-        private void TryAgain()
+        private void PlayAgain()
         {
-            Console.WriteLine("\t Do you want to try again? (y/n)");
+            Console.WriteLine("\t Do you want to play again? (y/n)");
             Console.Write("\t > ");
             string choice = ColorConsole.ReadInBlue();
             if (choice.ToLower() == "y")
@@ -981,14 +1131,14 @@ namespace AdventureGame
                     "1. Rest for the night for 100 gold (+ 100% Hp)",
                     "2. Eat and drink 60 gold (+ 50% Hp)",
                     "3. Purchase or sell items",
-                    "4. Leave"
+                    "E. Leave"
                 };
                 Utility.PrintWithFrame("", content);
                 Console.Write("\t > ");
-                int.TryParse(ColorConsole.ReadInBlue(), out int choice);
-                switch (choice)
+                string choice = ColorConsole.ReadInBlue();
+                switch (choice.ToUpper())
                 {
-                    case 1:
+                    case "1":
                         if (player.Gold >= 100)
                         {
                             player.Gold -= 100;
@@ -999,7 +1149,7 @@ namespace AdventureGame
                             Console.WriteLine("\t Sorry! You don't have enough gold...\n");
                         }
                         break;
-                    case 2:
+                    case "2":
                         if (player.Gold >= 60)
                         {
                             player.Gold -= 60;
@@ -1010,10 +1160,10 @@ namespace AdventureGame
                             Console.WriteLine("\t Sorry! You don't have enough gold...\n");
                         }
                         break;
-                    case 3:
+                    case "3":
                         Shop();
                         break;
-                    case 4:
+                    case "E":
                         Console.WriteLine("\t Thank you for visiting! We hope to see you back again soon!");
                         exit = true;
                         break;
@@ -1142,7 +1292,7 @@ namespace AdventureGame
             while (true)
             {
                 Console.WriteLine("\n\t What weapon do you want to buy?");
-                Console.WriteLine("\t┏━WEAPONS━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                ColorConsole.WriteEmbeddedColorLine("\t┏━[darkcyan]WEAPONS[/darkcyan]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
                 Console.WriteLine("\t┃ Nr:  Name:           Cost:   Damage:   ┃");
                 ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Kunai           150     1d6[/yellow]       ┃");
                 ColorConsole.WriteEmbeddedColorLine("\t┃ 2.   [yellow]Shuriken        250     1d8[/yellow]       ┃");

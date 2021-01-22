@@ -11,6 +11,7 @@ namespace AdventureGame.Interfaces
         public string Class { get; set; }
         public int MaxHp { get; set; }
         public int MaxExp { get; set; }
+        public double Pos { get; set; }
         public Armor Armor { get; set; }
         public Weapon Weapon { get; set; }
         public List<Item> Backpack { get; set; }
