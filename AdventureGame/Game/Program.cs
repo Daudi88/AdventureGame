@@ -1,7 +1,4 @@
-﻿using AdventureGame.HelperMethods;
-using System;
-
-namespace AdventureGame
+﻿namespace AdventureGame.Game
 {
     class Program
     {
@@ -20,14 +17,17 @@ namespace AdventureGame
         // Armor och Weapon ska ha public string Describe() som returnerar Name (+Hp).
         // Håkan ska skriva sitt äventyr! Implementeringen får ske i Explore().
         // Kan man köpa/sälja flera quantity på samma gång? Hur många vill du köpa? Bara om det är en consumable.
-        // Drick potion (RedBull) under strid mellan rundorna. Ger dig 10% Hp. Kostar 20-30 guld.
-        //  => När man dricker en potion!    
         // Narutos Gandalf story och implementering.       
+        // pos i GoAdventure måste ändras efter att man har besökt Hiruzen, graveyard, treasure & shop. Annars hamnar man i en evighetsloop...
+        // Console.CursorTop
+        // om man dricker en RedBull får det en positiv effekt under nästa fight (bool redBullBonusEffect = true;)
+        // det är något knas med backpack om den är tom
+        // backpack sell måste fixas
         // Fixa backpack problemet med akumelering av items rensas
+
 
         // ÖVERKURS!
         // Sudda ut felaktig inmatning.
         // Bakgrundsmusik.
-        // Visa spelaren på kartan.
     }
 }

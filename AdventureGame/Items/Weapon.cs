@@ -14,14 +14,13 @@ namespace AdventureGame.Items
             Bonus = Damage + " Damage";
         }
 
-        public void Equip(IPlayable player, IEquipable item)
+        public void Equip(IPlayable player)
         {
             if (player.Weapon != null)
             {
                 player.Backpack.Add(player.Weapon);
             }
-            Console.WriteLine($"\t you equipped {item.Name} and gained {item.Bonus}!");
-            player.Weapon = (Weapon)item;
+            Console.WriteLine($"\t you equipped {Name} and gained {Bonus} Damage!");
             player.Damage = Damage;
         }
 

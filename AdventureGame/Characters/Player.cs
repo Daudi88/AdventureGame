@@ -20,12 +20,7 @@ namespace AdventureGame.Characters
         public Player(int hp, string damage) : base(hp, damage)
         {
             MaxHp = Hp;
-            MaxExp = 200 * Level; // Fundera på om denna ska ligga i en variabel/metod eftersom vi använder den på flera ställen. 
-        }
-
-        public override int Attack()
-        {
-            return Utility.RollDice(Damage);
+            MaxExp = 200 * Level; 
         }
 
         public void LevelUp()

@@ -3,15 +3,20 @@ using System;
 
 namespace AdventureGame.Items
 {
-    class Armor : Item, IEquipable
-    {
-        public int MaxHp { get; set; } // Armor är Armor
-        public string Bonus { get; set; }
 
-        public Armor(string name, int cost, int maxHp) : base(name, cost)
+    // HÅKAN TODO
+    // En attack ska returnera damage - defender.Armor.
+    // En Armor ska inte ge +Hp utan armor
+    // Details ska visa => Armor: Flak Jacket (5)
+    // Uppdatera de armors som redan finns så att de ger en balanserad armor
+    class Armor : Item, IEquipable // [HÅKAN]
+    {
+        public int Defence { get; set; } // Heta Defence
+       
+
+        public Armor(string name, int cost, int defence) : base(name, cost) // int maxHp måste bytas till defence KLAR
         {
-            MaxHp = maxHp;
-            Bonus = MaxHp + " Hp";
+            Defence = defence ; // defence = defence KLAR
         }
 
         public void Equip(IPlayable player, IEquipable item)
@@ -20,15 +25,15 @@ namespace AdventureGame.Items
             {
                 player.Backpack.Add(player.Armor);
             }
-            Console.WriteLine($"\t you equipped {item.Name} and gained {item.Bonus}!");
+            Console.WriteLine($"\t you equipped {item.Name} and gained {Defence} defence!");
             player.Armor = (Armor)item;
-            player.MaxHp += MaxHp; // Bennys snygga armor tänk!
+            player.Defence = Defence;
 
         }
 
         public override string ToString()
         {
-            return $"{Name} (+{MaxHp} Hp)";
+            return $"{Name} (+{Defence} Hp)";
         }
     }
 }

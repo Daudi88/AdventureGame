@@ -1,142 +1,56 @@
-﻿namespace AdventureGame.HelperMethods
+﻿using System;
+using System.Threading;
+
+namespace AdventureGame.HelperMethods
 {
     class Display
     {
-        //private const int left = 10;
-        //private static int top;
+        public static void Title()
+        {
+            int top = 2;
+            int left = 8;
+            int ctr = 0;
+            int keyCtr = 0;
 
-        //public static Player CharacterCreation()
-        //{
-        //    Console.Clear();
-        //    Draw.Title();
-        //    Draw.CharaterCreation();
-        //    top = 10;
-        //    AtPosition("Choose a class:");
-        //    AtPosition("[1] Barbarian  [2] Bard       [3] Cleric    [4] Druid");
-        //    AtPosition("[5] Fighter    [6] Monk       [7] Paladin   [8] Ranger");
-        //    AtPosition("[9] Rouge      [10] Sorcerer  [11] Warlock  [12] Wizard");
-        //    AtPosition("> ");
-        //    int.TryParse(Utility.ReadInGreen(), out int choice);
-        //    Player player = Utility.GetClass((Classes)1);
+            string t = " ▀       █       █       █▀    ▄████████████████████████ █▀    █ █▀    ▀ ██      ▄█▀    ";
+            string h = "            ▀      ▄▀    ███████▄███████████████   ▄▀      ▄▀      ▄▀   ████████▄██████▀ ██████    ▄▀      ▄    ";
+            string e = "            ▀      ▄▀    ███████▄████████████████  ▄▀  ██  ▄▀  ██  ▄▀  ████  █████▀  ▄████    ██";
+            string space = "                                                ";
+            string s = "            ▀       █  ▄ ████  █▄████ ▄██████ ███   █  ██   █  ██   █  ██   █  ████ ██████▀ ███▀██  ███ ";
+            string i = "         ███████▄██████▀███████   ▌▌▌   ";
+            string n = "        ███████ ███████▀████████▄▀      ▄▀      ▄▀      ▄███████ ██████▀ ▄█████ ";
+            string o = "         ██████ ▄██████▀█████████      ██      ██      █████████▄██████▀ ██████ ";
+            string b = "        ▀   ▀  ▀█  ▄▀  ██████████████████████████  ▄▀  ██  ▄▀  ██  ▄▀  ██  ██  █████████▄██▀▄██▀ ██  ▄█ ";
+            string[] title = new string[] { t, h, e, space, s, h, i, n, o, b, i };
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            foreach (var letter in title)
+            {
+                for (int j = 0; j < letter.Length; j++)
+                {
+                    ctr++;
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write(letter[j]);
 
-        //    top++;
-        //    AtPosition("Choose a race:");
-        //    AtPosition("[1] Dwarf       [2] Elf    [3] Halfling  [4] Human");
-        //    AtPosition("[5] Dragonborn  [6] Gnome  [7] Half-Elf  [8] Half-Orc  [9] Tiefling");
-        //    AtPosition("> ");
-        //    int.TryParse(Utility.ReadInGreen(), out choice);
-        //    Utility.GetRace((Races)choice, player);
+                    if (Console.KeyAvailable)
+                    {
+                        keyCtr++;
+                    }
 
-        //    top++;
-        //    AtPosition("What is your name?");
-        //    AtPosition("> ");
-        //    string name = Utility.ReadInGreen();
-        //    player.Name = char.ToUpper(name[0]) + name[1..].ToLower();
-        //    if (player.Name == "Robin" || player.Name == "Daudi")
-        //    {
-        //        Utility.GodMode(player);
-        //    }
+                    if (keyCtr == 0)
+                    {
+                        Thread.Sleep(1);
+                    }
 
-        //    top++;
-        //    AtPosition($"Welcome {player.Name}, the {player.Race} {player.Class}!");
-        //    Thread.Sleep(2000);
-        //    return player;
-        //}
-
-        //public static void AtPosition(string text)
-        //{
-        //    Console.SetCursorPosition(left, top++);
-        //    Console.Write(text);
-        //}
-
-        //public static int MainMenu()
-        //{
-        //    Console.Clear();
-        //    Draw.Title();
-        //    Draw.MainMenu();
-        //    top = 10;
-        //    AtPosition("What do you want to do?");
-        //    AtPosition("1. Go adventuring");
-        //    AtPosition("2. Show details about your character");
-        //    AtPosition("3. Go to shop");
-        //    AtPosition("4. Exit game");
-        //    AtPosition("> ");
-        //    int.TryParse(Utility.ReadInGreen(), out int choice);
-        //    return choice;
-        //}
-        //public static void CharacterPanel(Player player)
-        //{
-        //    Console.Clear();
-        //    Draw.Title();
-        //    Draw.CharacterPanel(player);
-        //    top = 10;
-        //    AtPosition($"{player.Name} the {player.Race} {player.Class}");
-        //    AtPosition($"Level: {player.Level}");
-        //    AtPosition($"Exp: {player.ExperiencePoints}/{player.MaxExp}");
-        //    AtPosition($"Armor Class: {player.ArmorClass}");
-        //    AtPosition($"Hit Points: {player.HitPoints}/{player.MaxHp}");
-        //    AtPosition($"Gold: {player.Gold}");
-
-        //    top += 2;
-        //    AtPosition($"Strength {player.Strength} ({(Utility.GetAbilityModifier(player.Strength) < 0 ? "" : "+") + Utility.GetAbilityModifier(player.Strength)})");
-        //    AtPosition($"Dextrerity {player.Dexterity} ({(Utility.GetAbilityModifier(player.Dexterity) < 0 ? "" : "+") + Utility.GetAbilityModifier(player.Dexterity)})");
-        //    AtPosition($"Constitution {player.Constitution} ({(Utility.GetAbilityModifier(player.Constitution) < 0 ? "" : "+") + Utility.GetAbilityModifier(player.Constitution)})");
-        //    AtPosition($"Intelligence {player.Intelligence} ({(Utility.GetAbilityModifier(player.Intelligence) < 0 ? "" : "+") + Utility.GetAbilityModifier(player.Intelligence)})");
-        //    AtPosition($"Wisdom {player.Wisdom} ({(Utility.GetAbilityModifier(player.Wisdom) < 0 ? "" : "+") + Utility.GetAbilityModifier(player.Wisdom)})");
-        //    AtPosition($"Charisma {player.Charisma} ({(Utility.GetAbilityModifier(player.Charisma) < 0 ? "" : "+") + Utility.GetAbilityModifier(player.Charisma)})");
-
-        //    top += 2;
-        //    Console.SetCursorPosition(left, top++);
-        //    if (player.Weapon != null)
-        //    {
-        //        if (player.Weapon.AbilityModifier >= 0)
-        //            Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} (+{player.Weapon.AbilityModifier} {player.Weapon.ModifierName}) Damage");
-        //        else
-        //            Console.Write($"{player.Weapon.Name} = {player.Weapon.Damage} ({player.Weapon.AbilityModifier} {player.Weapon.ModifierName}) Damage");
-        //    }
-        //    else
-        //    {
-        //        Console.Write($"Unarmed = 1 ({(Utility.GetAbilityModifier(player.Strength) < 0 ? "" : "+") + Utility.GetAbilityModifier(player.Strength)} Str) Damage");
-        //    }
-        //    top += 2;
-
-        //    if (player.Armor != null)
-        //    {
-        //        foreach (Armor armor in player.Armor)
-        //        {
-        //            Console.SetCursorPosition(left, top++);
-        //            if (armor.Placement.Equals("Off-hand"))
-        //                Console.Write($"{armor.Name} =  +{armor.ArmorClass} Armor Class");
-        //            else if (armor.AbilityModifier > 0)
-        //                Console.Write($"{armor.Name} = {armor.ArmorClass} (+{armor.AbilityModifier} {armor.ModifierName}) Armor Class");
-        //            else
-        //                Console.Write($"{armor.Name} = {armor.ArmorClass} Armor Class");
-        //        }
-        //    }
-        //    Console.ReadLine();
-        //}
-
-        //private static void Stat(string title, int stat)
-        //{
-        //    Console.SetCursorPosition(left, top++);
-        //    Console.WriteLine($"{title}: {stat}");
-        //}
-
-        //private static void Stat(string title, int stat, int modifier)
-        //{
-        //    Console.SetCursorPosition(left, top++);
-        //    if (modifier >= 0)
-        //        Console.WriteLine($"{title}: {stat} (+{modifier})");
-        //    else
-        //        Console.WriteLine($"{title}: {stat} ({modifier})");
-        //}
-
-        //private static void StatMax(string title, int current, int max)
-        //{
-        //    Console.SetCursorPosition(left, top++);
-        //    Console.WriteLine($"{title}: {current}/{max}");
-        //}
-
-
+                    if (ctr % 10 == 8)
+                    {
+                        ctr = 0;
+                        top = 2;
+                        left++;
+                    }
+                }
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
+        }
     }
 }

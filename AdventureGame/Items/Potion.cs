@@ -15,10 +15,14 @@ namespace AdventureGame.Items
 
         public void Consume(IPlayable player)
         {
-            player.Hp += Healing;
-            if (player.Hp > player.MaxHp)
+            if (true)
             {
-                player.Hp = player.MaxHp;
+
+            }
+            player.Hp += Healing;
+            if (player.Hp > player.MaxHp) // [HÅKAN]
+            {
+                player.Hp = player.MaxHp; // [HÅKAN]
             }
             System.Console.WriteLine(Text);
         }
