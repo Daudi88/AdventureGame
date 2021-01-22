@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace AdventureGame.HelperMethods
+namespace AdventureGame.Structure
 {
     class ColorConsole
     {

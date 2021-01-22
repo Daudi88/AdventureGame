@@ -1,4 +1,5 @@
-﻿using AdventureGame.Interfaces;
+﻿using System;
+using AdventureGame.Interfaces;
 
 namespace AdventureGame.Items
 {
@@ -15,16 +16,20 @@ namespace AdventureGame.Items
 
         public void Consume(IPlayable player)
         {
-            if (true)
+            if (player.Hp < player.MaxHp)
             {
-
+                player.Hp += Healing;
+                Console.WriteLine($"\t {Text}");
+                if (player.Hp >= player.MaxHp)
+                {
+                    player.Hp = player.MaxHp;
+                    Console.WriteLine("\t You gained full health!");
+                }
+                else
+                {
+                    Console.WriteLine("\t You gained {Health} health!");
+                }                
             }
-            player.Hp += Healing;
-            if (player.Hp > player.MaxHp) // [HÅKAN]
-            {
-                player.Hp = player.MaxHp; // [HÅKAN]
-            }
-            System.Console.WriteLine(Text);
         }
 
         public override string ToString()

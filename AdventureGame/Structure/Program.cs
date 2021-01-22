@@ -1,4 +1,4 @@
-﻿namespace AdventureGame.Game
+﻿namespace AdventureGame.Structure
 {
     class Program
     {
@@ -23,11 +23,10 @@
         // om man dricker en RedBull får det en positiv effekt under nästa fight (bool redBullBonusEffect = true;)
         // det är något knas med backpack om den är tom
         // backpack sell måste fixas
-        // Fixa backpack problemet med akumelering av items rensas
 
 
         // ÖVERKURS!
-        // Sudda ut felaktig inmatning.
-        // Bakgrundsmusik.
+        // Sudda ut felaktig inmatning. [HÅKAN]
+        // Bakgrundsmusik. [HÅKAN]
     }
 }

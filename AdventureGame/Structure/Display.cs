@@ -1,57 +1,79 @@
-﻿using AdventureGame.Characters;
-using AdventureGame.Interfaces;
-using AdventureGame.Items;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using AdventureGame.Interfaces;
 
-namespace AdventureGame.HelperMethods
+namespace AdventureGame.Structure
+
 {
-    static class Utility
+    class Display
     {
-        static readonly Random random = new Random();
-
-        public static int RollDice(int dice)
+        public static void Title()
         {
-            return random.Next(dice);
-        }
+            int top = 2;
+            int left = 8;
+            int ctr = 0;
+            int keyCtr = 0;
 
-        public static int RollDice(string dice)
-        {
-            int times = int.Parse(dice[0].ToString());
-            int sides = int.Parse(dice[2..]);
-            int result = 0;
-            for (int i = 0; i < times; i++)
+            string t = " ▀       █       █       █▀    ▄████████████████████████ █▀    █ █▀    ▀ ██      ▄█▀    ";
+            string h = "            ▀      ▄▀    ███████▄███████████████   ▄▀      ▄▀      ▄▀   ████████▄██████▀ ██████    ▄▀      ▄    ";
+            string e = "            ▀      ▄▀    ███████▄████████████████  ▄▀  ██  ▄▀  ██  ▄▀  ████  █████▀  ▄████    ██";
+            string space = "                                                ";
+            string s = "            ▀       █  ▄ ████  █▄████ ▄██████ ███   █  ██   █  ██   █  ██   █  ████ ██████▀ ███▀██  ███ ";
+            string i = "         ███████▄██████▀███████   ▌▌▌   ";
+            string n = "        ███████ ███████▀████████▄▀      ▄▀      ▄▀      ▄███████ ██████▀ ▄█████ ";
+            string o = "         ██████ ▄██████▀█████████      ██      ██      █████████▄██████▀ ██████ ";
+            string b = "        ▀   ▀  ▀█  ▄▀  ██████████████████████████  ▄▀  ██  ▄▀  ██  ▄▀  ██  ██  █████████▄██▀▄██▀ ██  ▄█ ";
+            string[] title = new string[] { t, h, e, space, s, h, i, n, o, b, i };
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            foreach (var letter in title)
             {
-                result += random.Next(1, sides + 1);
+                for (int j = 0; j < letter.Length; j++)
+                {
+                    ctr++;
+                    Console.SetCursorPosition(left, top++);
+                    Console.Write(letter[j]);
+
+                    if (Console.KeyAvailable)
+                    {
+                        keyCtr++;
+                    }
+
+                    if (keyCtr == 0)
+                    {
+                        Thread.Sleep(1);
+                    }
+
+                    if (ctr % 10 == 8)
+                    {
+                        ctr = 0;
+                        top = 2;
+                        left++;
+                    }
+                }
             }
-            return result;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
         }
 
-        // [HÅKAN] Ge alla fiender balanserad armor 
-        public static List<Enemy> GetEnemies()
+        public static string MainMenu()
         {
-            List<Enemy> monsters = new List<Enemy>()
-              {
-                new Enemy("Kisame", 1, 10, "1d4", 50),
-                new Enemy("Kabuto", 1, 10, "1d4", 50),
-                new Enemy("Obito", 1, 10, "1d4", 50),
-                new Enemy("Madara", 1, 10, "1d4", 50),
-                new Enemy("Ginkaku", 2, 20, "2d4", 100),
-                new Enemy("Kimimaro", 3, 30, "2d6", 150),
-                new Enemy("Deidara", 4, 40, "2d8", 200),
-                new Enemy("Kakuzu", 5, 60, "2d10", 250),
-                new Enemy("Hanzo", 6, 80, "3d8", 300),
-                new Enemy("Orochimaru", 7, 25, "3d10", 350),
-                new Enemy("Nagato", 8, 200, "2d16", 400),
-                new Enemy("Haku", 9, 250, "3d16", 450)
-              };
-            return monsters;
-
-
+            string[] content = new string[]
+            {
+                "1. Go on an Adventure",
+                "2. Go to Tavern",
+                "C. Show Details",
+                "B. Open Backpack",
+                "M. Open Map",
+                "E. Exit Game"
+            };
+            Console.WriteLine();
+            Display.PrintWithFrame("[darkcyan]MENU[/darkcyan]", content);
+            Console.Write("\t > ");
+            return ColorConsole.ReadInBlue();
         }
 
-        // Lägg i Draw-klassen
         public static void PrintWithFrame(string title, string[] content)
         {
             List<int> lengths = new List<int>();
@@ -121,10 +143,8 @@ namespace AdventureGame.HelperMethods
                 Console.Write("━");
             }
             Console.WriteLine("┛");
-
         }
 
-        // Lägg i Draw-klassen
         public static void PrintWithDividedFrame(string title1, string[] texts1, string title2, string[] texts2, int width)
         {
             ColorConsole.WriteEmbeddedColor($"\t┏━{title1}");
@@ -167,60 +187,9 @@ namespace AdventureGame.HelperMethods
                 Console.Write("━");
             }
             Console.WriteLine("┛");
-
         }
 
-        public static void TypeOverWrongDoings() // Lägg i Draw-klassen
-        {
-
-        }
-
-        internal static Armor[] GetArmors()
-        {
-            Armor[] armor = new Armor[]
-            {
-                new Armor("Flak Jacket", 100, 15),
-                new Armor("Steam Armour", 200, 20),
-                new Armor("Shinobi Battle Armour", 500, 50),
-                new Armor("Chakra Armour", 2000, 75),
-                new Armor("Infinite Armour", 5000, 100)
-            };
-            return armor;
-        }
-
-        public static Weapon[] GetWeapons()
-        {
-            Weapon[] weapons = new Weapon[]
-            {
-                new Weapon("Kunai", 150, "1d6"),
-                new Weapon("Shuriken", 250, "1d8"),
-                new Weapon("Bow & Arrow", 500, "1d10"),
-                new Weapon("Crossbow", 750, "1d12"),
-                new Weapon("Tekagi-Shuko", 1000, "2d6"),
-                new Weapon("Chakra Blade", 1500, "2d8"),
-                new Weapon("Spear", 2000, "2d10"),
-                new Weapon("Sword", 2500, "2d12")
-            };
-            return weapons;
-
-            // Seven Swordsmen of the Mist vapen:
-            // Kiba, Kubikiribōchō, Nuibari, Samehada, Shibuki, Hiramekarei, Kabutowari
-        }
-
-        public static Potion[] GetPotions()
-        {
-            Potion[] potions = new Potion[]
-            {
-                new Potion("Powerking", 15, 5, ""),
-                new Potion("Red Bull", 30, 20, "\t You drink a powerfull potion that gives you wings.")
-            };
-            return potions;
-
-        }
-
-
-
-        public static void PrintMap() // Lägg den här metoden i Draw-klassen
+        public static void Map()
         {
             Console.WriteLine();
             int mapTop = Console.CursorTop;
@@ -248,17 +217,16 @@ namespace AdventureGame.HelperMethods
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]# ##### ## # ### # ##[/darkgreen] [darkgray]AAA AA A AAAA A AAA[/darkgray] [darkgreen]## ### # ### #### #[/darkgreen]                 ┃");
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgreen]### ## #### ######[/darkgreen] [darkgray]AAA AA AAAAA AAA AA AAAA[/darkgray] [darkgreen]# ### ## # ### ## #### ## ### ####[/darkgreen]┃");
             ColorConsole.WriteEmbeddedColorLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            Console.WriteLine("\t [Press enter to continue]");
             int mapBottom = Console.CursorTop;
             PrintPlayer(mapTop);
-            Console.ReadLine();
-            Console.SetWindowPosition(0, Console.CursorTop - 30);
             Console.SetCursorPosition(0, mapBottom);
+            Console.WriteLine("\t [Press enter to continue]");
+            Console.ReadKey(true);
+            Console.SetWindowPosition(0, Console.CursorTop - 30);
         }
-
-        private static void PrintPlayer(int mapTop) // [HÅKAN] Lägg den här metoden i Draw-klassen.
+        private static void PrintPlayer(int mapTop)
         {
-            IPlayable player = Game.player; // [HÅKAN] lös ;)
+            IPlayable player = Game.player;
             int left = 0;
             int top = mapTop;
             switch (player.Pos)
@@ -357,5 +325,26 @@ namespace AdventureGame.HelperMethods
             Console.SetCursorPosition(left, top);
             ColorConsole.WriteInRed("*");
         }
+
+        public static void LoseScreen()
+        {
+            Console.WriteLine("\n\t Sorry, you lose...");
+            Console.WriteLine("\t [Press enter to continue]");
+            Console.ReadLine();
+            Game.PlayAgain();
+        }
+
+        public static void WinScreen()
+        {
+            Console.WriteLine("\n\t Yeay! You win!");
+            Console.WriteLine("\t [Press enter to continue]");
+            Console.ReadLine();
+            Game.PlayAgain();
+        }
+
+
+
+
+
     }
 }
