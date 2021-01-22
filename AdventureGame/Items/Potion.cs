@@ -16,10 +16,10 @@ namespace AdventureGame.Items
 
         public void Consume(IPlayable player)
         {
+            Console.WriteLine($"\t {Text}");
             if (player.Hp < player.MaxHp)
             {
                 player.Hp += Healing;
-                Console.WriteLine($"\t {Text}");
                 if (player.Hp >= player.MaxHp)
                 {
                     player.Hp = player.MaxHp;
@@ -28,7 +28,7 @@ namespace AdventureGame.Items
                 else
                 {
                     Console.WriteLine("\t You gained {Health} health!");
-                }                
+                }
             }
         }
 

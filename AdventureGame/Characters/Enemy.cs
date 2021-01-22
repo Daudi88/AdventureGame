@@ -1,4 +1,4 @@
-﻿using AdventureGame.HelperMethods;
+﻿using AdventureGame.Structure;
 using System;
 
 namespace AdventureGame.Characters

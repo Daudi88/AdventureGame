@@ -1,4 +1,5 @@
 ﻿using AdventureGame.Interfaces;
+using AdventureGame.Characters;
 using System;
 
 namespace AdventureGame.Items
@@ -12,7 +13,7 @@ namespace AdventureGame.Items
             Damage = damage;
         }
 
-        public void Equip(IPlayable player, IEquipable weapon)
+        public void Equip(Player player, IEquipable weapon)
         {
             if (player.Weapon != null)
             {

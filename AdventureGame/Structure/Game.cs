@@ -1,9 +1,7 @@
 ﻿using AdventureGame.Characters;
-using AdventureGame.Interfaces;
 using AdventureGame.Items;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Media;
 using System.Threading;
 
 namespace AdventureGame.Structure
@@ -11,15 +9,18 @@ namespace AdventureGame.Structure
     class Game
     {
         public static Player player;
-        private static bool treasureTaken = false;
-        private static bool haveYouMetHim = false;
-        private static bool graveyardVisited = false;
+
         public void Setup()
         {
             Console.Title = "The Shinobi";
             Console.SetWindowSize(130, 75);
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
+
+            var soundLocation = Environment.CurrentDirectory + @"C:\Orginal.wav";
+            SoundPlayer player = new SoundPlayer(@"C:\Orginal.wav");
+            player.Play();
+            player.Play();            
             StartGame();
         }
 
@@ -28,6 +29,13 @@ namespace AdventureGame.Structure
             Console.Clear();
             Display.Title();
             CharacterCreation();
+            string[] content = new string[]
+            {
+                $"You, {player.Name} wake up in the Hidden Leaf Village and sense that something is wrong!",
+                "Kaguya Otsutsuki have kidnapped Hanare and taken her to his cave in the mountains.",
+                "It is your duty to find and rescue her!"
+            };
+            Display.Intro(content);
             Run();
         }
 
@@ -81,20 +89,20 @@ namespace AdventureGame.Structure
         {
             while (true)
             {
-                string choice = MainMenu();
+                string choice = Display.MainMenu();
                 switch (choice.ToUpper())
                 {
                     case "1":
-                        GoAdventure();
+                        Adventure.GoOnAdventure();
                         break;
                     case "2":
-                        Inn();
+                        Tavern.Inn(player);
                         break;
                     case "C":
-                        ShowDetails();
+                        Display.Details();
                         break;
                     case "B":
-                        Backpack();
+                        Display.Backpack();
                         break;
                     case "M":
                         Display.Map();
@@ -106,132 +114,6 @@ namespace AdventureGame.Structure
                         break;
                 }
             }
-        }
-
-        
-
-        private void Backpack(string str = null)
-        {
-            if (player.Backpack != null)
-            {
-                bool exit = false;
-                List<string> content = new List<string>();
-                if (str == null)
-                {
-                    while (!exit)
-                    {
-                        content.Clear();
-                        int ctr = 1;
-                        foreach (var item in player.Backpack)
-                        {
-                            content.Add($"{ctr++}. [yellow]{item}[/yellow]");
-                        }
-                        content.Add($"{ctr}. Go back");
-                        Console.WriteLine("\n\t What item do you want to use");
-                        Display.PrintWithFrame("[darkcyan]BACKPACK[/darkcyan]", content.ToArray());
-                        Console.Write("\t > ");
-                        if (int.TryParse(ColorConsole.ReadInBlue(), out int choice))
-                        {
-                            if (choice < ctr)
-                            {
-                                Item item = player.Backpack[choice - 1];
-                                if (item is IEquipable equipable)
-                                {
-                                    equipable.Equip(player, equipable);
-
-                                }
-                                else if (item is IConsumable consumable)
-                                {
-                                    consumable.Consume(player);
-                                }
-
-                                item.Quantity--;
-                                if (item.Quantity == 0)
-                                {
-                                    player.Backpack.Remove(item);
-                                }
-                            }
-                            else
-                            {
-                                exit = true;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("\t Invalid choice, try again!");
-                            Console.WriteLine("\t [Press enter to continue]");
-                            Console.ReadLine();
-                        }
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < player.Backpack.Count; i++)
-                    {
-                        content.Add($"{i + 1}. [yellow]{player.Backpack[i]} {player.Backpack[i].Cost}[/yellow]");
-                    }
-                    Console.WriteLine("\n\t What item do you want to sell?");
-                    // Skriv ut alla items i backpack
-                }
-
-            }
-            else
-            {
-                Console.WriteLine("\t Your backpack is empty...");
-                Console.WriteLine("\t [Press enter to continue]");
-                Console.ReadLine();
-            }
-
-        }
-                        
-
-        private void ShowDetails()
-        {
-            Console.WriteLine();
-            string[] content1 = new string[]
-            {
-                $"Name: [yellow]{player.Name}[/yellow]",
-                $"Level: [yellow]{player.Level}[/yellow]",
-                $"Hp: [yellow]{player.Hp}/{player.MaxHp}[/yellow]",
-                $"Exp: [yellow]{player.Exp}/{player.MaxExp}[/yellow]",
-                $"Damage: [yellow]{player.Damage}[/yellow]",
-                $"Gold: [yellow]{player.Gold}[/yellow]",
-            };
-
-            string armor;
-            if (player.Armor != null)
-            {
-                armor = player.Armor.ToString();
-            }
-            else
-            {
-                armor = new string(string.Empty);
-            }
-
-            string weapon;
-            if (player.Weapon != null)
-            {
-                weapon = player.Weapon.ToString();
-            }
-            else
-            {
-                weapon = new string(string.Empty);
-            }
-
-            string[] content2 = new string[]
-            {
-                $"Armor: [yellow]{armor}[/yellow]",
-                $"Weapon: [yellow]{weapon}[/yellow]"
-            };
-
-            string[] contents = new string[content1.Length + content2.Length];
-            Array.Copy(content1, contents, content1.Length);
-            Array.Copy(content2, 0, contents, content1.Length, content2.Length);
-
-            string longest = contents.OrderByDescending(s => s.Length).First();
-            Display.PrintWithDividedFrame("[darkcyan]DETAILS[/darkcyan]", content1, "EQUIPPED", content2, longest.Length - 17);
-            Console.WriteLine("\t [Press enter to continue]");
-            Console.ReadLine();
         }
 
         public static void PlayAgain()

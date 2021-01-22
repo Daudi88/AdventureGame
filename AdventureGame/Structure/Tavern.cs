@@ -1,15 +1,12 @@
 ﻿using AdventureGame.Characters;
-using AdventureGame.Interfaces;
 using AdventureGame.Items;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AdventureGame.Structure
 {
     class Tavern
     {
-        public void Inn(Player player)
+        public static void Inn(Player player)
         {
             Console.WriteLine("\n\t Welcome to the Barbarian Inn!");
             bool exit = false;
@@ -24,7 +21,7 @@ namespace AdventureGame.Structure
                     "3. Purchase or sell items",
                     "E. Leave"
                 };
-                Utility.PrintWithFrame("", content);
+                Display.WithFrame("", content);
                 Console.Write("\t > ");
                 string choice = ColorConsole.ReadInBlue();
                 switch (choice.ToUpper())
@@ -59,14 +56,14 @@ namespace AdventureGame.Structure
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("\t Invalid choice. Try again...\n");
+                        Utility.TypeOverWrongDoings("Invalid choice.Try again...");
                         break;
                 }
                 Console.SetWindowPosition(0, Console.CursorTop - 20);
             }
         }
 
-        private void Rest(Player player)
+        private static void Rest(Player player)
         {
             player.Hp = player.MaxHp;
             Console.WriteLine("\t You slept like a baby and are fully rested and healed.");
@@ -74,7 +71,7 @@ namespace AdventureGame.Structure
             Console.ReadLine();
         }
 
-        private void Eat(Player player)
+        private static void Eat(Player player)
         {
             player.Hp += player.MaxHp / 2;
             Console.WriteLine("\t You feel much better after a good meal.");
@@ -83,7 +80,7 @@ namespace AdventureGame.Structure
             Console.ReadLine();
         }
 
-        private void Shop(Player player)
+        private static void Shop(Player player)
         {
             int ctr = 0;
             bool exit = false;
@@ -103,7 +100,7 @@ namespace AdventureGame.Structure
                     "4. Sell items",
                     "5. Leave"
                 };
-                Utility.PrintWithFrame("", content);
+                Display.WithFrame("", content);
                 Console.Write("\t > ");
                 int.TryParse(ColorConsole.ReadInBlue(), out int choice);
                 switch (choice)
@@ -118,21 +115,21 @@ namespace AdventureGame.Structure
                         BuyPotions();
                         break;
                     case 4:
-                        SellItems();
+                        Utility.SellItems();
                         break;
                     case 5:
                         Console.WriteLine("\t Thank you for visiting! We hope to see you back again soon!");
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("\t Invalid choice. Try again...\n");
+                        Utility.TypeOverWrongDoings("Invalid choice.Try again...");
                         break;
                 }
                 Console.SetWindowPosition(0, Console.CursorTop - 20);
             }
         }
 
-        private void BuyArmor()
+        private static void BuyArmor()
         {
             while (true)
             {
@@ -161,13 +158,13 @@ namespace AdventureGame.Structure
                 }
                 else
                 {
-                    Console.WriteLine("\t Invalid choice, try again!");
+                    Utility.TypeOverWrongDoings("Invalid choice.Try again...");
                 }
                 Console.SetWindowPosition(0, Console.CursorTop - 20);
             }
         }
 
-        private void BuyWeapons()
+        private static void BuyWeapons()
         {
             Weapon[] weapons = Utility.GetWeapons();
             while (true)
@@ -205,7 +202,7 @@ namespace AdventureGame.Structure
             }
         }
 
-        private void BuyPotions()
+        private static void BuyPotions()
         {
             Potion[] potions = Utility.GetPotions();
             while (true)
@@ -231,7 +228,7 @@ namespace AdventureGame.Structure
                 }
                 else
                 {
-                    Console.WriteLine("\t Invalid choice, try again!");
+                    Utility.TypeOverWrongDoings("Invalid choice.Try again...");
                 }
                 Console.SetWindowPosition(0, Console.CursorTop - 20);
             }

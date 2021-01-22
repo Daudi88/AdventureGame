@@ -172,5 +172,12 @@ namespace AdventureGame.Structure
             Console.Write(text);
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+        public static void WriteInYellow(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AdventureGame.HelperMethods;
-using AdventureGame.Interfaces;
+﻿using AdventureGame.Interfaces;
 using AdventureGame.Items;
 using System;
 using System.Collections.Generic;

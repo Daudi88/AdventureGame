@@ -1,15 +1,21 @@
-﻿using System;
+﻿using AdventureGame.Characters;
+using AdventureGame.Items;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace AdventureGame.Structure
 {
     class Adventure
     {
-
-        private void GoAdventure()
+        private static bool treasureTaken = false;
+        private static bool haveYouMetHim = false;
+        private static bool graveyardVisited = false;
+        public static void GoOnAdventure()
         {
-
+            Player player = Game.player;
             Console.WriteLine("\n\t You start your adventure by going north...");
             Console.WriteLine("\t Be careful not to loose yourself in the wild!");
             player.Pos = 0.1;
@@ -36,7 +42,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -65,13 +71,13 @@ namespace AdventureGame.Structure
                                 exit = true;
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -93,7 +99,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -131,13 +137,13 @@ namespace AdventureGame.Structure
                                 EncounterCheck();
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -159,7 +165,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -183,13 +189,13 @@ namespace AdventureGame.Structure
                                 EncounterCheck();
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -211,7 +217,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -242,13 +248,13 @@ namespace AdventureGame.Structure
                                 EncounterCheck();
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -270,7 +276,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -293,7 +299,7 @@ namespace AdventureGame.Structure
                                 exit = true;
                                 if (player.Pos == 2.2)
                                 {
-                                    MeetHiruzen();
+                                    MeetHiruzen(player);
                                 }
                                 else
                                 {
@@ -301,13 +307,13 @@ namespace AdventureGame.Structure
                                 }
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -328,7 +334,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -352,7 +358,7 @@ namespace AdventureGame.Structure
                                 exit = true;
                                 if (player.Pos == -2.3)
                                 {
-                                    AbuHassansShop();
+                                    AbuHassansShop(player);
                                 }
                                 else
                                 {
@@ -360,13 +366,13 @@ namespace AdventureGame.Structure
                                 }
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -387,7 +393,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -405,11 +411,11 @@ namespace AdventureGame.Structure
                                 exit = true;
                                 if (player.Pos == 0.4)
                                 {
-                                    BossEncounter();
+                                    BossEncounter(player);
                                 }
                                 else if (player.Pos == -2.2)
                                 {
-                                    Treasure();
+                                    Treasure(player);
                                 }
                                 else
                                 {
@@ -422,7 +428,7 @@ namespace AdventureGame.Structure
                                 exit = true;
                                 if (player.Pos == 3.0)
                                 {
-                                    Graveyard();
+                                    Graveyard(player);
                                 }
                                 else
                                 {
@@ -430,13 +436,13 @@ namespace AdventureGame.Structure
                                 }
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -457,7 +463,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -475,13 +481,13 @@ namespace AdventureGame.Structure
                                 EncounterCheck();
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -502,7 +508,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                         };
-                        Utility.PrintWithFrame("", content);
+                        Display.WithFrame("", content);
                         Console.Write("\t > ");
                         string choice = ColorConsole.ReadInBlue();
                         switch (choice.ToUpper())
@@ -520,13 +526,13 @@ namespace AdventureGame.Structure
                                 EncounterCheck();
                                 break;
                             case "C":
-                                ShowDetails();
+                                Display.Details();
                                 break;
                             case "B":
-                                Backpack();
+                                Display.Backpack();
                                 break;
                             case "M":
-                                Utility.PrintMap();
+                                Display.Map();
                                 break;
                             default:
                                 Console.WriteLine("\t Invalid choice...");
@@ -544,7 +550,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                     };
-                    Utility.PrintWithFrame("", content);
+                    Display.WithFrame("", content);
                     Console.Write("\t > ");
                     string choice = ColorConsole.ReadInBlue();
                     switch (choice.ToUpper())
@@ -556,13 +562,13 @@ namespace AdventureGame.Structure
                             EncounterCheck();
                             break;
                         case "C":
-                            ShowDetails();
+                            Display.Details();
                             break;
                         case "B":
-                            Backpack();
+                            Display.Backpack();
                             break;
                         case "M":
-                            Utility.PrintMap();
+                            Display.Map();
                             break;
                         default:
                             Console.WriteLine("\t Invalid choice...");
@@ -579,7 +585,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                     };
-                    Utility.PrintWithFrame("", content);
+                    Display.WithFrame("", content);
                     Console.Write("\t > ");
                     string choice = ColorConsole.ReadInBlue();
                     switch (choice.ToUpper())
@@ -591,13 +597,13 @@ namespace AdventureGame.Structure
                             EncounterCheck();
                             break;
                         case "C":
-                            ShowDetails();
+                            Display.Details();
                             break;
                         case "B":
-                            Backpack();
+                            Display.Backpack();
                             break;
                         case "M":
-                            Utility.PrintMap();
+                            Display.Map();
                             break;
                         default:
                             Console.WriteLine("\t Invalid choice...");
@@ -614,7 +620,7 @@ namespace AdventureGame.Structure
                             "B. Open Backpack",
                             "M. Open Map"
                     };
-                    Utility.PrintWithFrame("", content);
+                    Display.WithFrame("", content);
                     Console.Write("\t > ");
                     string choice = ColorConsole.ReadInBlue();
                     switch (choice.ToUpper())
@@ -633,13 +639,13 @@ namespace AdventureGame.Structure
                             EncounterCheck();
                             break;
                         case "C":
-                            ShowDetails();
+                            Display.Details();
                             break;
                         case "B":
-                            Backpack();
+                            Display.Backpack();
                             break;
                         case "M":
-                            Utility.PrintMap();
+                            Display.Map();
                             break;
                         default:
                             Console.WriteLine("\t Invalid choice...");
@@ -650,7 +656,7 @@ namespace AdventureGame.Structure
             }
         }
 
-        private void EncounterCheck()
+        private static void EncounterCheck()
         {
             int chance = Utility.RollDice(10);
             if (chance == 0)
@@ -665,8 +671,9 @@ namespace AdventureGame.Structure
             }
         }
 
-        private void Battle()
+        private static void Battle()
         {
+            Player player = Game.player;
             Enemy[] enemies = Utility.GetEnemies().Where(e => e.Level <= player.Level).ToArray();
             Enemy enemy = enemies[Utility.RollDice(enemies.Length)];
             int battleCtr = 0;
@@ -679,7 +686,7 @@ namespace AdventureGame.Structure
                     content.Add($"You have encountered {enemy.Name}!");
                     battleCtr++;
                 }
-                int damage = player.Attack();
+                int damage = player.Attack(enemy);
                 enemy.Hp -= damage;
                 content.Add($"You hit {enemy.Name} with your {player.Weapon.Name} dealing {damage} damage!");
                 if (enemy.Hp <= 0)
@@ -697,7 +704,7 @@ namespace AdventureGame.Structure
                 }
                 else
                 {
-                    damage = enemy.Attack();
+                    damage = enemy.Attack(player);
                     player.Hp -= damage;
                     content.Add($"{enemy.Name} hits you dealing {damage} damage!");
                     if (player.Hp <= 0)
@@ -718,11 +725,11 @@ namespace AdventureGame.Structure
                         content.Add($"{enemy.Name} Hp: {enemy.Hp}");
                     }
                 }
-                Utility.PrintWithFrame("[red]BATTLE[/red]", content.ToArray());
+                Display.WithFrame("[red]BATTLE[/red]", content.ToArray());
 
                 if (player.Hp <= 0)
                 {
-                    LoseScreen();
+                    Display.LoseScreen();
                 }
                 else
                 {
@@ -732,7 +739,7 @@ namespace AdventureGame.Structure
             }
         }
 
-        private void AbuHassansShop()
+        private static void AbuHassansShop(Player player)
         {
             Console.WriteLine("\n\t Welcome to Abu hassan's one stop shop for everyting a good adventurer could ever need");
             Console.WriteLine("\t Welcome back again soon!");
@@ -740,7 +747,7 @@ namespace AdventureGame.Structure
             Console.ReadLine();
         }
 
-        private void Treasure()
+        private static void Treasure(Player player)
         {
             if (!treasureTaken)
             {
@@ -755,7 +762,7 @@ namespace AdventureGame.Structure
             Console.ReadLine();
         }
 
-        private void Graveyard()
+        private static void Graveyard(Player player)
         {
             if (!graveyardVisited)
             {
@@ -770,8 +777,8 @@ namespace AdventureGame.Structure
             Console.ReadLine();
         }
 
-        private void MeetHiruzen()
-        {
+        private static void MeetHiruzen(Player player)
+        {           
             if (!haveYouMetHim)
             {
                 Weapon weapon = new Weapon("Chakra Blade", 1500, "2d8");
@@ -791,7 +798,7 @@ namespace AdventureGame.Structure
                 "[magenta]Take these items and be on your way![/magenta]",
                 $"You got a {weapon.Name}, a {armor.Name} and 10 potions."
                 };
-                Utility.PrintWithFrame("[magenta]HIRUZEN[/magenta]", content);
+                Display.WithFrame("[magenta]HIRUZEN[/magenta]", content);
                 player.Backpack.Add(weapon);
                 player.Backpack.Add(armor);
                 player.Backpack.Add(potion);
@@ -806,19 +813,18 @@ namespace AdventureGame.Structure
 
         }
 
-        private void BossEncounter()
+        private static void BossEncounter(Player player)
         {
             if (player.Level >= 10)
-            {
-                Enemy boss = new Enemy("Kaguya Otsutsuki", 10, 500, "3d18", 500);
-                FightTheBoss();
+            {                
+                FightTheBoss(player);
                 if (player.Hp > 0)
                 {
-                    WinScreen();
+                    Display.WinScreen();
                 }
                 else
                 {
-                    LoseScreen();
+                    Display.LoseScreen();
                 }
             }
             else
@@ -830,8 +836,9 @@ namespace AdventureGame.Structure
 
         }
 
-        private void FightTheBoss()
+        private static void FightTheBoss(Player player)
         {
+            Enemy boss = new Enemy("Kaguya Otsutsuki", 10, 500, 50, "3d18", 500);
             player.Hp -= 1000;
             Console.WriteLine("\n\t You were not ready!");
             string[] haha = new string[] { "Ha! ", "Ha! ", "Ha! ", };

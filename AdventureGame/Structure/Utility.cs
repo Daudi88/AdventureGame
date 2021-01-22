@@ -33,17 +33,17 @@ namespace AdventureGame.Structure
             List<Enemy> monsters = new List<Enemy>()
               {
                 new Enemy("Kisame", 1, 10, 2, "1d4", 50),
-                new Enemy("Kabuto", 1, 10, "1d4", 50),
-                new Enemy("Obito", 1, 10, "1d4", 50),
-                new Enemy("Madara", 1, 10, "1d4", 50),
-                new Enemy("Ginkaku", 2, 20, "2d4", 100),
-                new Enemy("Kimimaro", 3, 30, "2d6", 150),
-                new Enemy("Deidara", 4, 40, "2d8", 200),
-                new Enemy("Kakuzu", 5, 60, "2d10", 250),
-                new Enemy("Hanzo", 6, 80, "3d8", 300),
-                new Enemy("Orochimaru", 7, 25, "3d10", 350),
-                new Enemy("Nagato", 8, 200, "2d16", 400),
-                new Enemy("Haku", 9, 250, "3d16", 450)
+                new Enemy("Kabuto", 1, 10, 3, "1d4", 50),
+                new Enemy("Obito", 1, 10, 4, "1d4", 50),
+                new Enemy("Madara", 1, 10, 5, "1d4", 50),
+                new Enemy("Ginkaku", 2, 20, 6, "2d4", 100),
+                new Enemy("Kimimaro", 3, 30, 7, "2d6", 150),
+                new Enemy("Deidara", 4, 40, 8, "2d8", 200),
+                new Enemy("Kakuzu", 5, 60, 9, "2d10", 250),
+                new Enemy("Hanzo", 6, 80, 10, "3d8", 300),
+                new Enemy("Orochimaru", 7, 25, 12, "3d10", 350),
+                new Enemy("Nagato", 8, 200, 14, "2d16", 400),
+                new Enemy("Haku", 9, 250, 16, "3d16", 450)
               };
             return monsters;
         }
@@ -129,22 +129,24 @@ namespace AdventureGame.Structure
 
         public static void SellItems()
         {
-            Backpack("sell");
+            Display.Backpack("sell");
         }
 
-        public static void TypeOverWrongDoings() // [HÅKAN] Skriv metoden!
+        public static void TypeOverWrongDoings(string message)
         {
+            int top = Console.CursorTop;
+            int left = 5;
             Console.Write("\t > ");
             Console.ReadLine();
-            Console.WriteLine("\t Invalid choice...");
-
-            // Ta in höjden från int top = Console.CursorTop;
-            // (left = 9, top)
-            // Console.SetCursorPosition(left, --top);
-            // Console.WriteLine("                                            ");
-            // Console.WriteLine(new String(' ', 20));
-            // Console.SetCursorPosition(left, --top);
-            // Console.Write("\t > ");
+            Console.Write($"\t {message}");
+            Console.ReadLine();
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine("                                         ");
+            Console.SetCursorPosition(left, ++top);
+            Console.WriteLine("                                         ");
+            Console.SetCursorPosition(left, --top);
+            Console.Write("\t > ");
+            Console.ReadLine();
 
         }
     }

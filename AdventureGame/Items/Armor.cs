@@ -1,4 +1,5 @@
 ﻿using AdventureGame.Interfaces;
+using AdventureGame.Characters;
 using System;
 
 namespace AdventureGame.Items
@@ -19,7 +20,7 @@ namespace AdventureGame.Items
             Defence = defence ; // defence = defence KLAR
         }
 
-        public void Equip(IPlayable player, IEquipable item)
+        public void Equip(Player player, IEquipable item)
         {
             if (player.Armor != null)
             {
