@@ -10,7 +10,7 @@ namespace AdventureGame.Items.Armors
         {
             Name = "Steam Armor";
             Cost = 200;
-            Defence = 8;
+            Defence = 5;
         }
     }
 }

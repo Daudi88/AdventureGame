@@ -1,4 +1,5 @@
 ﻿using AdventureGame.Characters;
+using AdventureGame.Characters.Enemies;
 using AdventureGame.Items;
 using AdventureGame.Items.Armors;
 using AdventureGame.Items.Potions;
@@ -30,22 +31,22 @@ namespace AdventureGame.Structure
             return result;
         }
 
-        public static List<Enemy> GetEnemies()
+        public static List<Character> GetEnemies()
         {
-            List<Enemy> monsters = new List<Enemy>()
+            List<Character> monsters = new List<Character>()
               {
-                new Enemy("Kisame", 1, 10, 2, "1d4", 50),
-                new Enemy("Kabuto", 1, 10, 3, "1d4", 50),
-                new Enemy("Obito", 1, 10, 4, "1d4", 50),
-                new Enemy("Madara", 1, 10, 5, "1d4", 50),
-                new Enemy("Ginkaku", 2, 20, 6, "2d4", 100),
-                new Enemy("Kimimaro", 3, 30, 7, "2d6", 150),
-                new Enemy("Deidara", 4, 40, 8, "2d8", 200),
-                new Enemy("Kakuzu", 5, 60, 9, "2d10", 250),
-                new Enemy("Hanzo", 6, 80, 10, "3d8", 300),
-                new Enemy("Orochimaru", 7, 25, 12, "3d10", 350),
-                new Enemy("Nagato", 8, 200, 14, "2d16", 400),
-                new Enemy("Haku", 9, 250, 16, "3d16", 450)
+                new Kisame(),
+                //new Enemy("Kabuto", 1, 10, 3, "1d4", 50),
+                //new Enemy("Obito", 1, 10, 4, "1d4", 50),
+                //new Enemy("Madara", 1, 10, 5, "1d4", 50),
+                //new Enemy("Ginkaku", 2, 20, 6, "2d4", 100),
+                //new Enemy("Kimimaro", 3, 30, 7, "2d6", 150),
+                //new Enemy("Deidara", 4, 40, 8, "2d8", 200),
+                //new Enemy("Kakuzu", 5, 60, 9, "2d10", 250),
+                //new Enemy("Hanzo", 6, 80, 10, "3d8", 300),
+                //new Enemy("Orochimaru", 7, 25, 12, "3d10", 350),
+                //new Enemy("Nagato", 8, 200, 14, "2d16", 400),
+                //new Enemy("Haku", 9, 250, 16, "3d16", 450)
               };
             return monsters;
         }
@@ -68,14 +69,14 @@ namespace AdventureGame.Structure
         {
             Weapon[] weapons = new Weapon[]
             {
-                new Weapon("Kunai", 150, "1d6"),
-                new Weapon("Shuriken", 250, "1d8"),
-                new Weapon("Bow & Arrow", 500, "1d10"),
-                new Weapon("Crossbow", 750, "1d12"),
-                new Weapon("Tekagi-Shuko", 1000, "2d6"),
-                new Weapon("Chakra Blade", 1500, "2d8"),
-                new Weapon("Spear", 2000, "2d10"),
-                new Weapon("Sword", 2500, "2d12")
+
+                new Kunai(),
+                new Shuriken(),              
+                new Crossbow(),
+                new TekagiShuko(),
+                new ChakraBlade(),
+                new Spear(),
+                new Sword()
             };
             return weapons;
         }
@@ -84,8 +85,7 @@ namespace AdventureGame.Structure
         {
             Potion[] potions = new Potion[]
             {
-                new Potion("Powerking", 15, 5, ""),
-                new Potion("Red Bull", 30, 20, "\t You drink a powerfull potion that gives you wings.")
+                new HealingPotion()
             };
             return potions;
         }

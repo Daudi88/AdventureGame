@@ -1,5 +1,4 @@
 ﻿using AdventureGame.Characters;
-using AdventureGame.Items;
 using AdventureGame.Items.Armors;
 using AdventureGame.Items.Potions;
 using AdventureGame.Items.Weapons;
@@ -16,7 +15,7 @@ namespace AdventureGame.Structure
                 player.Gold -= 100;
                 player.Hp += player.MaxHp / 4;
                 Console.WriteLine("\t You feel much better after a good burger.");
-                Console.WriteLine("\t Your Hp is now restored by 25%.");
+                Console.WriteLine("\t Your health is now restored by 25%.");
                 Console.WriteLine("\t [Press enter to continue]");
                 Console.ReadLine();
             }
@@ -33,7 +32,7 @@ namespace AdventureGame.Structure
             {
                 player.Gold -= 300;
                 player.Hp = player.MaxHp;
-                Console.WriteLine("\t The Dr. made a prostate exam and you wake up rested and fully healed.");
+                Console.WriteLine("\t The Dr. patched you up and you feel rested and fully healed.");
                 Console.WriteLine("\t [Press enter to continue]");
                 Console.ReadLine();
             }
@@ -107,11 +106,11 @@ namespace AdventureGame.Structure
                 Console.WriteLine("\n\t What armor do you want to buy?");
                 Console.WriteLine("\t┏━ARMOR━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
                 Console.WriteLine("\t┃ Nr:  Name:                    Cost:   Defence:   ┃");
-                ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Flak Jacket              500     +10[/yellow]        ┃");
-                ColorConsole.WriteEmbeddedColorLine("\t┃ 2.   [yellow]Steam Armour             750     +20[/yellow]        ┃");
-                ColorConsole.WriteEmbeddedColorLine("\t┃ 3.   [yellow]Shinobi Battle Armour    1500    +50[/yellow]        ┃");
-                ColorConsole.WriteEmbeddedColorLine("\t┃ 4.   [yellow]Chakra Armour            3000    +75[/yellow]        ┃");
-                ColorConsole.WriteEmbeddedColorLine("\t┃ 5.   [yellow]Infinite Armour          5000    +100[/yellow]       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Flak Jacket              100     3[/yellow]          ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 2.   [yellow]Steam Armour             200     5[/yellow]          ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 3.   [yellow]Shinobi Battle Armour    500     8[/yellow]          ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 4.   [yellow]Chakra Armour            2000    20[/yellow]         ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 5.   [yellow]Infinite Armour          5000    45[/yellow]         ┃");
                 Console.WriteLine("\t┃ E.   Go back to shop menu.                       ┃");
                 Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                 ColorConsole.Write("\t > ");
@@ -175,7 +174,7 @@ namespace AdventureGame.Structure
                     }
                     else
                     {
-                        Console.WriteLine("\t Invalid choice, try again!");
+                        Utility.TypeOverWrongDoings("Invalid choice, try again!");
                         innerExit = false;
                     }
                 } while (!innerExit);
@@ -189,12 +188,11 @@ namespace AdventureGame.Structure
             bool outerExit = false;
             while (!outerExit)
             {
-                Console.WriteLine("\n\t How many potions do you want to buy?");
+                Console.WriteLine("\n\t What potion do you want to buy?");
                 Console.WriteLine("\t┏━Potions━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-                Console.WriteLine("\t┃ Nr:  Name:           Cost:   HP:       ┃");
-                ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Power King   15     + 5HP[/yellow]       ┃");
-                ColorConsole.WriteEmbeddedColorLine("\t┃ 2.   [yellow]Red Bull     30    + 10HP[/yellow]       ┃");
-                Console.WriteLine("\t┃ 3.   Go back to shop menu.             ┃");
+                Console.WriteLine("\t┃ Nr:  Name:           Cost:   Hp:       ┃");
+                ColorConsole.WriteEmbeddedColorLine("\t┃ 1.   [yellow]Healing potion  15      +5 Hp[/yellow]     ┃");
+                Console.WriteLine("\t┃ E.   Go back to shop menu.             ┃");
                 Console.WriteLine("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                 ColorConsole.Write("\t > ");
                 bool innerExit = true;

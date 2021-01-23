@@ -1,4 +1,5 @@
-﻿using AdventureGame.Items;
+﻿using AdventureGame.Items.Armors;
+using AdventureGame.Items.Weapons;
 using AdventureGame.Structure;
 
 namespace AdventureGame.Characters
@@ -14,12 +15,6 @@ namespace AdventureGame.Characters
         public int Gold { get; set; } = 0;
         public Armor Armor { get; set; }
         public Weapon Weapon { get; set; }
-
-        public Character(int hp, Weapon weapon)
-        {
-            Hp = hp;
-            Damage = weapon.Damage;
-        }
 
         public virtual int Attack(Character defender)
         {

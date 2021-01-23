@@ -1,5 +1,9 @@
 ﻿using AdventureGame.Characters;
+using AdventureGame.Characters.Enemies;
 using AdventureGame.Items;
+using AdventureGame.Items.Armors;
+using AdventureGame.Items.Potions;
+using AdventureGame.Items.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +17,7 @@ namespace AdventureGame.Structure
         private static bool treasureTaken = false;
         private static bool haveYouMetHim = false;
         private static bool graveyardVisited = false;
+        public static bool isRedBull = false;
         public static void GoOnAdventure()
         {
             Player player = Game.player;
@@ -781,8 +786,12 @@ namespace AdventureGame.Structure
         private static void Battle()
         {
             Player player = Game.player;
-            Enemy[] enemies = Utility.GetEnemies().Where(e => e.Level <= player.Level).ToArray();
-            Enemy enemy = enemies[Utility.RollDice(enemies.Length)];
+            if (isRedBull)
+            {
+                player.Defence += 2;
+            }
+            Character[] enemies = Utility.GetEnemies().Where(e => e.Level <= player.Level).ToArray();
+            Character enemy = enemies[Utility.RollDice(enemies.Length)];
             int battleCtr = 0;
             List<string> content = new List<string>();
             while (enemy.Hp > 0)
@@ -845,6 +854,11 @@ namespace AdventureGame.Structure
                 }
                 Console.SetWindowPosition(0, Console.CursorTop - 30);
             }
+            if (isRedBull == true)
+            {
+                player.Defence -= 2;
+                isRedBull = false;
+            }
         }
 
         private static void AbuHassansShop(Player player)
@@ -877,13 +891,14 @@ namespace AdventureGame.Structure
             {
                 Weapon[] swords = new Weapon[]
                 {
-                    new Weapon("Kiba", 10000, "2d18"),
-                    new Weapon("Kubikiribōchō", 10000, "2d18"),
-                    new Weapon("Nuibari", 10000, "2d18"),
-                    new Weapon("Samehada", 10000, "2d18"),
-                    new Weapon("Shibuki", 10000, "2d18"),
-                    new Weapon("Hiramekarei", 10000, "2d18"),
-                    new Weapon("Kabutowari", 10000, "2d18")
+                    new Kunai(),
+                    //new Kiba(),
+                    //new Kubikiribōchō("Kubikiribōchō", 10000, "2d18"),
+                    //new Weapon("Nuibari", 10000, "2d18"),
+                    //new Weapon("Samehada", 10000, "2d18"),
+                    //new Weapon("Shibuki", 10000, "2d18"),
+                    //new Weapon("Hiramekarei", 10000, "2d18"),
+                    //new Weapon("Kabutowari", 10000, "2d18")
                 };
                 Weapon sword = swords[Utility.RollDice(7)];
                 Console.WriteLine("\n\t Yeay! you got a treasure!");
@@ -902,9 +917,9 @@ namespace AdventureGame.Structure
         {         
             if (!haveYouMetHim)
             {
-                Weapon weapon = new Weapon("Chakra Blade", 1500, "2d8");
-                Armor armor = new Armor("Chakra Armour", 2000, 75);
-                Potion potion = new Potion("Healing potion", 20, 15, "");
+                Weapon weapon = new ChakraBlade();
+                Armor armor = new ChakraArmor();
+                Potion potion = new HealingPotion();
                 potion.Quantity = 10;
                 Console.WriteLine();
                 string[] content = new string[]
@@ -960,7 +975,7 @@ namespace AdventureGame.Structure
 
         private static void FightTheBoss(Player player)
         {
-            Enemy boss = new Enemy("Kaguya Otsutsuki", 10, 500, 50, "3d18", 500);
+            Character boss = new KaguyaOtsutsuki();
             player.Hp -= 1000;
             Console.WriteLine("\n\t You were not ready!");
             string[] haha = new string[] { "Ha! ", "Ha! ", "Ha! ", };

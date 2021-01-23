@@ -1,5 +1,7 @@
 ﻿using AdventureGame.Characters;
-using AdventureGame.Items;
+using AdventureGame.Items.Weapons;
+using AdventureGame.Items.Armors;
+using AdventureGame.Items.Potions;
 using System;
 using System.IO;
 using System.Media;
@@ -41,7 +43,7 @@ namespace AdventureGame.Structure
 
         private static void CharacterCreation()
         {
-            player = new Player(35, new Weapon("Fists", 0, "1d4"));
+            player = new Player();
             Console.WriteLine("\n\t What is your name?");
             Console.Write("\t > ");
             while (true)
@@ -65,6 +67,7 @@ namespace AdventureGame.Structure
                 else
                 {
                     player.Name = name[0].ToString().ToUpper() + name[1..].ToLower();
+                    player.Weapon = new Fists();
                     break;
                 }
             }
@@ -78,9 +81,9 @@ namespace AdventureGame.Structure
             player.MaxHp = 1000;
             player.Damage = "8d100";
             player.Gold = 100000;
-            player.Armor = new Armor("Infinite Armour", 5000, 100);
-            player.Weapon = new Weapon("Samehada", 100000, "8d100");
-            Potion potion = new Potion("Red Bull", 30, 10, "You drink a powerfull potion that gives you wings.");
+            player.Armor = new InfiniteArmor();
+            player.Weapon = new Kubikiribōchō();
+            Potion potion = new RedBull();
             potion.Quantity = 100;
             player.Backpack.Add(potion);
         }

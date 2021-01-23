@@ -10,7 +10,7 @@ namespace AdventureGame.Items.Armors
         {
             Name = "Shinobi Battle Armor";
             Cost = 500;
-            Defence = 5;
+            Defence = 8;
         }
     }
 }

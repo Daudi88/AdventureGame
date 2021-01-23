@@ -8,7 +8,7 @@ namespace AdventureGame.Interfaces
     interface IConsumable
     {
         /// <summary>
-        /// How much the potion item heals its user.
+        /// How much the item heals its user.
         /// </summary>
         public int Healing { get; set; }
         public string Text { get; set; }

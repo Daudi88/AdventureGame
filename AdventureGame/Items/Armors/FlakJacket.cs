@@ -10,7 +10,7 @@ namespace AdventureGame.Items.Armors
         {
             Name = "Flak Jacket";
             Cost = 100;
-            Defence = 5;
+            Defence = 3;
         }
     }
 }

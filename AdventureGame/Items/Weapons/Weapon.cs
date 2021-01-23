@@ -4,13 +4,13 @@ using System;
 
 namespace AdventureGame.Items.Weapons
 {
-    class Weapon : Item, IEquipable
+    abstract class Weapon : Item, IEquipable
     {
         public string Damage { get; set; }
 
         public void Equip(Player player, IEquipable weapon)
         {
-            if (player.Weapon != null)
+            if (player.Weapon.Name != "Fists")
             {
                 player.Backpack.Add(player.Weapon);
             }

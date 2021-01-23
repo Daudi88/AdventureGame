@@ -9,7 +9,7 @@ namespace AdventureGame.Items.Armors
         public BulletproofVest()
         {
             Name = "Bulletproof vest";
-            Cost = 1000;
+            Cost = 10000;
             Defence = 100;
         }
     }

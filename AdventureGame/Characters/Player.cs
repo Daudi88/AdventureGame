@@ -1,6 +1,5 @@
-﻿using AdventureGame.Interfaces;
-using AdventureGame.Items;
-using System;
+﻿using AdventureGame.Items;
+using AdventureGame.Items.Weapons;
 using System.Collections.Generic;
 
 namespace AdventureGame.Characters
@@ -12,12 +11,11 @@ namespace AdventureGame.Characters
         public int MaxExp { get; set; }
         public List<Item> Backpack { get; set; } = new List<Item>();
         
-        public Player(int hp, Weapon weapon) : base(hp, weapon)
+        public Player()
         {
             MaxHp = Hp;
             MaxExp = 200 * Level;
-            Weapon = weapon;
-            Damage = weapon.Damage;
+            Weapon = new Fists();
         }
 
         public void LevelUp()

@@ -5,6 +5,7 @@ using System.Threading;
 using AdventureGame.Characters;
 using AdventureGame.Interfaces;
 using AdventureGame.Items;
+using AdventureGame.Items.Potions;
 
 namespace AdventureGame.Structure
 
@@ -170,6 +171,10 @@ namespace AdventureGame.Structure
                                 else if (item is IConsumable consumable)
                                 {
                                     consumable.Consume(player);
+                                    if (consumable is RedBull)
+                                    {
+                                        Adventure.isRedBull = true;
+                                    }
                                 }
 
                                 item.Quantity--;
@@ -363,7 +368,7 @@ namespace AdventureGame.Structure
         }
         private static void PrintPlayer(int mapTop)
         {
-            IPlayable player = Game.player;
+            Player player = Game.player;
             int left = 0;
             int top = mapTop;
             switch (player.Pos)
