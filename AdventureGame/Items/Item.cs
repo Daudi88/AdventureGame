@@ -11,11 +11,5 @@ namespace AdventureGame.Items
         /// </summary>
         public int Cost { get; set; }
         public int Quantity { get; set; } = 1;
-
-        public Item(string name, int cost)
-        {
-            Name = name;
-            Cost = cost;
-        }
     }
 }

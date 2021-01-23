@@ -82,23 +82,6 @@ namespace AdventureGame.Structure
             Console.WriteLine();
         }
 
-        public static string MainMenu()
-        {
-            string[] content = new string[]
-            {
-                "1. Go on an Adventure",
-                "2. Go to Tavern",
-                "C. Show Details",
-                "B. Open Backpack",
-                "M. Open Map",
-                "E. Exit Game"
-            };
-            Console.WriteLine();
-            Display.WithFrame("[darkcyan]MENU[/darkcyan]", content);
-            Console.Write("\t > ");
-            return ColorConsole.ReadInBlue();
-        }
-
         public static void Details()
         {
             Player player = Game.player;
@@ -144,15 +127,16 @@ namespace AdventureGame.Structure
             Array.Copy(content2, 0, contents, content1.Length, content2.Length);
 
             string longest = contents.OrderByDescending(s => s.Length).First();
-            Display.PrintWithDividedFrame("[darkcyan]DETAILS[/darkcyan]", content1, "EQUIPPED", content2, longest.Length - 17);
+            Display.WithDividedFrame("[darkcyan]DETAILS[/darkcyan]", content1, "EQUIPPED", content2, longest.Length - 17);
             Console.WriteLine("\t [Press enter to continue]");
             Console.ReadLine();
+            Console.SetWindowPosition(0, Console.CursorTop - 30);
         }
 
-        public static void Backpack(string str = null)
+        public static bool Backpack(string str = null)
         {
             Player player = Game.player;
-            if (player.Backpack != null)
+            if (player.Backpack.Count > 0)
             {
                 bool exit = false;
                 List<string> content = new List<string>();
@@ -166,13 +150,16 @@ namespace AdventureGame.Structure
                         {
                             content.Add($"{ctr++}. [yellow]{item}[/yellow]");
                         }
-                        content.Add($"{ctr}. Go back");
+                        content.Add($"E. Go back");
                         Console.WriteLine("\n\t What item do you want to use");
-                        Display.WithFrame("[darkcyan]BACKPACK[/darkcyan]", content.ToArray());
+                        WithFrame("[darkcyan]BACKPACK[/darkcyan]", content.ToArray());
                         Console.Write("\t > ");
-                        if (int.TryParse(ColorConsole.ReadInBlue(), out int choice))
+                        bool innerExit = false;
+                        while (!innerExit)
                         {
-                            if (choice < ctr)
+                            string input = ColorConsole.ReadInBlue();
+                            int.TryParse(input, out int choice);
+                            if (choice > 0 && choice < player.Backpack.Count)
                             {
                                 Item item = player.Backpack[choice - 1];
                                 if (item is IEquipable equipable)
@@ -190,18 +177,19 @@ namespace AdventureGame.Structure
                                 {
                                     player.Backpack.Remove(item);
                                 }
+                                innerExit = true;
+                            }
+                            else if (input.ToUpper() == "E")
+                            {
+                                innerExit = true;
+                                exit = true;
                             }
                             else
                             {
-                                exit = true;
+                                Utility.TypeOverWrongDoings("Invalid choice, try again!");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("\t Invalid choice, try again!");
-                            Console.WriteLine("\t [Press enter to continue]");
-                            Console.ReadLine();
-                        }
+                        }                        
+                        Console.SetWindowPosition(0, Console.CursorTop - 30);
                     }
                 }
                 else
@@ -213,13 +201,12 @@ namespace AdventureGame.Structure
                     Console.WriteLine("\n\t What item do you want to sell?");
                     // Skriv ut alla items i backpack
                 }
-
+                return true;
             }
             else
             {
-                Console.WriteLine("\t Your backpack is empty...");
-                Console.WriteLine("\t [Press enter to continue]");
-                Console.ReadLine();
+                Utility.TypeOverWrongDoings("Your backpack is empty...");
+                return false;
             }
 
         }
@@ -295,7 +282,7 @@ namespace AdventureGame.Structure
             Console.WriteLine("┛");
         }
 
-        public static void PrintWithDividedFrame(string title1, string[] texts1, string title2, string[] texts2, int width)
+        public static void WithDividedFrame(string title1, string[] texts1, string title2, string[] texts2, int width)
         {
             ColorConsole.WriteEmbeddedColor($"\t┏━{title1}");
             for (int i = 0; i < width - title1.Length + 2 + 21; i++)
@@ -343,7 +330,7 @@ namespace AdventureGame.Structure
         {
             Console.WriteLine();
             int mapTop = Console.CursorTop;
-            Console.WriteLine("\t┏━MAP━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            ColorConsole.WriteEmbeddedColorLine("\t┏━[darkcyan]MAP[/darkcyan]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AAA AAA AAA AAA  AAA  AAA[/darkgray]  [red]X[/red]   [darkgray]AAA AAA AAA A A AAA AAA AA AAA AA AAA AAAA A AA[/darkgray]┃");
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]A AAA  AAA AAA AAA AAAAA      AA A AA AAA AAA AAA AAA AAA A AAA A AAA AA AAA A[/darkgray]┃");
             ColorConsole.WriteEmbeddedColorLine("\t┃[darkgray]AA[/darkgray] [darkcyan]S[/darkcyan]           [darkgray]AAA A AAA      AAA AAA AAA AAA AAA AAA AAA AAA AAA AA A AAA AAA[/darkgray]┃");
@@ -473,7 +460,7 @@ namespace AdventureGame.Structure
                     break;
             }
             Console.SetCursorPosition(left, top);
-            ColorConsole.WriteInRed("*");
+            ColorConsole.WriteInRed("●");
         }
 
         public static void LoseScreen()

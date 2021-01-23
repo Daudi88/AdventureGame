@@ -5,21 +5,19 @@ using System.Collections.Generic;
 
 namespace AdventureGame.Characters
 {
-    class Player : Character, IPlayable
+    class Player : Character
     {
-        public string Race { get; set; }
-        public string Class { get; set; }
+        public double Pos { get; set; } = 0.0;
         public int MaxHp { get; set; }
         public int MaxExp { get; set; }
-        public Armor Armor { get; set; }
-        public Weapon Weapon { get; set; } = new Weapon("Fists", 0, "1d4");
         public List<Item> Backpack { get; set; } = new List<Item>();
-        public double Pos { get; set; } = 0.0;
-
-        public Player(int hp, string damage) : base(hp, damage)
+        
+        public Player(int hp, Weapon weapon) : base(hp, weapon)
         {
             MaxHp = Hp;
-            MaxExp = 200 * Level; 
+            MaxExp = 200 * Level;
+            Weapon = weapon;
+            Damage = weapon.Damage;
         }
 
         public void LevelUp()

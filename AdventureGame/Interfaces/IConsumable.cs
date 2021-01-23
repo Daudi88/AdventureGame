@@ -12,6 +12,6 @@ namespace AdventureGame.Interfaces
         /// </summary>
         public int Healing { get; set; }
         public string Text { get; set; }
-        public void Consume(IPlayable player);
+        public void Consume(Player player);
     }
 }

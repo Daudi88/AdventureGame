@@ -1,6 +1,7 @@
 ﻿using AdventureGame.Characters;
 using AdventureGame.Items;
 using System;
+using System.IO;
 using System.Media;
 using System.Threading;
 
@@ -17,10 +18,9 @@ namespace AdventureGame.Structure
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
 
-            var soundLocation = Environment.CurrentDirectory + @"C:\Orginal.wav";
-            SoundPlayer player = new SoundPlayer(@"C:\Orginal.wav");
-            player.Play();
-            player.Play();            
+            var soundLocation = Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\NarutoFinal.wav");
+            SoundPlayer player = new SoundPlayer(soundLocation);
+            player.PlayLooping();
             StartGame();
         }
 
@@ -41,21 +41,21 @@ namespace AdventureGame.Structure
 
         private static void CharacterCreation()
         {
-            player = new Player(35, "1d6");
+            player = new Player(35, new Weapon("Fists", 0, "1d4"));
+            Console.WriteLine("\n\t What is your name?");
+            Console.Write("\t > ");
             while (true)
             {
-                Console.WriteLine("\n\t What is your name?");
-                Console.Write("\t > ");
                 string name = ColorConsole.ReadInBlue();
                 name = name.Trim();
 
                 if (name.Length < 3)
                 {
-                    Console.WriteLine("\t The name is too short...");
+                    Utility.TypeOverWrongDoings("The name is too short. Try again!");
                 }
                 else if (name.Length > 12)
                 {
-                    Console.WriteLine("\t The name is too long...");
+                    Utility.TypeOverWrongDoings("The name is too long. Try again!");
                 }
                 else if (name.Trim().ToLower() == "robin")
                 {
@@ -89,29 +89,62 @@ namespace AdventureGame.Structure
         {
             while (true)
             {
-                string choice = Display.MainMenu();
-                switch (choice.ToUpper())
+                string[] content = new string[]
                 {
-                    case "1":
-                        Adventure.GoOnAdventure();
-                        break;
-                    case "2":
-                        Tavern.Inn(player);
-                        break;
-                    case "C":
-                        Display.Details();
-                        break;
-                    case "B":
-                        Display.Backpack();
-                        break;
-                    case "M":
-                        Display.Map();
-                        break;
-                    case "E":
-                        ExitGame();
-                        break;
-                    default:
-                        break;
+                    "1. Go on an Adventure",
+                    "2. Eat at Lightning Burger",
+                    "3. Heal yourself at Konoha Hospital",
+                    "4. Go to the Ninja Tool Shop",
+                    "D. Show Details",
+                    "B. Show Backpack",
+                    "M. Show Map",
+                    "E. Exit Game"
+                };
+                Console.WriteLine();
+                Display.WithFrame("[darkcyan]MENU[/darkcyan]", content);
+                Console.Write("\t > ");
+                bool exit = false;
+                while (!exit)
+                {
+                    string choice = ColorConsole.ReadInBlue();
+                    switch (choice.ToUpper())
+                    {
+                        case "1":
+                            Adventure.GoOnAdventure();
+                            exit = true;
+                            break;
+                        case "2":
+                            Locations.LightningBurger(player);
+                            exit = true;
+                            break;
+                        case "3":
+                            Locations.KonohaHospital(player);
+                            break;
+                        case "4":
+                            Locations.NinjaToolShop(player);
+                            break;
+                        case "D":
+                            Display.Details();
+                            exit = true;
+                            break;
+                        case "B":
+                            if (Display.Backpack())
+                            {
+                                exit = true;
+                            }
+                            break;
+                        case "M":
+                            Display.Map();
+                            exit = true;
+                            break;
+                        case "E":
+                            ExitGame();
+                            exit = true;
+                            break;
+                        default:
+                            Utility.TypeOverWrongDoings("Invalid choice. Try again!");
+                            break;
+                    } 
                 }
             }
         }

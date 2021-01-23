@@ -1,8 +1,11 @@
 ﻿using AdventureGame.Characters;
 using AdventureGame.Items;
+using AdventureGame.Items.Armors;
+using AdventureGame.Items.Potions;
+using AdventureGame.Items.Weapons;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 
 namespace AdventureGame.Structure
 {
@@ -27,7 +30,6 @@ namespace AdventureGame.Structure
             return result;
         }
 
-        // [HÅKAN] Ge alla fiender balanserad armor 
         public static List<Enemy> GetEnemies()
         {
             List<Enemy> monsters = new List<Enemy>()
@@ -52,11 +54,12 @@ namespace AdventureGame.Structure
         {
             Armor[] armor = new Armor[]
             {
-                new Armor("Flak Jacket", 100, 15),
-                new Armor("Steam Armour", 200, 20),
-                new Armor("Shinobi Battle Armour", 500, 50),
-                new Armor("Chakra Armour", 2000, 75),
-                new Armor("Infinite Armour", 5000, 100)
+                new FlakJacket(),
+                new SteamArmor(),
+                new ShinobiBattleArmor(),
+                new ChakraArmor(),
+                new InfiniteArmor(),
+                new BulletproofVest()
             };
             return armor;
         }
@@ -75,9 +78,6 @@ namespace AdventureGame.Structure
                 new Weapon("Sword", 2500, "2d12")
             };
             return weapons;
-
-            // Seven Swordsmen of the Mist vapen:
-            // Kiba, Kubikiribōchō, Nuibari, Samehada, Shibuki, Hiramekarei, Kabutowari
         }
 
         public static Potion[] GetPotions()
@@ -89,8 +89,6 @@ namespace AdventureGame.Structure
             };
             return potions;
         }
-
-        
 
         public static void BuyItem(int choice, Item[] items)
         {
@@ -134,20 +132,16 @@ namespace AdventureGame.Structure
 
         public static void TypeOverWrongDoings(string message)
         {
+            Console.Write($"\t {message}");
+            Thread.Sleep(1800);
             int top = Console.CursorTop;
             int left = 5;
-            Console.Write("\t > ");
-            Console.ReadLine();
-            Console.Write($"\t {message}");
-            Console.ReadLine();
             Console.SetCursorPosition(left, top);
             Console.WriteLine("                                         ");
-            Console.SetCursorPosition(left, ++top);
-            Console.WriteLine("                                         ");
             Console.SetCursorPosition(left, --top);
+            Console.WriteLine("                                         ");
+            Console.SetCursorPosition(left, top);
             Console.Write("\t > ");
-            Console.ReadLine();
-
         }
     }
 }
